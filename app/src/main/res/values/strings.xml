@@ -47,10 +47,10 @@
     <string name="container_application_internal_space_manager">Container Application Internal Storage Space Manager</string>
     <string name="calculating">Calculating…</string>
     <string name="install_request">Install Request</string>
-    <string name="install_request_content">%1$s want install %2$s</string>
+    <string name="install_request_content">%1$s want install %2$s.</string>
     <string name="install">Install</string>
     <string name="uninstall_request">Uninstall Request</string>
-    <string name="uninstall_request_content">Do you want to uninstall %1$s</string>
+    <string name="uninstall_request_content">Do you want to uninstall %1$s?</string>
     <string name="user_interface">User Interface</string>
     <string name="advance_settings">Advance Settings</string>
     <string name="container_space_manager_summary">Manage the space used by the application within the container.</string>
@@ -60,6 +60,6 @@
     <string name="input_name">Input the name of the new user.</string>
     <string name="user_manager">User Manager</string>
     <string name="user_manager_summary">Manage Virtual Users</string>
-    <string name="id_label">ID:</string>
+    <string name="id_label" translatable="false">ID:</string>
     <string name="select_user">Select User</string>
 </resources>
