@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android">
+    <explode>
+        <targets>
+            <target android:excludeId="@android:id/statusBarBackground"/>
+            <target android:excludeId="@android:id/navigationBarBackground"/>
+            <target android:excludeId="@id/app_bar"/>
+            <target android:excludeId="@id/fab"/>
+            <target android:excludeId="@id/bottom_navigation"/>
+            <target android:excludeId="@id/property_card" />
+        </targets>
+    </explode>
+    <slide android:startDelay="50" android:slideEdge="top">
+        <targets>
+            <target android:targetId="@id/app_bar"/>
+        </targets>
+    </slide>
+    <slide android:slideEdge="bottom">
+        <targets>
+            <target android:targetId="@id/fab"/>
+            <target android:targetId="@id/bottom_navigation"/>
+        </targets>
+    </slide>
+    <fade>
+        <targets>
+            <target android:excludeId="@id/app_bar"/>
+            <target android:excludeId="@id/fab"/>
+            <target android:excludeId="@id/bottom_navigation"/>
+            <target android:excludeId="@id/property_card" />
+        </targets>
+    </fade>
+    <slide android:startDelay="150" android:slideEdge="bottom">
+        <targets>
+            <target android:targetId="@id/property_card" />
+        </targets>
+    </slide>
+    <fade android:startDelay="150">
+        <targets>
+            <target android:targetId="@id/property_card" />
+        </targets>
+    </fade>
+</transitionSet>

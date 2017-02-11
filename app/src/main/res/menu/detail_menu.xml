@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/run"
+        android:icon="@drawable/ic_run"
+        android:title="@string/run"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/uninstall"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/uninstall"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/run_as"
+        android:title="@string/run_as"
+        app:showAsAction="never"/>
+</menu>

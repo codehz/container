@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/installed"
+        android:icon="@drawable/ic_installed"
+        android:title="@string/installed" />
+    <item
+        android:id="@+id/running"
+        android:icon="@drawable/ic_running"
+        android:title="@string/running" />
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_setting"
+        android:title="@string/action_settings" />
+</menu>

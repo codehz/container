@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="36dp"
+    android:gravity="center_vertical"
+    android:clickable="false"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:text="@string/pending"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Header" />
+
+    <View
+        android:layout_width="68dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center"
+        android:background="@drawable/ic_close_all_inset"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:id="@+id/close_button" />
+</LinearLayout>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="one.codehz.container">
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:manageSpaceActivity=".SpaceManagerActivity"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".LoadingActivity"
+            android:label="@string/loading"
+            android:theme="@style/LoadingScreenTheme"/>
+
+        <activity
+            android:name=".VLoadingActivity"
+            android:excludeFromRecents="true"
+            android:label="@string/loading"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:taskAffinity="va.task.loading"
+            android:theme="@style/LoadingScreenTheme"/>
+
+        <activity
+            android:name=".DetailActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:label="@string/application_detail"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".SpaceManagerActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:label="@string/container_space_manager"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".ManageContainerApplicationStorageActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:label="@string/container_application_internal_space_manager"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".UserManagerActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:label="@string/user_manager"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".UserSelectorActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:label="@string/select_user"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".InstallerActivity"
+            android:allowTaskReparenting="true"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|screenLayout"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:hardwareAccelerated="true"
+            android:label="@string/advance_virtual_package_installer"
+            android:noHistory="true"
+            android:screenOrientation="locked"
+            android:taskAffinity=":PInstaller"
+            android:theme="@style/InstallerTheme">
+
+            <intent-filter>
+                <action android:name="android.intent.action.INSTALL_PACKAGE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:scheme="file"/>
+                <data android:mimeType="application/vnd.android.package-archive"/>
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".InstallService"
+            android:exported="false"
+            android:process=":installer"/>
+    </application>
+
+</manifest>

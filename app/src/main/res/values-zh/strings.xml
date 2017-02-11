@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">容器</string>
+    <string name="about_title">关于</string>
+    <string name="action_settings">设置</string>
+    <string name="advance_virtual_package_installer">高级虚拟包安装器</string>
+    <string name="amount">总量：</string>
+    <string name="app_icon">应用图标</string>
+    <string name="application_detail">应用详情</string>
+    <string name="application_installing">应用安装中</string>
+    <string name="application_uninstalled">应用已卸载</string>
+    <string name="author">作者</string>
+    <string name="calculating">计算中</string>
+    <string name="click_switch_off">点击：直接运行应用\n长按：显示应用详情</string>
+    <string name="click_switch_on">长按：直接运行应用\n点击：显示应用详情</string>
+    <string name="container_application_internal_space_manager">容器内应用内部存储空间管理器</string>
+    <string name="container_application_optimization_data">容器内应用优化数据</string>
+    <string name="container_space_manager">容器空间管理器</string>
+    <string name="dismiss">解雇</string>
+    <string name="install_failed">安装失败</string>
+    <string name="install_finished">应用程序安装成功</string>
+    <string name="installed">已安装</string>
+    <string name="installing">安装中…</string>
+    <string name="invalid_apk">请选择一个有效的APK文件。</string>
+    <string name="loading">加载中</string>
+    <string name="manage">管理</string>
+    <string name="optimize_application">应用程序优化中…</string>
+    <string name="package_name_text">%1$s</string>
+    <string name="parsing_application">解析应用程序中</string>
+    <string name="pending">测试</string>
+    <string name="receive_apk_file">接收APK文件中</string>
+    <string name="receive_apk_file_progress">接收APK文件中(%1$d千字节/%2$d千字节)</string>
+    <string name="run">运行</string>
+    <string name="run_as">运行以</string>
+    <string name="running">运行中</string>
+    <string name="select_apk">选择一个APK文件</string>
+    <string name="space_application_in_container">容器内应用程序所使用的内部存储空间总量</string>
+    <string name="switch_click_function">交换点击和长按的功能</string>
+    <string name="task_container_prefix">容器：%1$s</string>
+    <string name="task_detail_prefix">细节：%1$s</string>
+    <string name="task_installed">已安装</string>
+    <string name="task_running">运行中</string>
+    <string name="task_setting">设置</string>
+    <string name="uninstall">卸载</string>
+    <string name="value_copied">%1$s 已复制</string>
+</resources>
