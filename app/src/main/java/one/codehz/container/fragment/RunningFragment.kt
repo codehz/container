@@ -3,6 +3,7 @@ package one.codehz.container.fragment
 import android.app.Activity
 import android.app.Fragment
 import android.content.Loader
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
@@ -29,11 +30,16 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
     companion object {
         val LIST_LOADER = 0
         val KILL_LOADER = 1
+        val KILL_ALL_LOADER = 2
     }
 
-    override val canBeFloatingActionTarget = false
+    override val canBeFloatingActionTarget = true
 
-    override fun onFloatingAction() = throw UnsupportedOperationException("not implemented")
+    override fun onFloatingAction() {
+        loaderManager.restartLoader(KILL_ALL_LOADER, null, killAllLoader)
+    }
+
+    override fun getFloatingDrawable() = R.drawable.ic_clear_all
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = inflater.inflate(R.layout.content_main, container, false)!!
 
@@ -56,6 +62,12 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
             virtualCore.killApp(pkgName, user)
             Thread.sleep(100)
         }
+    }
+
+    val killAllLoader by MakeLoaderCallbacks({ activity }, { loaderManager.getLoader<Loader<*>>(LIST_LOADER).forceLoad() }) {
+        killedList.clear()
+        virtualCore.killAllApps()
+        Thread.sleep(200)
     }
 
     val recycleView by lazy<RecyclerView> { view[R.id.content_main] }

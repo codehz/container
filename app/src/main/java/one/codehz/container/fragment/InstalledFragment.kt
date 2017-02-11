@@ -7,6 +7,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.Loader
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.ParcelFileDescriptor
 import android.support.design.widget.Snackbar
@@ -98,6 +99,8 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
             Intent.createChooser(this, getString(R.string.select_apk))
         }, OPEN_APK_REQUEST)
     }
+
+    override fun getFloatingDrawable() = R.drawable.ic_add
 
     fun initViews() {
         with(swipe_refresh_widget) {

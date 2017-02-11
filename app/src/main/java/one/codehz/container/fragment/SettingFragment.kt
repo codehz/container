@@ -12,6 +12,8 @@ class SettingFragment : PreferenceFragment(), IFloatingActionTarget {
 
     override fun onFloatingAction() = throw UnsupportedOperationException("not implemented")
 
+    override fun getFloatingDrawable() = throw UnsupportedOperationException("not implemented")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

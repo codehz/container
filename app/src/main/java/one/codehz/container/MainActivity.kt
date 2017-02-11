@@ -95,9 +95,10 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             else -> throw InvalidParameterException()
         }
 
-        if ((frag as IFloatingActionTarget).canBeFloatingActionTarget)
+        if ((frag as IFloatingActionTarget).canBeFloatingActionTarget) {
             fab.show()
-        else
+            fab.setImageDrawable(ContextCompat.getDrawable(this, frag.getFloatingDrawable()))
+        } else
             fab.hide()
 
         fragmentManager.beginTransaction().apply {
