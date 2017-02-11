@@ -44,7 +44,7 @@
     <string name="uninstall">卸载</string>
     <string name="value_copied">“%1$s”已复制</string>
     <string name="advance_settings">高级设置</string>
-    <string name="container_space_manager_summary">管理容器内引用使用的空间</string>
+    <string name="container_space_manager_summary">管理容器内应用使用的空间</string>
     <string name="deleted">已删除</string>
     <string name="input_name">请输入新用户的名称。</string>
     <string name="install">安装</string>
