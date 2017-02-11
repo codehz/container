@@ -7,3 +7,7 @@
 /build
 /captures
 .externalNativeBuild
+*.apk
+.idea/vcs.xml
+app/libs/
+app/src/main/res/values-v21/
