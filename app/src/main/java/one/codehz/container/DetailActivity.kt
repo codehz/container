@@ -1,15 +1,16 @@
 package one.codehz.container
 
-import android.app.*
+import android.app.Activity
+import android.app.ActivityManager
+import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.graphics.Palette
 import android.support.v7.widget.*
 import android.util.Log
@@ -26,18 +27,19 @@ import one.codehz.container.models.AppPropertyModel
 
 class DetailActivity : BaseActivity(R.layout.application_detail) {
     companion object {
-        val KEY_PACKAGE_NAME by staticName
         val RESULT_DELETE_APK = 1
         val REQUEST_USER = 0
 
         fun launch(context: Activity, appModel: AppModel, iconView: View, startFn: (Intent, Bundle) -> Unit) {
             startFn(Intent(context, DetailActivity::class.java).apply {
-                putExtra(KEY_PACKAGE_NAME, appModel.packageName)
+                action = Intent.ACTION_VIEW
+                data = Uri.Builder().scheme("container").authority("detail").appendPath(appModel.packageName).build()
+                Log.d("DA", dataString)
             }, ActivityOptions.makeSceneTransitionAnimation(context, iconView, "app_icon").toBundle())
         }
     }
 
-    val package_name: String by lazy { intent.getStringExtra(KEY_PACKAGE_NAME) }
+    val package_name: String by lazy { intent.data.path.substring(1) }
     val model by lazy { AppModel(this, virtualCore.findApp(package_name)) }
 
     val listLoader by MakeLoaderCallbacks({ this }, { it() }) { ctx ->
@@ -69,7 +71,7 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
         loaderManager.initLoader(0, null, listLoader).forceLoad()
 
         iconView.setImageDrawable(model.icon)
-        Palette.from((model.icon as BitmapDrawable).bitmap).apply { maximumColorCount(1) }.generate { palette ->
+        Palette.from(model.icon.bitmap).apply { maximumColorCount(1) }.generate { palette ->
             try {
                 val (main_color) = palette.swatches
                 val dark_color = Color.HSVToColor(floatArrayOf(0f, 0f, 0f).apply { Color.colorToHSV(main_color.rgb, this) }.apply { this[2] *= 0.8f })
@@ -126,7 +128,7 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
                             setResult(RESULT_DELETE_APK, intent)
                             finishAfterTransition()
                         }
-                        .setNegativeButton("Cancel") {dialog, id -> }
+                        .setNegativeButton("Cancel") { dialog, id -> }
                         .setOnDismissListener {
                             Snackbar.make(iconView, "Uninstalling is canceled.", Snackbar.LENGTH_SHORT).setBackground(bgcolor).show()
                         }

@@ -36,7 +36,16 @@
         <activity
             android:name=".LoadingActivity"
             android:label="@string/loading"
-            android:theme="@style/LoadingScreenTheme"/>
+            android:theme="@style/LoadingScreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.RUN"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:host="launch"
+                    android:scheme="container"/>
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".VLoadingActivity"
@@ -45,14 +54,35 @@
             android:launchMode="singleInstance"
             android:noHistory="true"
             android:taskAffinity="va.task.loading"
-            android:theme="@style/LoadingScreenTheme"/>
+            android:theme="@style/LoadingScreenTheme">
+
+            <intent-filter>
+                <action android:name="android.intent.action.RUN"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:host="launch"
+                    android:scheme="container"/>
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".DetailActivity"
             android:configChanges="orientation|screenSize|screenLayout"
             android:label="@string/application_detail"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="detail"
+                    android:scheme="container"/>
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".SpaceManagerActivity"

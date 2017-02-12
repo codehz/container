@@ -235,7 +235,7 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
             DETAIL_REQUEST -> when (resultCode) {
                 DetailActivity.RESULT_DELETE_APK -> {
                     intent?.apply {
-                        uninstallPendingList.add(getStringExtra(DetailActivity.KEY_PACKAGE_NAME))
+                        uninstallPendingList.add(data.path)
                         loaderManager.restartLoader(PkgUninstallLoaderId, null, uninstallLoader)
                     }
                 }
