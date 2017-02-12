@@ -62,4 +62,7 @@
     <string name="user_manager_summary">Manage Virtual Users</string>
     <string name="id_label" translatable="false">ID:</string>
     <string name="select_user">Select User</string>
+    <string name="clear_all">Clear All</string>
+    <string name="clear_all_long">Clear All APP in Container</string>
+    <string name="clear_all_disable">Clear All(Disable)</string>
 </resources>

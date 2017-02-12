@@ -1,0 +1,15 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="clear_all"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_clear_all"
+        android:shortcutShortLabel="@string/clear_all"
+        android:shortcutLongLabel="@string/clear_all_long"
+        android:shortcutDisabledMessage="@string/clear_all_disable">
+        <intent
+            android:action="one.codehz.container.CLEAR_ALL"
+            android:targetPackage="one.codehz.container"
+            android:targetClass="one.codehz.container.ShortcutActivity" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>
