@@ -6,10 +6,10 @@
         android:title="@string/installed" />
     <item
         android:id="@+id/running"
-        android:icon="@drawable/ic_running"
+        android:icon="@drawable/ic_services"
         android:title="@string/running" />
     <item
         android:id="@+id/settings"
-        android:icon="@drawable/ic_setting"
+        android:icon="@drawable/ic_settings"
         android:title="@string/action_settings" />
 </menu>
