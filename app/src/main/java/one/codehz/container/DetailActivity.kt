@@ -122,18 +122,8 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
                 true
             }
             R.id.uninstall -> {
-                AlertDialog.Builder(this)
-                        .setIcon(R.drawable.ic_alert)
-                        .setTitle("Do you really want to delete this application?")
-                        .setPositiveButton("Uninstall") { dialog, id ->
-                            setResult(RESULT_DELETE_APK, intent)
-                            finishAfterTransition()
-                        }
-                        .setNegativeButton("Cancel") { dialog, id -> }
-                        .setOnDismissListener {
-                            Snackbar.make(iconView, "Uninstalling is canceled.", Snackbar.LENGTH_SHORT).setBackground(bgcolor).show()
-                        }
-                        .show()
+                setResult(RESULT_DELETE_APK, intent)
+                finishAfterTransition()
                 true
             }
             R.id.send_to_desktop -> {

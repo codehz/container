@@ -120,30 +120,33 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     viewHolder as AppListAdapter.AppListViewHolder
-                    val currentModel = viewHolder.currentModel!!
-                    val deleteAction = contentAdapter.enqueueDelete(currentModel)
-                    var undo = false
-                    Snackbar.make(viewHolder.itemView, R.string.deleted, Snackbar.LENGTH_SHORT)
-                            .setBackground(ContextCompat.getColor(activity, R.color.colorPrimaryDark))
-                            .setAction(R.string.undo) {
-                                undo = true
-                                deleteAction()
-                                loaderManager.restartLoader(AppListLoaderId, null, modelLoader)
-                            }
-                            .addCallback(object : Snackbar.Callback() {
-                                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                                    if (undo) return
-                                    deleteAction()
-                                    uninstallPendingList.add(currentModel.packageName)
-                                    loaderManager.restartLoader(PkgUninstallLoaderId, null, uninstallLoader)
-                                }
-                            }).show()
-                    loaderManager.restartLoader(AppListLoaderId, null, modelLoader)
+                    preUninstallApp(viewHolder.currentModel!!)
                 }
 
                 override fun isLongPressDragEnabled() = false
             }).attachToRecyclerView(this)
         }
+    }
+
+    fun preUninstallApp(currentModel: AppModel) {
+        val deleteAction = contentAdapter.enqueueDelete(currentModel)
+        var undo = false
+        Snackbar.make(installedList, R.string.deleted, Snackbar.LENGTH_SHORT)
+                .setBackground(ContextCompat.getColor(activity, R.color.colorPrimaryDark))
+                .setAction(R.string.undo) {
+                    undo = true
+                    deleteAction()
+                    loaderManager.restartLoader(AppListLoaderId, null, modelLoader)
+                }
+                .addCallback(object : Snackbar.Callback() {
+                    override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                        if (undo) return
+                        deleteAction()
+                        uninstallPendingList.add(currentModel.packageName)
+                        loaderManager.restartLoader(PkgUninstallLoaderId, null, uninstallLoader)
+                    }
+                }).show()
+        loaderManager.restartLoader(AppListLoaderId, null, modelLoader)
     }
 
     fun installFromStream(vararg params: Pair<InputStream, Long>) {
@@ -234,8 +237,7 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
             DETAIL_REQUEST -> when (resultCode) {
                 DetailActivity.RESULT_DELETE_APK -> {
                     intent?.apply {
-                        uninstallPendingList.add(data.path)
-                        loaderManager.restartLoader(PkgUninstallLoaderId, null, uninstallLoader)
+                        preUninstallApp(AppModel(activity, virtualCore.findApp(data.path.substring(1))))
                     }
                 }
             }
