@@ -50,8 +50,9 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     }
 
     fun setTask(task: Int) {
+        title = getString(R.string.task_container_prefix, getString(task))
         setTaskDescription(ActivityManager.TaskDescription(
-                getString(R.string.task_container_prefix, getString(task)),
+                title.toString(),
                 (getDrawable(R.mipmap.ic_launcher) as BitmapDrawable).bitmap,
                 ContextCompat.getColor(this, R.color.colorPrimaryDark)))
     }
