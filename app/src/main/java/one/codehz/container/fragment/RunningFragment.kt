@@ -60,8 +60,8 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
         killedList.forEach {
             val (user, pkgName) = it
             virtualCore.killApp(pkgName, user)
-            Thread.sleep(100)
         }
+        Thread.sleep(200)
     }
 
     val killAllLoader by MakeLoaderCallbacks({ activity }, { loaderManager.getLoader<Loader<*>>(LIST_LOADER).forceLoad() }) {
