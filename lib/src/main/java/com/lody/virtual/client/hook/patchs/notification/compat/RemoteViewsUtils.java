@@ -3,7 +3,6 @@ package com.lody.virtual.client.hook.patchs.notification.compat;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -99,7 +98,6 @@ class RemoteViewsUtils {
 		// }
 		params.gravity = Gravity.CENTER_VERTICAL;
 		mCache = frameLayout;
-//		frameLayout.setBackgroundColor(Color.WHITE);
 		frameLayout.addView(view1, params);
 		// if (Build.VERSION.SDK_INT >= 23) {
 		// if (!systemId) {
@@ -117,18 +115,11 @@ class RemoteViewsUtils {
 		}
 		int mode;
 		// TODO 各种适配
-		if (systemId) {
-			mode = View.MeasureSpec.EXACTLY;
-		} else {
-			mode = View.MeasureSpec.AT_MOST;
-		}
-//		mCache.layout(0, 0, width, height);
+		mode = View.MeasureSpec.AT_MOST;
 		mCache.measure(View.MeasureSpec.makeMeasureSpec(width, mode), View.MeasureSpec.makeMeasureSpec(height, mode));
-		mCache.layout(0, 0, width, mCache.getMeasuredHeight());
+		mCache.layout(0, 0, mCache.getMeasuredWidth(), mCache.getMeasuredHeight());
 		VLog.i(TAG, "notification:systemId=" + systemId + ",max=%d/%d, szie=%d/%d", width, height,
 				mCache.getMeasuredWidth(), mCache.getMeasuredHeight());
-
-		VLog.i(TAG, "notification:isBig=%d HEIGHT=%d", isBig ? 1 : 0, view1.getMeasuredHeight());
 		// 打印action
 		// logActions(remoteViews, view1);
 		return mCache;

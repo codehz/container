@@ -25,6 +25,7 @@ import com.lody.virtual.client.env.Constants;
 import com.lody.virtual.client.env.VirtualRuntime;
 import com.lody.virtual.client.fixer.ContextFixer;
 import com.lody.virtual.client.hook.delegate.ComponentDelegate;
+import com.lody.virtual.client.hook.delegate.ForegroundNotificationDelegate;
 import com.lody.virtual.client.hook.delegate.IORedirectDelegate;
 import com.lody.virtual.client.hook.delegate.PhoneInfoDelegate;
 import com.lody.virtual.client.hook.delegate.TaskDescriptionDelegate;
@@ -87,15 +88,9 @@ public final class VirtualCore {
     private ComponentDelegate componentDelegate;
     private TaskDescriptionDelegate taskDescriptionDelegate;
 
-    public IORedirectDelegate getIoRedirectDelegate() {
-        return ioRedirectDelegate;
-    }
+    public ForegroundNotificationDelegate foregroundNotificationDelegate;
 
-    public void setIoRedirectDelegate(IORedirectDelegate ioRedirectDelegate) {
-        this.ioRedirectDelegate = ioRedirectDelegate;
-    }
-
-    private IORedirectDelegate ioRedirectDelegate;
+    public IORedirectDelegate ioRedirectDelegate;
 
     private VirtualCore() {
     }

@@ -11,6 +11,8 @@ import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.widget.RemoteViews;
 
+import com.lody.virtual.client.core.VirtualCore;
+import com.lody.virtual.client.hook.delegate.ForegroundNotificationDelegate;
 import com.lody.virtual.helper.utils.Reflect;
 import com.lody.virtual.helper.utils.collection.SparseArray;
 
@@ -31,18 +33,18 @@ import mirror.com.android.internal.R_Hide;
 	}
 
 	private static void loadSystemLayoutRes() {
-		Field[] fields = R_Hide.TYPE.getFields();
-		for (Field field : fields) {
-			if (Modifier.isStatic(field.getModifiers())
-					&& Modifier.isFinal(field.getModifiers())) {
-				try {
-					int id = field.getInt(null);
-					sSystemLayoutResIds.put(id, field.getName());
-				} catch (Throwable e) {
-					e.printStackTrace();
+			Field[] fields = R_Hide.layout.TYPE.getFields();
+			for (Field field : fields) {
+				if (Modifier.isStatic(field.getModifiers())
+						&& Modifier.isFinal(field.getModifiers())) {
+					try {
+						int id = field.getInt(null);
+						sSystemLayoutResIds.put(id, field.getName());
+					} catch (Throwable e) {
+						e.printStackTrace();
+					}
 				}
 			}
-		}
 	}
 
 	public static boolean isSystemLayout(RemoteViews remoteViews) {
@@ -60,7 +62,9 @@ import mirror.com.android.internal.R_Hide;
 			builder = createBuilder(context, notification);
 		}
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			builder.setGroup("VA");
+			ForegroundNotificationDelegate foregroundNotificationDelegate = VirtualCore.get().foregroundNotificationDelegate;
+			if (foregroundNotificationDelegate != null)
+			builder.setGroup(foregroundNotificationDelegate.getGroup(notification.getGroup()));
 		}
 		fixNotificationIcon(context, notification, builder);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -73,15 +77,15 @@ import mirror.com.android.internal.R_Hide;
 		//noinspection deprecation
 		cloneNotification.icon = notification.icon;
 
-		if (cloneNotification.contentIntent == null) {
-			cloneNotification.contentIntent = notification.contentIntent;
-		}
-		if (cloneNotification.deleteIntent == null) {
-			cloneNotification.deleteIntent = notification.deleteIntent;
-		}
-		if (cloneNotification.fullScreenIntent == null) {
-			cloneNotification.fullScreenIntent = notification.fullScreenIntent;
-		}
+        if(cloneNotification.contentIntent == null){
+            cloneNotification.contentIntent = notification.contentIntent;
+        }
+        if(cloneNotification.deleteIntent == null){
+            cloneNotification.deleteIntent = notification.deleteIntent;
+        }
+        if(cloneNotification.fullScreenIntent == null){
+            cloneNotification.fullScreenIntent = notification.fullScreenIntent;
+        }
 		if (cloneNotification.contentView == null) {
 			cloneNotification.contentView = notification.contentView;
 		}

@@ -67,4 +67,6 @@
     <string name="clear_all_disable">Clear All(Disable)</string>
     <string name="send_to_desktop_shortcut">Send to Desktop Shortcut</string>
     <string name="installed_application">Installed Application</string>
+    <string name="foreground_notification_title">Notification Manager Service</string>
+    <string name="container_has_started">Container has started</string>
 </resources>

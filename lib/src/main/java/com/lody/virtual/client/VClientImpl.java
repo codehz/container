@@ -332,7 +332,7 @@ public final class VClientImpl extends IVClient.Stub {
         ApplicationInfo info = mBoundApplication.appInfo;
         IOHook.redirect("/data/data/" + info.packageName + "/", info.dataDir + "/");
         IOHook.redirect("/data/user/0/" + info.packageName + "/", info.dataDir + "/");
-        IORedirectDelegate delegate = VirtualCore.get().getIoRedirectDelegate();
+        IORedirectDelegate delegate = VirtualCore.get().ioRedirectDelegate;
         if (delegate != null) {
             Map<String, String> ioRedirect = delegate.getIORedirect();
             for (Map.Entry<String, String> entry : ioRedirect.entrySet())
