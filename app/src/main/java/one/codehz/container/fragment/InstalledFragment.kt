@@ -7,7 +7,6 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.Loader
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.ParcelFileDescriptor
 import android.support.design.widget.Snackbar
