@@ -1,5 +1,6 @@
 package one.codehz.container.provider
 
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -45,7 +46,15 @@ class SystemApplicationProvider : DocumentsProvider() {
 
     override fun querySearchDocuments(rootId: String?, query: String, projection: Array<out String>?): Cursor {
         val ret = MatrixCursor(resolveDocumentProjection(projection))
-        context.packageManager.getInstalledPackages(0).filter { it.applicationInfo.loadLabel(context.packageManager).contains(query) }.forEach { ret += it }
+        with(context.packageManager.getInstalledPackages(0)) {
+            when(query) {
+                "-s" -> filter { it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0 }
+                "-3" -> filter { it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0 }
+                "-t" -> filter { it.applicationInfo.flags and ApplicationInfo.FLAG_STOPPED != 0 }
+                "-g" -> filter { it.applicationInfo.flags and ApplicationInfo.FLAG_IS_GAME != 0 }
+                else -> filter { it.applicationInfo.loadLabel(context.packageManager).toString().toLowerCase().contains(query.toLowerCase()) }
+            }.forEach { ret += it }
+        }
         return ret
     }
 
