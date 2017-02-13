@@ -11,6 +11,7 @@ import android.provider.DocumentsContract.Document
 import android.provider.DocumentsContract.Root
 import android.provider.DocumentsProvider
 import one.codehz.container.R
+import one.codehz.container.ext.virtualCore
 import java.io.File
 import java.io.FileNotFoundException
 import java.util.concurrent.TimeUnit
@@ -46,12 +47,15 @@ class SystemApplicationProvider : DocumentsProvider() {
 
     override fun querySearchDocuments(rootId: String?, query: String, projection: Array<out String>?): Cursor {
         val ret = MatrixCursor(resolveDocumentProjection(projection))
+        val internal = virtualCore.allApps.map { it.packageName }
         with(context.packageManager.getInstalledPackages(0)) {
             when(query) {
                 "-s" -> filter { it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0 }
                 "-3" -> filter { it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0 }
                 "-t" -> filter { it.applicationInfo.flags and ApplicationInfo.FLAG_STOPPED != 0 }
                 "-g" -> filter { it.applicationInfo.flags and ApplicationInfo.FLAG_IS_GAME != 0 }
+                "-c" -> filter { it.packageName in internal }
+                "-f" -> filter { it.packageName !in internal }
                 else -> filter { it.applicationInfo.loadLabel(context.packageManager).toString().toLowerCase().contains(query.toLowerCase()) }
             }.forEach { ret += it }
         }
