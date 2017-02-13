@@ -66,4 +66,5 @@
     <string name="clear_all_long">Clear All APP in Container</string>
     <string name="clear_all_disable">Clear All(Disable)</string>
     <string name="send_to_desktop_shortcut">Send to Desktop Shortcut</string>
+    <string name="installed_application">Installed Application</string>
 </resources>
