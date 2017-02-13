@@ -3,7 +3,9 @@ package one.codehz.container
 import android.app.Activity
 import android.app.ActivityManager
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -20,10 +22,7 @@ import android.widget.ImageView
 import com.lody.virtual.os.VUserHandle
 import one.codehz.container.adapters.PropertyListAdapter
 import one.codehz.container.base.BaseActivity
-import one.codehz.container.ext.MakeLoaderCallbacks
-import one.codehz.container.ext.get
-import one.codehz.container.ext.setBackground
-import one.codehz.container.ext.virtualCore
+import one.codehz.container.ext.*
 import one.codehz.container.models.AppModel
 import one.codehz.container.models.AppPropertyModel
 
@@ -143,11 +142,13 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
             REQUEST_USER_FOR_SHORTCUT -> if (resultCode == Activity.RESULT_OK) {
                 data!!
                 sendBroadcast(Intent("com.android.launcher.action.INSTALL_SHORTCUT").apply {
+                    val size = systemService<ActivityManager>(Context.ACTIVITY_SERVICE).launcherLargeIconSize
+                    val scaledIcon = Bitmap.createScaledBitmap(model.icon.bitmap, size, size, false)
                     putExtra(Intent.EXTRA_SHORTCUT_INTENT, Intent(this@DetailActivity, VLoadingActivity::class.java).apply {
                         this.data = Uri.Builder().scheme("container").authority("launch").appendPath(model.packageName).fragment(data.getIntExtra(UserSelectorActivity.KEY_USER_ID, 0).toString()).build()
                     })
                     putExtra(Intent.EXTRA_SHORTCUT_NAME, model.name)
-                    putExtra(Intent.EXTRA_SHORTCUT_ICON, model.icon.bitmap)
+                    putExtra(Intent.EXTRA_SHORTCUT_ICON, scaledIcon)
                     putExtra("duplicate", false)
                 })
             }
