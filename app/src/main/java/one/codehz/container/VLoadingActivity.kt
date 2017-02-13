@@ -29,9 +29,12 @@ class VLoadingActivity : Activity() {
 
         virtualCore.setLoadingPage(target, this)
 
-        Handler().postDelayed({
+        if (intent.data.getQueryParameter("delay") != null)
+            Handler().postDelayed({
+                vActivityManager.startActivity(target, userId)
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            }, 50)
+        else
             vActivityManager.startActivity(target, userId)
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        }, 50)
     }
 }

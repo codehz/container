@@ -29,6 +29,7 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
     companion object {
         val RESULT_DELETE_APK = 1
         val REQUEST_USER = 0
+        val REQUEST_USER_FOR_SHORTCUT = 1
 
         fun launch(context: Activity, appModel: AppModel, iconView: View, startFn: (Intent, Bundle) -> Unit) {
             startFn(Intent(context, DetailActivity::class.java).apply {
@@ -135,6 +136,10 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
                         .show()
                 true
             }
+            R.id.send_to_desktop -> {
+                startActivityForResult(Intent(this, UserSelectorActivity::class.java), REQUEST_USER_FOR_SHORTCUT)
+                true
+            }
             else -> false
         }
     }
@@ -144,6 +149,18 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
             REQUEST_USER -> if (resultCode == Activity.RESULT_OK) {
                 data!!
                 LoadingActivity.launch(this, model, data.getIntExtra(UserSelectorActivity.KEY_USER_ID, 0), iconView)
+            }
+            REQUEST_USER_FOR_SHORTCUT -> if (resultCode == Activity.RESULT_OK) {
+                data!!
+                Log.d("DA", data.toString())
+                sendBroadcast(Intent("com.android.launcher.action.INSTALL_SHORTCUT").apply {
+                    putExtra(Intent.EXTRA_SHORTCUT_INTENT, Intent(this@DetailActivity, VLoadingActivity::class.java).apply {
+                        this.data = Uri.Builder().scheme("container").authority("launch").appendPath(model.packageName).fragment(data.getIntExtra(UserSelectorActivity.KEY_USER_ID, 0).toString()).build()
+                    })
+                    putExtra(Intent.EXTRA_SHORTCUT_NAME, model.name)
+                    putExtra(Intent.EXTRA_SHORTCUT_ICON, model.icon.bitmap)
+                    putExtra("duplicate", false)
+                })
             }
         }
     }

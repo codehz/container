@@ -63,4 +63,5 @@
     <string name="clear_all">清除全部进程</string>
     <string name="clear_all_disable">清除全部进程（已禁用）</string>
     <string name="clear_all_long">清除全部容器中的进程</string>
+    <string name="send_to_desktop_shortcut">发送到桌面快捷方式</string>
 </resources>

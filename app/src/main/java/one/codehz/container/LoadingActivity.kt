@@ -49,20 +49,21 @@ class LoadingActivity : Activity() {
 
         window.sharedElementEnterTransition.addListener(object : Transition.TransitionListener {
             override fun onTransitionEnd(transition: Transition?) {
+                val delay = intent.data.buildUpon().appendQueryParameter("delay", "true").build()
                 runAsync<Unit, Unit> { unit ->
                     virtualCore.preOpt(package_name)
                 }.then { unit ->
                     if (android.os.Build.VERSION.SDK_INT >= 24 && isInMultiWindowMode) {
                         startActivity(Intent(this@LoadingActivity, VLoadingActivity::class.java).apply {
                             action = Intent.ACTION_RUN
-                            data = intent.data
+                            data = delay
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT)
                         })
                     } else {
                         startActivity(Intent(this@LoadingActivity, VLoadingActivity::class.java).apply {
                             action = Intent.ACTION_RUN
-                            data = intent.data
+                            data = delay
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         })
                     }

@@ -18,4 +18,9 @@
         android:id="@+id/run_as"
         android:title="@string/run_as"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/send_to_desktop"
+        android:title="@string/send_to_desktop_shortcut"
+        app:showAsAction="never" />
 </menu>
