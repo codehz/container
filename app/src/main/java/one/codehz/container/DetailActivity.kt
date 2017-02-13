@@ -13,7 +13,6 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.graphics.Palette
 import android.support.v7.widget.*
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -21,7 +20,10 @@ import android.widget.ImageView
 import com.lody.virtual.os.VUserHandle
 import one.codehz.container.adapters.PropertyListAdapter
 import one.codehz.container.base.BaseActivity
-import one.codehz.container.ext.*
+import one.codehz.container.ext.MakeLoaderCallbacks
+import one.codehz.container.ext.get
+import one.codehz.container.ext.setBackground
+import one.codehz.container.ext.virtualCore
 import one.codehz.container.models.AppModel
 import one.codehz.container.models.AppPropertyModel
 
@@ -35,7 +37,6 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
             startFn(Intent(context, DetailActivity::class.java).apply {
                 action = Intent.ACTION_VIEW
                 data = Uri.Builder().scheme("container").authority("detail").appendPath(appModel.packageName).build()
-                Log.d("DA", dataString)
             }, ActivityOptions.makeSceneTransitionAnimation(context, iconView, "app_icon").toBundle())
         }
     }
@@ -44,7 +45,7 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
     val model by lazy { AppModel(this, virtualCore.findApp(package_name)) }
 
     val listLoader by MakeLoaderCallbacks({ this }, { it() }) { ctx ->
-        contentAdapter.updateModels(AppPropertyModel(model).getItems().onEach { Log.d("DA", it.key) })
+        contentAdapter.updateModels(AppPropertyModel(model).getItems())
     }
 
     val iconView by lazy<ImageView> { this[R.id.icon] }
@@ -109,7 +110,6 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                Log.d("DA", "HOME")
                 finishAfterTransition()
                 true
             }
@@ -152,7 +152,6 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
             }
             REQUEST_USER_FOR_SHORTCUT -> if (resultCode == Activity.RESULT_OK) {
                 data!!
-                Log.d("DA", data.toString())
                 sendBroadcast(Intent("com.android.launcher.action.INSTALL_SHORTCUT").apply {
                     putExtra(Intent.EXTRA_SHORTCUT_INTENT, Intent(this@DetailActivity, VLoadingActivity::class.java).apply {
                         this.data = Uri.Builder().scheme("container").authority("launch").appendPath(model.packageName).fragment(data.getIntExtra(UserSelectorActivity.KEY_USER_ID, 0).toString()).build()
