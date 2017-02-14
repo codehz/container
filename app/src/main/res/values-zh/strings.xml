@@ -72,4 +72,6 @@
     <string name="foreground_notification_try_to_hide_off">通知将会保留在通知栏上</string>
     <string name="foreground_notification_try_to_hide_on">可能无法在7.0及以上版本中正常工作</string>
     <string name="container_system_detail_setting">打开系统中容器的设置</string>
+    <string name="container_system_detail_setting_summary">你可以在设置中改变权限设置或者强制停止本程序（用于解决某些偶然性的问题）</string>
+    <string name="open_github">获取源代码</string>
 </resources>

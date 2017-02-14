@@ -74,4 +74,7 @@
     <string name="foreground_notification_try_to_hide_on">May not work in versions higher than Nougat</string>
     <string name="foreground_notification_try_to_hide_off">The notification will be retained in the notification panel</string>
     <string name="container_system_detail_setting">Container Application Settings Page</string>
+    <string name="container_system_detail_setting_summary">You can change the permissions in the settings or forced to stop the program (used to solve some of the occasional problems)</string>
+    <string name="open_github">Open the Github repository</string>
+    <string name="open_github_summary" translatable="false">https://github.com/codehz/container</string>
 </resources>
