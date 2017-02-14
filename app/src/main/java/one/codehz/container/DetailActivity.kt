@@ -10,6 +10,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
@@ -51,6 +52,7 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
     val contentList by lazy<RecyclerView> { this[R.id.content_list] }
     val collapsingToolbar by lazy<CollapsingToolbarLayout> { this[R.id.collapsing_toolbar] }
     var bgcolor = 0
+    val handler = Handler()
 
     val contentAdapter by lazy {
         PropertyListAdapter<AppPropertyModel>()
@@ -137,7 +139,9 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
         when (requestCode) {
             REQUEST_USER -> if (resultCode == Activity.RESULT_OK) {
                 data!!
-                LoadingActivity.launch(this, model, data.getIntExtra(UserSelectorActivity.KEY_USER_ID, 0), iconView)
+                handler.post {
+                    LoadingActivity.launch(this, model, data.getIntExtra(UserSelectorActivity.KEY_USER_ID, 0), iconView)
+                }
             }
             REQUEST_USER_FOR_SHORTCUT -> if (resultCode == Activity.RESULT_OK) {
                 data!!
