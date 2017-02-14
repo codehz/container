@@ -11,3 +11,5 @@
 .idea/vcs.xml
 app/libs/
 app/src/main/res/values-v21/
+.idea/
+.idea/inspectionProfiles/

@@ -78,19 +78,57 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
  import com.lody.virtual.helper.component.BaseService;
  
  /**
-@@ -29,8 +32,10 @@
+@@ -14,7 +17,7 @@
+  */
+ public class DaemonService extends BaseService {
+ 
+-    private static final int NOTIFY_ID = 1001;
++	private static final int NOTIFY_ID = 1001;
+ 
+ 	public static void startup(Context context) {
+ 		context.startService(new Intent(context, DaemonService.class));
+@@ -29,9 +32,15 @@
  	@Override
  	public void onCreate() {
  		super.onCreate();
-+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
--        startService(new Intent(this, InnerService.class));
-+        	startService(new Intent(this, InnerService.class));
--        startForeground(NOTIFY_ID, new Notification());
 +		ForegroundNotificationDelegate foregroundNotificationDelegate = VirtualCore.get().foregroundNotificationDelegate;
-+		startForeground(NOTIFY_ID, foregroundNotificationDelegate == null ? new Notification() : foregroundNotificationDelegate.getNotification());
- 
++		if (foregroundNotificationDelegate == null) {
+-        startService(new Intent(this, InnerService.class));
+-        startForeground(NOTIFY_ID, new Notification());
++			startService(new Intent(this, InnerService.class));
++			startForeground(NOTIFY_ID, new Notification());
+-
++		} else if (foregroundNotificationDelegate.isEnable()) {
++			startForeground(NOTIFY_ID, foregroundNotificationDelegate.getNotification());
++			if (foregroundNotificationDelegate.isTryToHide())
++				startService(new Intent(this, InnerService.class));
++		}
  	}
  
+ 	@Override
+@@ -41,14 +50,14 @@
+ 
+ 	public static final class InnerService extends BaseService {
+ 
+-        @Override
+-        public int onStartCommand(Intent intent, int flags, int startId) {
+-            startForeground(NOTIFY_ID, new Notification());
+-            stopForeground(true);
+-            stopSelf();
+-            return super.onStartCommand(intent, flags, startId);
+-        }
+-    }
++		@Override
++		public int onStartCommand(Intent intent, int flags, int startId) {
++			startForeground(NOTIFY_ID, new Notification());
++			stopForeground(true);
++			stopSelf();
++			return super.onStartCommand(intent, flags, startId);
++		}
++	}
+ 
+ 
+ }
 Index: lib/src/main/java/com/lody/virtual/client/VClientImpl.java
 IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
@@ -126,7 +164,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 --- lib/src/main/java/com/lody/virtual/client/hook/patchs/notification/compat/RemoteViewsUtils.java	(revision 30d07f02ec29ccecfacbd2c627394a71565fb665)
 +++ lib/src/main/java/com/lody/virtual/client/hook/patchs/notification/compat/RemoteViewsUtils.java	(revision )
-@@ -115,14 +115,9 @@
+@@ -115,16 +115,11 @@
  		}
  		int mode;
  		// TODO 各种适配
@@ -141,8 +179,11 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 -		mCache.layout(0, 0, width, height);
 +		mCache.layout(0, 0, mCache.getMeasuredWidth(), mCache.getMeasuredHeight());
  		VLog.i(TAG, "notification:systemId=" + systemId + ",max=%d/%d, szie=%d/%d", width, height,
- 				mCache.getMeasuredWidth(), mCache.getMeasuredHeight());
+-				mCache.getMeasuredWidth(), mCache.getMeasuredHeight());
++				width, mCache.getMeasuredHeight());
  		// 打印action
+ 		// logActions(remoteViews, view1);
+ 		return mCache;
 Index: lib/src/main/java/com/lody/virtual/client/hook/delegate/ForegroundNotificationDelegate.java
 IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
@@ -150,16 +191,22 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 --- lib/src/main/java/com/lody/virtual/client/hook/delegate/ForegroundNotificationDelegate.java	(revision )
 +++ lib/src/main/java/com/lody/virtual/client/hook/delegate/ForegroundNotificationDelegate.java	(revision )
-@@ -0,0 +1,9 @@
+@@ -0,0 +1,14 @@
 +package com.lody.virtual.client.hook.delegate;
 +
 +import android.app.Notification;
 +
 +public interface ForegroundNotificationDelegate {
++
 +	Notification getNotification();
++
++	boolean isEnable();
++
++	boolean isTryToHide();
 +
 +	String getGroup(String orig);
 +}
+\ No newline at end of file
 Index: lib/src/main/java/com/lody/virtual/client/core/VirtualCore.java
 IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP

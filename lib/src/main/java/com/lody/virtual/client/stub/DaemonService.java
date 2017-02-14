@@ -32,11 +32,15 @@ public class DaemonService extends BaseService {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
-        	startService(new Intent(this, InnerService.class));
 		ForegroundNotificationDelegate foregroundNotificationDelegate = VirtualCore.get().foregroundNotificationDelegate;
-		startForeground(NOTIFY_ID, foregroundNotificationDelegate == null ? new Notification() : foregroundNotificationDelegate.getNotification());
-
+		if (foregroundNotificationDelegate == null) {
+			startService(new Intent(this, InnerService.class));
+			startForeground(NOTIFY_ID, new Notification());
+		} else if (foregroundNotificationDelegate.isEnable()) {
+			startForeground(NOTIFY_ID, foregroundNotificationDelegate.getNotification());
+			if (foregroundNotificationDelegate.isTryToHide())
+				startService(new Intent(this, InnerService.class));
+		}
 	}
 
 	@Override

@@ -117,7 +117,7 @@ class RemoteViewsUtils {
 		// TODO 各种适配
 		mode = View.MeasureSpec.AT_MOST;
 		mCache.measure(View.MeasureSpec.makeMeasureSpec(width, mode), View.MeasureSpec.makeMeasureSpec(height, mode));
-		mCache.layout(0, 0, mCache.getMeasuredWidth(), mCache.getMeasuredHeight());
+		mCache.layout(0, 0, width, mCache.getMeasuredHeight());
 		VLog.i(TAG, "notification:systemId=" + systemId + ",max=%d/%d, szie=%d/%d", width, height,
 				mCache.getMeasuredWidth(), mCache.getMeasuredHeight());
 		// 打印action
