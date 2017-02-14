@@ -67,4 +67,8 @@
     <string name="container_has_started">容器已启动</string>
     <string name="foreground_notification_title">通知管理服务</string>
     <string name="installed_application">已安装的应用</string>
+    <string name="foreground_notification_enabled">启用前台服务</string>
+    <string name="foreground_notification_try_to_hide">尝试隐藏前台服务通知</string>
+    <string name="foreground_notification_try_to_hide_off">通知将会保留在通知栏上</string>
+    <string name="foreground_notification_try_to_hide_on">可能无法在7.0及以上版本中正常工作</string>
 </resources>

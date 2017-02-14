@@ -69,4 +69,8 @@
     <string name="installed_application">Installed Application</string>
     <string name="foreground_notification_title">Notification Manager Service</string>
     <string name="container_has_started">Container has started</string>
+    <string name="foreground_notification_enabled">Enable Foreground Service</string>
+    <string name="foreground_notification_try_to_hide">Try To Hide Foreground Service Notification</string>
+    <string name="foreground_notification_try_to_hide_on">May not work in versions higher than Nougat</string>
+    <string name="foreground_notification_try_to_hide_off">The notification will be retained in the notification panel</string>
 </resources>

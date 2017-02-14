@@ -10,6 +10,17 @@
             android:summaryOff="@string/click_switch_off"
             android:summaryOn="@string/click_switch_on"
             android:title="@string/switch_click_function"/>
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="foreground_notification_enabled"
+            android:title="@string/foreground_notification_enabled"/>
+        <SwitchPreference
+            android:defaultValue="true"
+            android:dependency="foreground_notification_enabled"
+            android:key="foreground_notification_try_to_hide"
+            android:summaryOff="@string/foreground_notification_try_to_hide_off"
+            android:summaryOn="@string/foreground_notification_try_to_hide_on"
+            android:title="@string/foreground_notification_try_to_hide"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:key="advance"

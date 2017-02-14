@@ -8,9 +8,9 @@ import one.codehz.container.ext.sharedPreferences
 
 
 class MyForegroundNotificationDelegate(val context: Context) : ForegroundNotificationDelegate {
-    override fun isEnabled() = true
+    override fun isEnabled() = sharedPreferences.getBoolean("foreground_notification_enabled", true)
 
-    override fun isTryToHide() = false
+    override fun isTryToHide() = sharedPreferences.getBoolean("foreground_notification_try_to_hide", true)
 
     override fun getNotification()
             = Notification.Builder(context)
