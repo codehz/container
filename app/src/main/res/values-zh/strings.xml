@@ -50,7 +50,7 @@
     <string name="install">安装</string>
     <string name="install_finished_with_name">应用“%1$s”安装完成</string>
     <string name="install_request">安装请求</string>
-    <string name="install_request_content">“%1$s”想要安装“%2$s”文件。</string>
+    <string name="install_request_content">是否安装“%1$s”。</string>
     <string name="optimize_application_with_name">应用“%1$s”优化中</string>
     <string name="select_user">选择用户</string>
     <string name="stopped">已停止</string>

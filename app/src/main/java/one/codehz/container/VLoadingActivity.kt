@@ -3,7 +3,6 @@ package one.codehz.container
 import android.app.Activity
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import one.codehz.container.ext.get
@@ -20,7 +19,7 @@ class VLoadingActivity : Activity() {
         setContentView(R.layout.loading_page)
 
         val package_name = intent.data.path.substring(1)
-        val userId = intent.data.fragment.toInt()
+        val userId = intent.data.fragment?.toInt() ?: 0
         val model = AppModel(this, virtualCore.findApp(package_name))
         iconView.setImageDrawable(model.icon)
         titleView.text = model.name

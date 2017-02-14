@@ -47,7 +47,7 @@
     <string name="container_application_internal_space_manager">Container Application Internal Storage Space Manager</string>
     <string name="calculating">Calculating…</string>
     <string name="install_request">Install Request</string>
-    <string name="install_request_content">%1$s want install %2$s.</string>
+    <string name="install_request_content">Do you want to install %1$s.</string>
     <string name="install">Install</string>
     <string name="uninstall_request">Uninstall Request</string>
     <string name="uninstall_request_content">Do you want to uninstall %1$s?</string>
