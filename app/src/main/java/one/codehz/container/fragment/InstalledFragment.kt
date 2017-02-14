@@ -37,7 +37,7 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
 
     val uninstallLoader by MakeLoaderCallbacks({ activity }, { loaderManager.getLoader<Loader<*>>(AppListLoaderId).forceLoad() }) { ctx ->
         uninstallPendingList.forEach {
-            Thread.sleep(100)
+            Thread.sleep(200)
             virtualCore.uninstallApp(it)
         }
     }
@@ -142,8 +142,12 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
                     override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                         if (undo) return
                         deleteAction()
-                        uninstallPendingList.add(currentModel.packageName)
-                        loaderManager.restartLoader(PkgUninstallLoaderId, null, uninstallLoader)
+                        if (isAdded) {
+                            uninstallPendingList.add(currentModel.packageName)
+                            loaderManager.restartLoader(PkgUninstallLoaderId, null, uninstallLoader)
+                        } else {
+                            virtualCore.uninstallApp(currentModel.packageName)
+                        }
                     }
                 }).show()
         loaderManager.restartLoader(AppListLoaderId, null, modelLoader)

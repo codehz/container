@@ -3,7 +3,6 @@ package one.codehz.container.fragment
 import android.app.Activity
 import android.app.Fragment
 import android.content.Loader
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
@@ -12,11 +11,9 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.lody.virtual.os.VUserHandle
 import one.codehz.container.LoadingActivity
 import one.codehz.container.MainActivity
 import one.codehz.container.R
@@ -67,7 +64,7 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
     val killAllLoader by MakeLoaderCallbacks({ activity }, { loaderManager.getLoader<Loader<*>>(LIST_LOADER).forceLoad() }) {
         killedList.clear()
         virtualCore.killAllApps()
-        Thread.sleep(200)
+        Thread.sleep(400)
     }
 
     val recycleView by lazy<RecyclerView> { view[R.id.content_main] }
@@ -137,8 +134,12 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
                                     override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                                         if (undo) return
                                         deleteAction()
-                                        killedList.add(currentModel.userId to currentModel.appModel.packageName)
-                                        loaderManager.restartLoader(KILL_LOADER, null, killAppLoader)
+                                        if (isAdded) {
+                                            killedList.add(currentModel.userId to currentModel.appModel.packageName)
+                                            loaderManager.restartLoader(KILL_LOADER, null, killAppLoader)
+                                        } else {
+                                            virtualCore.killApp(currentModel.appModel.packageName, currentModel.userId)
+                                        }
                                     }
                                 })
                                 .show()
