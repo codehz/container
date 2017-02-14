@@ -41,7 +41,7 @@ class UserSelectorActivity : BaseActivity(R.layout.user_manager_activity) {
 
         initViews()
 
-        loaderManager.restartLoader(USER_LIST, null, userListLoader)
+        supportLoaderManager.restartLoader(USER_LIST, null, userListLoader)
     }
 
     fun initViews() {

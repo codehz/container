@@ -2,16 +2,18 @@ package one.codehz.container.ext
 
 import android.app.Activity
 import android.app.Dialog
-import android.app.LoaderManager
-import android.content.*
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import android.preference.PreferenceManager
 import android.support.design.widget.Snackbar
+import android.support.v4.app.LoaderManager
+import android.support.v4.content.AsyncTaskLoader
 import android.support.v7.util.DiffUtil
-import android.support.v7.util.ListUpdateCallback
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.lody.virtual.client.core.VirtualCore
@@ -48,9 +50,9 @@ fun <T> makeAsyncTaskLoader(context: Context, task: (Context) -> T) = object : A
 
 class MakeLoaderCallbacks<T>(val contextGetter: () -> Context, val finishedFn: (T) -> Unit, val task: (Context) -> T) {
     operator fun getValue(thisRef: Any?, property: KProperty<*>) = object : LoaderManager.LoaderCallbacks<T> {
-        override fun onLoadFinished(loader: Loader<T>?, data: T) = finishedFn(data)
-        override fun onLoaderReset(loader: Loader<T>?) = Unit
         override fun onCreateLoader(id: Int, args: Bundle?) = makeAsyncTaskLoader(contextGetter(), task)
+        override fun onLoadFinished(loader: android.support.v4.content.Loader<T>?, data: T) = finishedFn(data)
+        override fun onLoaderReset(loader: android.support.v4.content.Loader<T>?) = Unit
     }
 }
 

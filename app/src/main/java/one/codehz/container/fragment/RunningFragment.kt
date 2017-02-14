@@ -1,10 +1,10 @@
 package one.codehz.container.fragment
 
 import android.app.Activity
-import android.app.Fragment
 import android.content.Loader
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DefaultItemAnimator
@@ -67,8 +67,8 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
         Thread.sleep(400)
     }
 
-    val recycleView by lazy<RecyclerView> { view[R.id.content_main] }
-    val swipe_refresh_widget by lazy<SwipeRefreshLayout> { view[R.id.swipe_refresh_widget] }
+    val recycleView by lazy<RecyclerView> { view!![R.id.content_main] }
+    val swipe_refresh_widget by lazy<SwipeRefreshLayout> { view!![R.id.swipe_refresh_widget] }
     val linearLayoutManager by lazy { LinearLayoutManager(activity) }
     val contentAdapter by lazy {
         RunningListAdapter({ runningModel: RunningAppModel, iconView: View, titleView: View ->

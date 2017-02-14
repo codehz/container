@@ -2,25 +2,17 @@ package one.codehz.container
 
 import android.Manifest
 import android.app.ActivityManager
-import android.app.Fragment
-import android.app.NotificationManager
-import android.content.Context
 import android.graphics.drawable.BitmapDrawable
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.service.notification.StatusBarNotification
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.FloatingActionButton
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.app.NotificationCompat
 import android.transition.Transition
 import android.view.MenuItem
-import android.widget.Toolbar
 import one.codehz.container.base.BaseActivity
 import one.codehz.container.ext.get
-import one.codehz.container.ext.systemService
 import one.codehz.container.fragment.InstalledFragment
 import one.codehz.container.fragment.RunningFragment
 import one.codehz.container.fragment.SettingFragment
@@ -34,7 +26,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     val handler by lazy { Handler() }
     var isTransition = false
     val currentFragment: IFloatingActionTarget
-        get() = fragmentManager.findFragmentByTag("current") as IFloatingActionTarget
+        get() = supportFragmentManager.findFragmentByTag("current") as IFloatingActionTarget
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,7 +94,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         } else
             fab.hide()
 
-        fragmentManager.beginTransaction().apply {
+        supportFragmentManager.beginTransaction().apply {
             replace(R.id.frame, frag, "current")
         }.commit()
     }

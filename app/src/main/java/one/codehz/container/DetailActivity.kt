@@ -12,8 +12,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.CollapsingToolbarLayout
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AlertDialog
 import android.support.v7.graphics.Palette
 import android.support.v7.widget.*
 import android.view.Menu
@@ -23,7 +21,10 @@ import android.widget.ImageView
 import com.lody.virtual.os.VUserHandle
 import one.codehz.container.adapters.PropertyListAdapter
 import one.codehz.container.base.BaseActivity
-import one.codehz.container.ext.*
+import one.codehz.container.ext.MakeLoaderCallbacks
+import one.codehz.container.ext.get
+import one.codehz.container.ext.systemService
+import one.codehz.container.ext.virtualCore
 import one.codehz.container.models.AppModel
 import one.codehz.container.models.AppPropertyModel
 
@@ -71,7 +72,7 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
             setDisplayShowHomeEnabled(true)
         }
 
-        loaderManager.initLoader(0, null, listLoader).forceLoad()
+        supportLoaderManager.initLoader(0, null, listLoader).forceLoad()
 
         iconView.setImageDrawable(model.icon)
         Palette.from(model.icon.bitmap).apply { maximumColorCount(1) }.generate { palette ->
@@ -161,6 +162,6 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
 
     override fun onResume() {
         super.onResume()
-        loaderManager.restartLoader(0, null, listLoader)
+        supportLoaderManager.restartLoader(0, null, listLoader)
     }
 }

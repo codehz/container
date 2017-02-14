@@ -1,11 +1,9 @@
 package one.codehz.container
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import one.codehz.container.adapters.SpaceManagerAdapter
 import one.codehz.container.base.BaseActivity
 import one.codehz.container.ext.MakeLoaderCallbacks
@@ -52,8 +50,8 @@ class SpaceManagerActivity : BaseActivity(R.layout.space_manager) {
 
         syncList()
 
-        loaderManager.restartLoader(APP_DATA, null, appDataLoader)
-        loaderManager.restartLoader(APP_OPT, null, appOptLoader)
+        supportLoaderManager.restartLoader(APP_DATA, null, appDataLoader)
+        supportLoaderManager.restartLoader(APP_OPT, null, appOptLoader)
     }
 
     val syncList: () -> Unit

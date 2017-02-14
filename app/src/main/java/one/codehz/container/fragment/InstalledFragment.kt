@@ -2,7 +2,6 @@ package one.codehz.container.fragment
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Fragment
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -10,6 +9,7 @@ import android.content.Loader
 import android.os.Bundle
 import android.os.ParcelFileDescriptor
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DefaultItemAnimator
@@ -52,8 +52,8 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
     override val canBeFloatingActionTarget = true
 
     val uninstallPendingList = mutableListOf<String>()
-    val installedList by lazy<RecyclerView> { view[R.id.content_main] }
-    val swipe_refresh_widget by lazy<SwipeRefreshLayout> { view[R.id.swipe_refresh_widget] }
+    val installedList by lazy<RecyclerView> { view!![R.id.content_main] }
+    val swipe_refresh_widget by lazy<SwipeRefreshLayout> { view!![R.id.swipe_refresh_widget] }
     val linearLayoutManager by lazy { LinearLayoutManager(activity) }
     val contentAdapter by lazy {
         AppListAdapter { appModel: AppModel, iconView: View, titleView: View, isLongPress: Boolean ->
@@ -76,7 +76,7 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
         retainInstance = true
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle?) = inflater.inflate(R.layout.content_main, container, false)!!
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?) = inflater!!.inflate(R.layout.content_main, container, false)!!
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -220,7 +220,7 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
                 File("$filesDir/temp.apk").delete()
 
                 Snackbar.make(installedList, getString(R.string.install_finished), Snackbar.LENGTH_SHORT).setBackground(ContextCompat.getColor(activity, R.color.colorPrimaryDark)).show()
-                loaderManager.restartLoader(AppListLoaderId, null, modelLoader)
+                this@InstalledFragment.loaderManager.restartLoader(AppListLoaderId, null, modelLoader)
             }.execute(*params)
         }
     }

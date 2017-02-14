@@ -58,7 +58,7 @@ class UserManagerActivity : BaseActivity(R.layout.user_manager_activity) {
 
         initViews()
 
-        loaderManager.restartLoader(USER_LIST, null, userListLoader)
+        supportLoaderManager.restartLoader(USER_LIST, null, userListLoader)
     }
 
     private fun initViews() {
@@ -85,18 +85,18 @@ class UserManagerActivity : BaseActivity(R.layout.user_manager_activity) {
                             .setAction(R.string.undo) {
                                 undo = true
                                 deleteAction()
-                                loaderManager.restartLoader(USER_LIST, null, userListLoader)
+                                supportLoaderManager.restartLoader(USER_LIST, null, userListLoader)
                             }
                             .addCallback(object : Snackbar.Callback() {
                                 override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                                     if (undo) return
                                     deleteAction()
                                     deleteUserList += currentModel
-                                    loaderManager.restartLoader(DELETE_USER, null, userDeleteLoader)
+                                    supportLoaderManager.restartLoader(DELETE_USER, null, userDeleteLoader)
                                 }
                             })
                             .show()
-                    loaderManager.restartLoader(USER_LIST, null, userListLoader)
+                    supportLoaderManager.restartLoader(USER_LIST, null, userListLoader)
                 }
             }).attachToRecyclerView(this)
         }
@@ -106,7 +106,7 @@ class UserManagerActivity : BaseActivity(R.layout.user_manager_activity) {
                     .setView(R.layout.input_layout)
                     .setPositiveButton(android.R.string.ok) { dialog, i ->
                         vUserManager.createUser(((dialog as AlertDialog).findViewById(R.id.input) as EditText).text.toString(), 0)
-                        loaderManager.restartLoader(USER_LIST, null, userListLoader)
+                        supportLoaderManager.restartLoader(USER_LIST, null, userListLoader)
                     }
                     .setNegativeButton(android.R.string.cancel) { dialog, i -> }
                     .show()
