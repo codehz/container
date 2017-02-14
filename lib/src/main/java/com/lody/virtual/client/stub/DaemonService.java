@@ -1,11 +1,8 @@
 package com.lody.virtual.client.stub;
 
 import android.app.Notification;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.os.IBinder;
 
 import com.lody.virtual.client.core.VirtualCore;
 import com.lody.virtual.client.hook.delegate.ForegroundNotificationDelegate;
@@ -36,7 +33,7 @@ public class DaemonService extends BaseService {
 		if (foregroundNotificationDelegate == null) {
 			startService(new Intent(this, InnerService.class));
 			startForeground(NOTIFY_ID, new Notification());
-		} else if (foregroundNotificationDelegate.isEnable()) {
+		} else if (foregroundNotificationDelegate.isEnabled()) {
 			startForeground(NOTIFY_ID, foregroundNotificationDelegate.getNotification());
 			if (foregroundNotificationDelegate.isTryToHide())
 				startService(new Intent(this, InnerService.class));

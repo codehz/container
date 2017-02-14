@@ -4,10 +4,11 @@ import android.app.Notification
 import android.content.Context
 import com.lody.virtual.client.hook.delegate.ForegroundNotificationDelegate
 import one.codehz.container.R
+import one.codehz.container.ext.sharedPreferences
 
 
 class MyForegroundNotificationDelegate(val context: Context) : ForegroundNotificationDelegate {
-    override fun isEnable() = true
+    override fun isEnabled() = true
 
     override fun isTryToHide() = false
 

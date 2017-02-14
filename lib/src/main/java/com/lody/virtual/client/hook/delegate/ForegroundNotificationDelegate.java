@@ -6,7 +6,7 @@ public interface ForegroundNotificationDelegate {
 
 	Notification getNotification();
 
-	boolean isEnable();
+	boolean isEnabled();
 
 	boolean isTryToHide();
 
