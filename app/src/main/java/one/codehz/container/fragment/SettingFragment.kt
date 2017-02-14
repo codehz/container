@@ -1,6 +1,5 @@
 package one.codehz.container.fragment
 
-import android.app.Fragment
 import android.os.Bundle
 import android.preference.PreferenceFragment
 import one.codehz.container.MainActivity
