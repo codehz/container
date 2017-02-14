@@ -46,6 +46,15 @@
                 android:targetClass="one.codehz.container.UserManagerActivity"
                 android:targetPackage="one.codehz.container"/>
         </PreferenceScreen>
+        <PreferenceScreen
+            android:key="stop_self"
+            android:title="@string/container_system_detail_setting"
+            android:persistent="false">
+            <intent
+                android:action="one.codehz.container.SELF_DETAIL"
+                android:targetClass="one.codehz.container.ShortcutActivity"
+                android:targetPackage="one.codehz.container"/>
+        </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory
         android:key="button_about"

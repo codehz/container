@@ -71,4 +71,5 @@
     <string name="foreground_notification_try_to_hide">尝试隐藏前台服务通知</string>
     <string name="foreground_notification_try_to_hide_off">通知将会保留在通知栏上</string>
     <string name="foreground_notification_try_to_hide_on">可能无法在7.0及以上版本中正常工作</string>
+    <string name="container_system_detail_setting">打开系统中容器的设置</string>
 </resources>

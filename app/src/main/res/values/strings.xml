@@ -73,4 +73,5 @@
     <string name="foreground_notification_try_to_hide">Try To Hide Foreground Service Notification</string>
     <string name="foreground_notification_try_to_hide_on">May not work in versions higher than Nougat</string>
     <string name="foreground_notification_try_to_hide_off">The notification will be retained in the notification panel</string>
+    <string name="container_system_detail_setting">Container Application Settings Page</string>
 </resources>
