@@ -3,7 +3,7 @@
     <string name="app_name">容器</string>
     <string name="about_title">关于</string>
     <string name="action_settings">设置</string>
-    <string name="advance_virtual_package_installer">高级虚拟包安装器</string>
+    <string name="advance_virtual_package_installer">容器内软件包安装器程序</string>
     <string name="amount">总量：</string>
     <string name="app_icon">应用图标</string>
     <string name="application_detail">应用详情</string>

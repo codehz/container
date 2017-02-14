@@ -122,7 +122,7 @@
             android:theme="@style/InstallerTheme">
 
             <intent-filter>
-                <action android:name="android.intent.action.INSTALL_PACKAGE"/>
+                <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
 
                 <data android:scheme="file"/>
@@ -136,13 +136,13 @@
             android:process=":installer"/>
 
         <provider
-            android:authorities="one.codehz.container.provider.system-applications"
             android:name=".provider.SystemApplicationProvider"
-            android:grantUriPermissions="true"
+            android:authorities="one.codehz.container.provider.system-applications"
             android:exported="true"
+            android:grantUriPermissions="true"
             android:permission="android.permission.MANAGE_DOCUMENTS">
             <intent-filter>
-                <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
+                <action android:name="android.content.action.DOCUMENTS_PROVIDER"/>
             </intent-filter>
         </provider>
     </application>

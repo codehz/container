@@ -26,7 +26,7 @@
     <string name="about_title">About</string>
     <string name="author">Author</string>
     <string name="application_uninstalled">Application Uninstalled.</string>
-    <string name="advance_virtual_package_installer">Advance Virtual Package Installer</string>
+    <string name="advance_virtual_package_installer">Container Package Installer</string>
     <string name="application_detail">Application Detail</string>
     <string name="value_copied">%1$s Copied</string>
     <string name="run">Run</string>
