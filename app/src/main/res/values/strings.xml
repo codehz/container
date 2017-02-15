@@ -15,7 +15,7 @@
     <string name="dismiss">dismiss</string>
     <string name="install_failed">Install Failed</string>
     <string name="installed">Installed</string>
-    <string name="running">running</string>
+    <string name="running">Running</string>
     <string name="scroll_aware_fab_behavior" translatable="false">one.codehz.container.behavior.ScrollAwareFABBehavior</string>
     <string name="bottom_navigation_behavior" translatable="false">one.codehz.container.behavior.BottomNavigationBehavior</string>
     <string name="receive_apk_file">Receiving APK File</string>
