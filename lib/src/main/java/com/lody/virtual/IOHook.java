@@ -118,6 +118,14 @@ public class IOHook {
         }
     }
 
+    public static void reversed(String origPath, String newPath) {
+        try {
+            nativeReversedRedirect(origPath, newPath);
+        } catch (Throwable e) {
+            VLog.e(TAG, VLog.getStackTraceString(e));
+        }
+    }
+
     public static void hook() {
         try {
             nativeHook(Build.VERSION.SDK_INT);
@@ -185,6 +193,8 @@ public class IOHook {
     private static native String nativeGetRedirectedPath(String orgPath);
 
     private static native void nativeRedirect(String orgPath, String newPath);
+
+    private static native void nativeReversedRedirect(String orgPath, String newPath);
 
     private static native void nativeHook(int apiLevel);
 

@@ -337,6 +337,9 @@ public final class VClientImpl extends IVClient.Stub {
             Map<String, String> ioRedirect = delegate.getIORedirect();
             for (Map.Entry<String, String> entry : ioRedirect.entrySet())
                 IOHook.redirect(entry.getKey(), entry.getValue());
+            Map<String, String> reversedRedirect = delegate.getIOReversedRedirect();
+            for (Map.Entry<String, String> entry : reversedRedirect.entrySet())
+                IOHook.reversed(entry.getKey(), entry.getValue());
         }
         IOHook.hook();
     }

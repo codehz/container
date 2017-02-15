@@ -6,6 +6,7 @@
 
 static std::map<std::string/*orig_path*/, std::string/*new_path*/> IORedirectMap;
 static std::map<std::string/*orig_path*/, std::string/*new_path*/> RootIORedirectMap;
+static std::map<std::string/*orig_path*/, std::string/*new_path*/> IOReversedRedirectMap;
 
 
 static inline void
@@ -37,9 +38,13 @@ static inline bool endWith(const std::string &str, const char &suffix) {
     return *(str.end() - 1) == suffix;
 }
 
-static void add_pair(const char *_orig_path, const char *_new_path) {
+static void add_pair(const char *_orig_path, const char *_new_path, bool reversed) {
     std::string origPath = std::string(_orig_path);
     std::string newPath = std::string(_new_path);
+    if (reversed) {
+        IOReversedRedirectMap.insert(std::pair<std::string, std::string>(origPath, newPath));
+        return;
+    }
     IORedirectMap.insert(std::pair<std::string, std::string>(origPath, newPath));
     if (endWith(origPath, '/')) {
         RootIORedirectMap.insert(
@@ -70,6 +75,16 @@ const char *match_redirected_path(const char *_path) {
         const std::string &new_prefix = iterator->second;
         if (startWith(path, prefix)) {
             std::string new_path = new_prefix + path.substr(prefix.length(), path.length());
+            for (iterator = IOReversedRedirectMap.begin();
+                 iterator != IOReversedRedirectMap.end(); iterator++) {
+                const std::string &rprefix = iterator->first;
+                const std::string &rnew_prefix = iterator->second;
+                if (startWith(new_path, rprefix)) {
+                    std::string rnew_path =
+                            rnew_prefix + new_path.substr(rprefix.length(), new_path.length());
+                    return strdup(rnew_path.c_str());
+                }
+            }
             return strdup(new_path.c_str());
         }
     }
@@ -77,9 +92,9 @@ const char *match_redirected_path(const char *_path) {
 }
 
 
-void IOUniformer::redirect(const char *orig_path, const char *new_path) {
+void IOUniformer::redirect(const char *orig_path, const char *new_path, bool reversed) {
     LOGI("Start redirect : from %s to %s", orig_path, new_path);
-    add_pair(orig_path, new_path);
+    add_pair(orig_path, new_path, reversed);
 }
 
 const char *IOUniformer::query(const char *orig_path) {

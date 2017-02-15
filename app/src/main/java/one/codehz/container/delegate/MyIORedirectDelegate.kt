@@ -6,11 +6,16 @@ import com.lody.virtual.client.hook.delegate.IORedirectDelegate
 
 class MyIORedirectDelegate : IORedirectDelegate {
     @SuppressLint("SdCardPath")
-    override fun getIORedirect(): MutableMap<String, String> {
+    override fun getIORedirect(): Map<String, String> {
         val mediaDirs = Environment.getExternalStorageDirectory().absolutePath
-        return mutableMapOf(
+        return mapOf(
                 "/sdcard" to "/sdcard/virtual",
                 "/mnt/sdcard" to "/mnt/sdcard/virtual",
                 mediaDirs to "$mediaDirs/virtual")
+    }
+
+    @SuppressLint("SdCardPath")
+    override fun getIOReversedRedirect(): Map<String, String> {
+        return ioRedirect.map { it.value + "/reversed" to it.key }.toMap()
     }
 }

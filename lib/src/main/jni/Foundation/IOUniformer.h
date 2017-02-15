@@ -28,7 +28,7 @@
 namespace IOUniformer {
     void startUniformer(int api_level);
 
-    void redirect(const char*orig_path, const char*new_path);
+    void redirect(const char *orig_path, const char *new_path, bool reversed = false);
 
     const char *query(const char *orig_path);
 

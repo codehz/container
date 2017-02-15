@@ -34,6 +34,12 @@ void redirect(JNIEnv *env, jclass jclazz, jstring orgPath, jstring newPath) {
     IOUniformer::redirect(org_path, new_path);
 }
 
+void reversed(JNIEnv *env, jclass jclazz, jstring orgPath, jstring newPath) {
+    const char *org_path = env->GetStringUTFChars(orgPath, NULL);
+    const char *new_path = env->GetStringUTFChars(newPath, NULL);
+    IOUniformer::redirect(org_path, new_path, true);
+}
+
 jstring query(JNIEnv *env, jclass jclazz, jstring orgPath) {
     const char *org_path = env->GetStringUTFChars(orgPath, NULL);
     const char *redirected_path = IOUniformer::query(org_path);
@@ -51,6 +57,8 @@ jstring restore(JNIEnv *env, jclass jclazz, jstring redirectedPath) {
 static JNINativeMethod gMethods[] = {
         NATIVE_METHOD((void *) hook_io,  "nativeHook",                  "(I)V"),
         NATIVE_METHOD((void *) redirect, "nativeRedirect",              "(Ljava/lang/String;Ljava/lang/String;)V"),
+        NATIVE_METHOD((void *) reversed, "nativeReversedRedirect",
+                      "(Ljava/lang/String;Ljava/lang/String;)V"),
         NATIVE_METHOD((void *) query,    "nativeGetRedirectedPath",     "(Ljava/lang/String;)Ljava/lang/String;"),
         NATIVE_METHOD((void *) restore,  "nativeRestoreRedirectedPath", "(Ljava/lang/String;)Ljava/lang/String;"),
 
