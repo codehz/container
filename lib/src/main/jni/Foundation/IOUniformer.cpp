@@ -93,7 +93,8 @@ const char *match_redirected_path(const char *_path) {
 
 
 void IOUniformer::redirect(const char *orig_path, const char *new_path, bool reversed) {
-    LOGI("Start redirect : from %s to %s", orig_path, new_path);
+    LOGI(reversed ? "Start reversed : from %s to %s" : "Start redirect : from %s to %s", orig_path,
+         new_path);
     add_pair(orig_path, new_path, reversed);
 }
 
