@@ -80,6 +80,7 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
             loaderManager.restartLoader(KILL_LOADER, null, killAppLoader)
         })
     }
+    var mSnackbar: Snackbar? = null
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -123,7 +124,7 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
                         val currentModel = itemViewHolder.currentModel!!
                         val deleteAction = enqueueDelete(currentModel)
                         var undo = false
-                        Snackbar.make(viewHolder.itemView, R.string.stopped, Snackbar.LENGTH_SHORT)
+                        mSnackbar = Snackbar.make(viewHolder.itemView, R.string.stopped, Snackbar.LENGTH_SHORT)
                                 .setBackground(ContextCompat.getColor(activity, R.color.colorPrimaryDark))
                                 .setAction(R.string.undo) {
                                     undo = true
@@ -142,7 +143,7 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
                                         }
                                     }
                                 })
-                                .show()
+                        mSnackbar!!.show()
                         loaderManager.restartLoader(LIST_LOADER, null, runningModelLoader)
                     }
                 }
@@ -150,5 +151,10 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
                 override fun isLongPressDragEnabled() = false
             }).attachToRecyclerView(this)
         }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        mSnackbar?.dismiss()
     }
 }

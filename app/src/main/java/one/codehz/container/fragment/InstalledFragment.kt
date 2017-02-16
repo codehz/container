@@ -70,6 +70,7 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
                 LoadingActivity.launch(activity as Activity, appModel, VUserHandle.USER_OWNER, iconView, titleView)
         }
     }
+    var mSnackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -131,7 +132,7 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
     fun preUninstallApp(currentModel: AppModel) {
         val deleteAction = contentAdapter.enqueueDelete(currentModel)
         var undo = false
-        Snackbar.make(installedList, R.string.deleted, Snackbar.LENGTH_SHORT)
+        mSnackbar = Snackbar.make(installedList, R.string.deleted, Snackbar.LENGTH_SHORT)
                 .setBackground(ContextCompat.getColor(activity, R.color.colorPrimaryDark))
                 .setAction(R.string.undo) {
                     undo = true
@@ -149,7 +150,8 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
                             virtualCore.uninstallApp(currentModel.packageName)
                         }
                     }
-                }).show()
+                })
+        mSnackbar!!.show()
         loaderManager.restartLoader(AppListLoaderId, null, modelLoader)
     }
 
@@ -223,6 +225,11 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
                 this@InstalledFragment.loaderManager.restartLoader(AppListLoaderId, null, modelLoader)
             }.execute(*params)
         }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        mSnackbar?.dismiss()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
