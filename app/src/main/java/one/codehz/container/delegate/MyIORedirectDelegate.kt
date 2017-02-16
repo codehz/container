@@ -14,8 +14,7 @@ class MyIORedirectDelegate : IORedirectDelegate {
                 mediaDirs to "$mediaDirs/virtual")
     }
 
-    @SuppressLint("SdCardPath")
-    override fun getIOReversedRedirect(): Map<String, String> {
-        return ioRedirect.map { it.value + "/reversed" to it.key }.toMap()
-    }
+    override fun getIOReversedRedirect() = ioRedirect.map { it.value + "/reversed" to it.key }.toMap()
+
+    override fun getContentReversedRedirect() = ioRedirect.map { it.key to it.key + "/reversed" }.toMap()
 }

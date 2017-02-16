@@ -6,4 +6,6 @@ public interface IORedirectDelegate {
 	Map<String, String> getIORedirect();
 
 	Map<String, String> getIOReversedRedirect();
+
+	Map<String, String> getContentReversedRedirect();
 }

@@ -1,5 +1,6 @@
 package com.lody.virtual.client.hook.providers;
 
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IInterface;
@@ -63,49 +64,11 @@ public class ProviderHook implements InvocationHandler {
 		return fetcher;
 	}
 
-
-	public Bundle call(Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
-
-		return (Bundle) method.invoke(mBase, args);
-	}
-
-	public Uri insert(Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
-		return (Uri) method.invoke(mBase, args);
-	}
-
-	@Override
-	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-		try {
-			processArgs(method, args);
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-		try {
-			String name = method.getName();
-			if ("call".equals(name)) {
-				return call(method, args);
-			} else if ("insert".equals(name)) {
-				return insert(method, args);
-			}
-			return method.invoke(mBase, args);
-		} catch (Throwable e) {
-			VLog.d("ProviderHook", "call: %s (%s) with error", method.getName(), Arrays.toString(args));
-			if (e instanceof InvocationTargetException) {
-				throw e.getCause();
-			}
-			throw e;
-		}
-	}
-
-	protected void processArgs(Method method, Object... args) {
-
-	}
-
 	private static IInterface createProxy(IInterface provider, ProviderHook hook) {
 		if (provider == null || hook == null) {
 			return null;
 		}
-		return (IInterface) Proxy.newProxyInstance(provider.getClass().getClassLoader(), new Class[] {
+		return (IInterface) Proxy.newProxyInstance(provider.getClass().getClassLoader(), new Class[]{
 				IContentProvider.TYPE,
 		}, hook);
 	}
@@ -123,6 +86,51 @@ public class ProviderHook implements InvocationHandler {
 			}
 		}
 		return provider;
+	}
+
+	public Bundle call(Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
+
+		return (Bundle) method.invoke(mBase, args);
+	}
+
+	public Uri insert(Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
+		return (Uri) method.invoke(mBase, args);
+	}
+
+	public Cursor query(Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
+		return (Cursor) method.invoke(mBase, args);
+	}
+
+	@Override
+	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+//		VLog.i("ProviderHook", "call: %s (%s) CLASSNAME: %s", method.getName(), Arrays.deepToString(args), this.getClass().toString());
+		try {
+			processArgs(method, args);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		try {
+			String name = method.getName();
+			if ("call".equals(name)) {
+				return call(method, args);
+			} else if ("insert".equals(name)) {
+				return insert(method, args);
+			} else if ("query".equals(name)) {
+				return query(method, args);
+			}
+			return method.invoke(mBase, args);
+		} catch (Throwable e) {
+			e.printStackTrace();
+			VLog.d("ProviderHook", "call: %s (%s) with error", method.getName(), Arrays.toString(args));
+			if (e instanceof InvocationTargetException) {
+				throw e.getCause();
+			}
+			throw e;
+		}
+	}
+
+	protected void processArgs(Method method, Object... args) {
+
 	}
 
 	public interface HookFetcher {
