@@ -38,7 +38,7 @@ class UserManagerActivity : BaseActivity(R.layout.user_manager_activity) {
                     .setView(editLayout)
                     .setPositiveButton(android.R.string.ok) { dialog, i ->
                         vUserManager.setUserName(model.id, edit.text.toString())
-                        loaderManager.getLoader<Loader<*>>(USER_LIST).forceLoad()
+                        supportLoaderManager.getLoader<Loader<*>>(USER_LIST).forceLoad()
                     }
                     .setNegativeButton(android.R.string.cancel) { dialog, i -> }
                     .show()
@@ -46,7 +46,7 @@ class UserManagerActivity : BaseActivity(R.layout.user_manager_activity) {
     }
     val userListLoader by MakeLoaderCallbacks({ this }, { it() }) { contentAdapter.updateModels(vUserManager.users.map(::UserModel)) }
     val deleteUserList = mutableListOf<UserModel>()
-    val userDeleteLoader by MakeLoaderCallbacks({ this }, { loaderManager.getLoader<Loader<*>>(USER_LIST).forceLoad() }) {
+    val userDeleteLoader by MakeLoaderCallbacks({ this }, { supportLoaderManager.getLoader<Loader<*>>(USER_LIST).forceLoad() }) {
         deleteUserList.forEach {
             vUserManager.wipeUser(it.id)
             vUserManager.removeUser(it.id)
@@ -59,6 +59,14 @@ class UserManagerActivity : BaseActivity(R.layout.user_manager_activity) {
         initViews()
 
         supportLoaderManager.restartLoader(USER_LIST, null, userListLoader)
+    }
+
+    override fun onDestroy() {
+        deleteUserList.forEach {
+            vUserManager.wipeUser(it.id)
+            vUserManager.removeUser(it.id)
+        }
+        super.onDestroy()
     }
 
     private fun initViews() {
@@ -79,19 +87,20 @@ class UserManagerActivity : BaseActivity(R.layout.user_manager_activity) {
                     val currentModel = viewHolder.currentModel!!
                     val deleteAction = contentAdapter.enqueueDelete(currentModel)
                     var undo = false
+                    deleteUserList += currentModel
 
                     Snackbar.make(viewHolder.itemView, R.string.deleted, Snackbar.LENGTH_SHORT)
                             .setBackground(ContextCompat.getColor(this@UserManagerActivity, R.color.colorPrimaryDark))
                             .setAction(R.string.undo) {
                                 undo = true
                                 deleteAction()
+                                deleteUserList -= currentModel
                                 supportLoaderManager.restartLoader(USER_LIST, null, userListLoader)
                             }
                             .addCallback(object : Snackbar.Callback() {
                                 override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                                     if (undo) return
                                     deleteAction()
-                                    deleteUserList += currentModel
                                     supportLoaderManager.restartLoader(DELETE_USER, null, userDeleteLoader)
                                 }
                             })
