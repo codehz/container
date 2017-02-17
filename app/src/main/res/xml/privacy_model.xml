@@ -29,4 +29,16 @@
             android:summary="ro.product.device"
             android:title="DEVICE"/>
     </PreferenceCategory>
+    <PreferenceCategory
+        android:key="privacy_phone_info"
+        android:title="Phone Info">
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="privacy_phone_device_id"
+            android:title="Device Id"/>
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="privacy_phone_bluetooth_address"
+            android:title="Bluetooth Id"/>
+    </PreferenceCategory>
 </PreferenceScreen>
