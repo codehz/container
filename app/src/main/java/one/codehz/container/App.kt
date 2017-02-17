@@ -31,6 +31,12 @@ class App : Application() {
                     phoneInfoDelegate = MyPhoneInfoDelegate()
                     taskDescriptionDelegate = MyTaskDescriptionDelegate()
                     ioRedirectDelegate = MyIORedirectDelegate()
+
+                    mirror.android.os.Build.MODEL.set("TEST MODEL")
+                    mirror.android.os.Build.MANUFACTURER.set("TEST MANUFACTURER")
+                    mirror.android.os.Build.BRAND.set("TEST BRAND")
+                    mirror.android.os.Build.PRODUCT.set("TEST BRAND")
+                    mirror.android.os.Build.DEVICE.set("TEST DEVICE")
                 }
                 isServerProcess -> {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
