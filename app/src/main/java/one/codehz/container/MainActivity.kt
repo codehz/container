@@ -13,6 +13,7 @@ import android.transition.Transition
 import android.view.MenuItem
 import one.codehz.container.base.BaseActivity
 import one.codehz.container.ext.get
+import one.codehz.container.ext.transaction
 import one.codehz.container.fragment.InstalledFragment
 import one.codehz.container.fragment.RunningFragment
 import one.codehz.container.fragment.SettingFragment
@@ -94,8 +95,6 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         } else
             fab.hide()
 
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.frame, frag, "current")
-        }.commit()
+        supportFragmentManager.transaction { replace(R.id.frame, frag, "current") }
     }
 }

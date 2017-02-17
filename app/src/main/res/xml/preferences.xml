@@ -56,6 +56,14 @@
                 android:targetClass="one.codehz.container.ShortcutActivity"
                 android:targetPackage="one.codehz.container"/>
         </Preference>
+        <Preference
+            android:key="privacy_protection_settings"
+            android:title="Privacy Protection Settings">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="one.codehz.container.PrivacyProtectonActivity"
+                android:targetPackage="one.codehz.container"/>
+        </Preference>
     </PreferenceCategory>
     <PreferenceCategory
         android:key="button_about"

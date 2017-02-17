@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:key="privacy_device_information"
+        android:title="@string/device_information">
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="privacy_device_model"
+            android:summary="ro.product.model"
+            android:title="MODEL"/>
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="privacy_device_manufacturer"
+            android:summary="ro.product.manufacturer"
+            android:title="MANUFACTURER"/>
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="privacy_device_brand"
+            android:summary="ro.product.brand"
+            android:title="BRAND"/>
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="privacy_device_product"
+            android:summary="ro.product.name"
+            android:title="PRODUCT"/>
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="privacy_device_device"
+            android:summary="ro.product.device"
+            android:title="DEVICE"/>
+    </PreferenceCategory>
+</PreferenceScreen>

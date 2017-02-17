@@ -109,6 +109,13 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
+            android:name=".PrivacyProtectonActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:icon="@drawable/ic_device_information"
+            android:label="Privacy Protection Settings"
+            android:theme="@style/AppTheme"/>
+
+        <activity
             android:name=".InstallerActivity"
             android:allowTaskReparenting="true"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|screenLayout"

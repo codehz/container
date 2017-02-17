@@ -11,6 +11,8 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.preference.PreferenceManager
 import android.support.design.widget.Snackbar
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.AsyncTaskLoader
 import android.support.v7.util.DiffUtil
@@ -38,6 +40,8 @@ val vActivityManager: VActivityManager by lazy { VActivityManager.get() }
 val vUserManager: VUserManager by lazy { VUserManager.get() }
 val sharedPreferences: SharedPreferences by lazy { PreferenceManager.getDefaultSharedPreferences(virtualCore.context) }
 val clipboardManager: ClipboardManager by lazy { virtualCore.context.getSystemService(ClipboardManager::class.java)!! }
+
+fun FragmentManager.transaction(fn: FragmentTransaction.() -> Unit) = beginTransaction().apply(fn).commit()
 
 infix fun <R, P> ((P) -> R).bind(p: P) = { this.invoke(p) }
 
