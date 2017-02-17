@@ -39,6 +39,7 @@ import com.lody.virtual.client.hook.patchs.power.PowerManagerPatch;
 import com.lody.virtual.client.hook.patchs.restriction.RestrictionPatch;
 import com.lody.virtual.client.hook.patchs.search.SearchManagerPatch;
 import com.lody.virtual.client.hook.patchs.telephony.TelephonyPatch;
+import com.lody.virtual.client.hook.patchs.telephony.TelephonyRegistryPatch;
 import com.lody.virtual.client.hook.patchs.user.UserManagerPatch;
 import com.lody.virtual.client.hook.patchs.vibrator.VibratorPatch;
 import com.lody.virtual.client.hook.patchs.wifi.WifiManagerPatch;
@@ -63,11 +64,9 @@ import static android.os.Build.VERSION_CODES.N;
  */
 public final class PatchManager {
 
-    private static PatchManager sPatchManager = new PatchManager();
-    private static boolean sInit;
-
 	private static final String TAG = PatchManager.class.getSimpleName();
-
+	private static PatchManager sPatchManager = new PatchManager();
+    private static boolean sInit;
 	private Map<Class<?>, Injectable> injectTable = new HashMap<>(13);
 
 	private PatchManager() {
@@ -126,6 +125,7 @@ public final class PatchManager {
 			addPatch(new MountServicePatch());
 			addPatch(new BackupManagerPatch());
 			addPatch(new TelephonyPatch());
+			addPatch(new TelephonyRegistryPatch());
 			addPatch(new PhoneSubInfoPatch());
 			addPatch(new PowerManagerPatch());
 			addPatch(new AppWidgetManagerPatch());
