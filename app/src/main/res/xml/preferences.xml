@@ -58,7 +58,7 @@
         </Preference>
         <Preference
             android:key="privacy_protection_settings"
-            android:title="Privacy Protection Settings">
+            android:title="@string/privacy_protection_settings">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:targetClass="one.codehz.container.PrivacyProtectonActivity"

@@ -31,14 +31,14 @@
     </PreferenceCategory>
     <PreferenceCategory
         android:key="privacy_phone_info"
-        android:title="Phone Info">
+        android:title="@string/phone_info">
         <EditTextPreference
             android:defaultValue=""
             android:key="privacy_phone_device_id"
-            android:title="Device Id"/>
+            android:title="@string/device_id"/>
         <EditTextPreference
             android:defaultValue=""
             android:key="privacy_phone_bluetooth_address"
-            android:title="Bluetooth Id"/>
+            android:title="@string/bluetooth_address"/>
     </PreferenceCategory>
 </PreferenceScreen>

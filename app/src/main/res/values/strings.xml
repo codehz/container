@@ -78,4 +78,8 @@
     <string name="open_github">Open the Github repository</string>
     <string name="open_github_summary" translatable="false">https://github.com/codehz/container</string>
     <string name="device_information">Device Information</string>
+    <string name="phone_info">Phone Info</string>
+    <string name="device_id">Device Id</string>
+    <string name="bluetooth_address">Bluetooth Address</string>
+    <string name="privacy_protection_settings">Privacy Protection Settings</string>
 </resources>

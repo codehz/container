@@ -112,7 +112,7 @@
             android:name=".PrivacyProtectonActivity"
             android:configChanges="orientation|screenSize|screenLayout"
             android:icon="@drawable/ic_device_information"
-            android:label="Privacy Protection Settings"
+            android:label="@string/privacy_protection_settings"
             android:theme="@style/AppTheme"/>
 
         <activity
