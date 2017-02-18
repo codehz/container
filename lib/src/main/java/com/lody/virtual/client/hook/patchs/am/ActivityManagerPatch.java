@@ -20,7 +20,6 @@ import com.lody.virtual.client.ipc.VActivityManager;
 import com.lody.virtual.helper.proto.AppTaskInfo;
 
 import java.lang.reflect.Method;
-import java.util.Iterator;
 import java.util.List;
 
 import mirror.android.app.ActivityManagerNative;
@@ -103,7 +102,7 @@ public class ActivityManagerPatch extends PatchDelegate<HookDelegate<IInterface>
 					//noinspection unchecked
 					Object _infos = method.invoke(who, args);
 					List<ActivityManager.RecentTaskInfo> infos =
-							_infos instanceof ParceledListSlice
+							ParceledListSlice.TYPE.isInstance(_infos)
 									? ParceledListSlice.getList.call(_infos)
 									: (List)_infos;
 					for (ActivityManager.RecentTaskInfo info : infos) {
@@ -124,6 +123,11 @@ public class ActivityManagerPatch extends PatchDelegate<HookDelegate<IInterface>
 		}
 	}
 
+	@Override
+	public boolean isEnvBad() {
+		return ActivityManagerNative.getDefault.call() != getHookDelegate().getProxyInterface();
+	}
+
 	private class isUserRunning extends Hook {
 		@Override
 		public String getName() {
@@ -135,10 +139,5 @@ public class ActivityManagerPatch extends PatchDelegate<HookDelegate<IInterface>
 			int userId = (int) args[0];
 			return userId == 0;
 		}
-	}
-
-	@Override
-	public boolean isEnvBad() {
-		return ActivityManagerNative.getDefault.call() != getHookDelegate().getProxyInterface();
 	}
 }
