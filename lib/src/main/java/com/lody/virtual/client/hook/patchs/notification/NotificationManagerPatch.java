@@ -18,7 +18,9 @@ import mirror.android.widget.Toast;
  * @see android.widget.Toast
  */
 @Patch({CancelAllNotifications.class, EnqueueNotificationWithTag.class, CancelNotificationWithTag.class,
-        EnqueueNotificationWithTagPriority.class, EnqueueNotification.class})
+        EnqueueNotificationWithTagPriority.class, EnqueueNotification.class,
+        SetNotificationsEnabledForPackage.class,
+        AreNotificationsEnabledForPackage.class})
 public class NotificationManagerPatch extends PatchDelegate<HookDelegate<IInterface>> {
 
     public NotificationManagerPatch() {

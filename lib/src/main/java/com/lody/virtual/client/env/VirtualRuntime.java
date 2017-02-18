@@ -8,7 +8,6 @@ import android.os.Process;
 import android.os.RemoteException;
 
 import com.lody.virtual.client.core.VirtualCore;
-import com.lody.virtual.helper.utils.VLog;
 
 import mirror.android.ddm.DdmHandleAppName;
 import mirror.android.ddm.DdmHandleAppNameJBMR1;
@@ -53,6 +52,7 @@ public class VirtualRuntime {
     }
 
     public static <T> T crash(RemoteException e) throws RuntimeException {
+        e.printStackTrace();
         if (VirtualCore.get().isVAppProcess()) {
             Process.killProcess(Process.myPid());
             System.exit(0);
