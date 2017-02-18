@@ -620,6 +620,4 @@ void IOUniformer::startUniformer(int api_level) {
         HOOK_IO(faccessat);
     }
     hook_dlopen(api_level);
-
-    HOOK_IO(dlsym);
 }
