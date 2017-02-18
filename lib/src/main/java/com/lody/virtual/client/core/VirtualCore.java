@@ -29,7 +29,7 @@ import com.lody.virtual.client.hook.delegate.ForegroundNotificationDelegate;
 import com.lody.virtual.client.hook.delegate.IORedirectDelegate;
 import com.lody.virtual.client.hook.delegate.PhoneInfoDelegate;
 import com.lody.virtual.client.hook.delegate.TaskDescriptionDelegate;
-import com.lody.virtual.client.hook.delegate.UnckeckedExceptionDelegate;
+import com.lody.virtual.client.hook.delegate.UncheckedExceptionDelegate;
 import com.lody.virtual.client.ipc.LocalProxyUtils;
 import com.lody.virtual.client.ipc.ServiceManagerNative;
 import com.lody.virtual.client.ipc.VActivityManager;
@@ -93,7 +93,7 @@ public final class VirtualCore {
 
     public IORedirectDelegate ioRedirectDelegate;
 
-    public UnckeckedExceptionDelegate unckeckedExceptionDelegate;
+    public UncheckedExceptionDelegate uncheckedExceptionDelegate;
 
     private VirtualCore() {
     }
