@@ -209,7 +209,10 @@ public final class VClientImpl extends IVClient.Stub {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public synchronized void start() {
-                new Exception().printStackTrace();
+                Throwable t = new Exception();
+                t.printStackTrace();
+                if (VirtualCore.get().unckeckedExceptionDelegate != null)
+                    VirtualCore.get().unckeckedExceptionDelegate.onShutdown(t);
                 super.start();
             }
         });
@@ -524,6 +527,8 @@ public final class VClientImpl extends IVClient.Stub {
         @Override
         public void uncaughtException(Thread t, Throwable e) {
             VLog.e("uncaught", e);
+            if (VirtualCore.get().unckeckedExceptionDelegate != null)
+                VirtualCore.get().unckeckedExceptionDelegate.onThreadGroupUncaughtException(t, e);
             System.exit(0);
         }
     }

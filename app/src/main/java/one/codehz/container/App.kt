@@ -35,6 +35,7 @@ class App : Application() {
                     phoneInfoDelegate = MyPhoneInfoDelegate()
                     taskDescriptionDelegate = MyTaskDescriptionDelegate()
                     ioRedirectDelegate = MyIORedirectDelegate()
+                    unckeckedExceptionDelegate = MyUnckeckedExceptionDelegate()
 
                     mirror.android.os.Build.MODEL.setIfNotEmpty(sharedPreferences.getString("privacy_device_model", ""))
                     mirror.android.os.Build.MANUFACTURER.setIfNotEmpty(sharedPreferences.getString("privacy_device_manufacturer", ""))

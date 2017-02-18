@@ -18,6 +18,7 @@ import android.support.v4.content.AsyncTaskLoader
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.lody.virtual.client.VClientImpl
 import com.lody.virtual.client.core.VirtualCore
 import com.lody.virtual.client.ipc.VActivityManager
 import com.lody.virtual.os.VUserManager
@@ -36,6 +37,7 @@ operator fun <T> Activity.get(id: Int) = this.findViewById(id) as T
 infix fun View.pair(name: String) = android.util.Pair(this, name)
 
 val virtualCore: VirtualCore by lazy { VirtualCore.get() }
+val vClientImpl: VClientImpl by lazy { VClientImpl.get() }
 val vActivityManager: VActivityManager by lazy { VActivityManager.get() }
 val vUserManager: VUserManager by lazy { VUserManager.get() }
 val sharedPreferences: SharedPreferences by lazy { PreferenceManager.getDefaultSharedPreferences(virtualCore.context) }
