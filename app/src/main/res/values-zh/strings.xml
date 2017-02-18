@@ -79,4 +79,5 @@
     <string name="device_information">设备信息</string>
     <string name="phone_info">手机信息</string>
     <string name="privacy_protection_settings">隐私保护设置</string>
+    <string name="null_launch_intent">无法找到启动活动！</string>
 </resources>

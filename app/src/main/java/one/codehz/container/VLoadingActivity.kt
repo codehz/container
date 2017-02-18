@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import one.codehz.container.ext.get
 import one.codehz.container.ext.vActivityManager
 import one.codehz.container.ext.virtualCore
@@ -25,6 +26,11 @@ class VLoadingActivity : Activity() {
         titleView.text = model.name
 
         val target = virtualCore.getLaunchIntent(package_name, userId)
+
+        if (target == null) {
+            Toast.makeText(this, getString(R.string.null_launch_intent), Toast.LENGTH_SHORT).show()
+            return finishAfterTransition()
+        }
 
         virtualCore.setLoadingPage(target, this)
 
