@@ -66,7 +66,7 @@ public final class PatchManager {
 
 	private static final String TAG = PatchManager.class.getSimpleName();
 	private static PatchManager sPatchManager = new PatchManager();
-    private static boolean sInit;
+	private static boolean sInit;
 	private Map<Class<?>, Injectable> injectTable = new HashMap<>(13);
 
 	private PatchManager() {

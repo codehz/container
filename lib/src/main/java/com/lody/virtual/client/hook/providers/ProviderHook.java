@@ -103,7 +103,6 @@ public class ProviderHook implements InvocationHandler {
 
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-//		VLog.i("ProviderHook", "call: %s (%s) CLASSNAME: %s", method.getName(), Arrays.deepToString(args), this.getClass().toString());
 		try {
 			processArgs(method, args);
 		} catch (Throwable e) {
@@ -120,7 +119,6 @@ public class ProviderHook implements InvocationHandler {
 			}
 			return method.invoke(mBase, args);
 		} catch (Throwable e) {
-			e.printStackTrace();
 			VLog.d("ProviderHook", "call: %s (%s) with error", method.getName(), Arrays.toString(args));
 			if (e instanceof InvocationTargetException) {
 				throw e.getCause();

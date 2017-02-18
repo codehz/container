@@ -11,8 +11,6 @@ import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.widget.RemoteViews;
 
-import com.lody.virtual.client.core.VirtualCore;
-import com.lody.virtual.client.hook.delegate.ForegroundNotificationDelegate;
 import com.lody.virtual.helper.utils.Reflect;
 import com.lody.virtual.helper.utils.collection.SparseArray;
 
@@ -33,7 +31,7 @@ import mirror.com.android.internal.R_Hide;
 	}
 
 	private static void loadSystemLayoutRes() {
-			Field[] fields = R_Hide.layout.TYPE.getFields();
+		Field[] fields = R_Hide.TYPE.getFields();
 			for (Field field : fields) {
 				if (Modifier.isStatic(field.getModifiers())
 						&& Modifier.isFinal(field.getModifiers())) {
@@ -60,11 +58,6 @@ import mirror.com.android.internal.R_Hide;
 			builder = Reflect.on(Notification.Builder.class).create(context, notification).get();
 		} catch (Exception e) {
 			builder = createBuilder(context, notification);
-		}
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			ForegroundNotificationDelegate foregroundNotificationDelegate = VirtualCore.get().foregroundNotificationDelegate;
-			if (foregroundNotificationDelegate != null)
-			builder.setGroup(foregroundNotificationDelegate.getGroup(notification.getGroup()));
 		}
 		fixNotificationIcon(context, notification, builder);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
