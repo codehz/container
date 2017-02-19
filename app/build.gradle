@@ -8,8 +8,8 @@ android {
         applicationId "one.codehz.container"
         minSdkVersion 22
         targetSdkVersion 25
-        versionCode 6
-        versionName "0.571428571428"
+        versionCode 7
+        versionName "0.714285714285"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
