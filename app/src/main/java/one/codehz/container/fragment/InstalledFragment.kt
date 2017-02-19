@@ -166,6 +166,7 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
                             setMessage(getString(R.string.receive_apk_file))
                             isIndeterminate = false
                             max = size.toInt()
+                            setProgressNumberFormat("%1dkb/%2dkb")
                             setCancelable(false)
                             setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
                             show()
@@ -183,6 +184,8 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
                             }
                         }
                         ui {
+                            dialog.setProgressNumberFormat(null)
+                            dialog.setProgressPercentFormat(null)
                             dialog.isIndeterminate = true
                             dialog.setMessage(getString(R.string.parsing_application))
                         }
