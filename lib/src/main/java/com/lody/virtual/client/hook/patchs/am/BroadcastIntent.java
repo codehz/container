@@ -1,18 +1,25 @@
 package com.lody.virtual.client.hook.patchs.am;
 
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
+import android.webkit.MimeTypeMap;
 
+import com.lody.virtual.IOHook;
 import com.lody.virtual.client.core.VirtualCore;
 import com.lody.virtual.client.env.Constants;
 import com.lody.virtual.client.hook.base.Hook;
 import com.lody.virtual.client.stub.StubManifest;
 import com.lody.virtual.helper.utils.BitmapUtils;
 import com.lody.virtual.helper.utils.ComponentUtils;
+import com.lody.virtual.helper.utils.VLog;
 import com.lody.virtual.os.VUserHandle;
 
 import java.lang.reflect.Method;
@@ -31,7 +38,15 @@ import java.lang.reflect.Method;
     public Object call(Object who, Method method, Object... args) throws Throwable {
         Intent intent = (Intent) args[1];
         String type = (String) args[2];
-        intent.setDataAndType(intent.getData(), type);
+        intent.setDataAndType(redirectData(intent.getData()), type);
+        if (intent.getAction().equals(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE) && intent.getData() != null) {
+            ContentValues values = new ContentValues(2);
+            String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(intent.getDataString()));
+            values.put("mime_type", mime);
+            values.put("_data", intent.getData().getPath());
+            VLog.d(getName(), "try " + values);
+            VirtualCore.get().getContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        }
         if (VirtualCore.get().getComponentDelegate() != null) {
             VirtualCore.get().getComponentDelegate().onSendBroadcast(intent);
         }
@@ -46,7 +61,15 @@ import java.lang.reflect.Method;
             // clear the permission
             args[7] = null;
         }
+        VLog.d(getName(), "broadcast " + intent);
         return method.invoke(who, args);
+    }
+
+    private Uri redirectData(Uri data) {
+        if (data == null) return null;
+        if (data.getScheme().equals("file"))
+            return data.buildUpon().path(IOHook.getRedirectedPath(data.getPath())).build();
+        return data;
     }
 
 
