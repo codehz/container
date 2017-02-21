@@ -132,7 +132,7 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
     fun preUninstallApp(currentModel: AppModel) {
         val deleteAction = contentAdapter.enqueueDelete(currentModel)
         var undo = false
-        mSnackbar = Snackbar.make(installedList, R.string.deleted, Snackbar.LENGTH_SHORT)
+        mSnackbar = Snackbar.make(installedList, R.string.deleted, Snackbar.LENGTH_LONG)
                 .setBackground(ContextCompat.getColor(activity, R.color.colorPrimaryDark))
                 .setAction(R.string.undo) {
                     undo = true
@@ -144,7 +144,7 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
                         if (undo) return
                         deleteAction()
                         if (isAdded) {
-                            uninstallPendingList.add(currentModel.packageName)
+                            uninstallPendingList += currentModel.packageName
                             loaderManager.restartLoader(PkgUninstallLoaderId, null, uninstallLoader)
                         } else {
                             virtualCore.uninstallApp(currentModel.packageName)
@@ -232,6 +232,11 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
 
     override fun onDetach() {
         super.onDetach()
+        mSnackbar?.dismiss()
+    }
+
+    override fun onPause() {
+        super.onPause()
         mSnackbar?.dismiss()
     }
 

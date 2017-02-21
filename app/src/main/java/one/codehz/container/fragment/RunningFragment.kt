@@ -124,7 +124,7 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
                         val currentModel = itemViewHolder.currentModel!!
                         val deleteAction = enqueueDelete(currentModel)
                         var undo = false
-                        mSnackbar = Snackbar.make(viewHolder.itemView, R.string.stopped, Snackbar.LENGTH_SHORT)
+                        mSnackbar = Snackbar.make(viewHolder.itemView, R.string.stopped, Snackbar.LENGTH_LONG)
                                 .setBackground(ContextCompat.getColor(activity, R.color.colorPrimaryDark))
                                 .setAction(R.string.undo) {
                                     undo = true
@@ -136,7 +136,7 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
                                         if (undo) return
                                         deleteAction()
                                         if (isAdded) {
-                                            killedList.add(currentModel.userId to currentModel.appModel.packageName)
+                                            killedList += currentModel.userId to currentModel.appModel.packageName
                                             loaderManager.restartLoader(KILL_LOADER, null, killAppLoader)
                                         } else {
                                             virtualCore.killApp(currentModel.appModel.packageName, currentModel.userId)
@@ -155,6 +155,11 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
 
     override fun onDetach() {
         super.onDetach()
+        mSnackbar?.dismiss()
+    }
+
+    override fun onPause() {
+        super.onPause()
         mSnackbar?.dismiss()
     }
 }
