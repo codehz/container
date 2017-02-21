@@ -22,7 +22,7 @@
     <string name="receive_apk_file_progress">Receiving APK File(%1$dKB/%2$dKB)</string>
     <string name="application_installing">Installing Application</string>
     <string name="parsing_application">Parsing Application</string>
-    <string name="switch_click_function">Exchange click and long press function</string>
+    <string name="switch_click_function">UI Mode</string>
     <string name="about_title">About</string>
     <string name="author">Author</string>
     <string name="application_uninstalled">Application Uninstalled.</string>
@@ -70,7 +70,7 @@
     <string name="foreground_notification_title">Notification Manager Service</string>
     <string name="container_has_started">Container has started</string>
     <string name="foreground_notification_enabled">Enable Foreground Service</string>
-    <string name="foreground_notification_try_to_hide">Try To Hide Foreground Service Notification</string>
+    <string name="foreground_notification_try_to_hide">Try To Hide Notification</string>
     <string name="foreground_notification_try_to_hide_on">May not work in versions higher than Nougat</string>
     <string name="foreground_notification_try_to_hide_off">The notification will be retained in the notification panel</string>
     <string name="container_system_detail_setting">Container Application Settings Page</string>
