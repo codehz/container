@@ -40,5 +40,9 @@
             android:defaultValue=""
             android:key="privacy_phone_bluetooth_address"
             android:title="@string/bluetooth_address"/>
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="privacy_phone_mac_address"
+            android:title="@string/mac_address"/>
     </PreferenceCategory>
 </PreferenceScreen>

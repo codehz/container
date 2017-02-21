@@ -83,4 +83,5 @@
     <string name="bluetooth_address">Bluetooth Address</string>
     <string name="privacy_protection_settings">Privacy Protection Settings</string>
     <string name="null_launch_intent">Cannot find launch activity!</string>
+    <string name="mac_address">Mac Address</string>
 </resources>

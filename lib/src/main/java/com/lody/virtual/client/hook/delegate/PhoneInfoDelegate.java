@@ -5,4 +5,6 @@ public interface PhoneInfoDelegate {
     String getDeviceId(String oldDeviceId);
 
     String getBluetoothAddress(String oldAddress);
+
+    String getMacAddress(String oldAddress);
 }

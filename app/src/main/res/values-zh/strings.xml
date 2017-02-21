@@ -80,4 +80,5 @@
     <string name="phone_info">手机信息</string>
     <string name="privacy_protection_settings">隐私保护设置</string>
     <string name="null_launch_intent">无法找到启动活动！</string>
+    <string name="mac_address">Wifi硬件地址</string>
 </resources>
