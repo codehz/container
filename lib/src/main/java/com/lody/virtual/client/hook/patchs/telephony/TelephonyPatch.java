@@ -12,7 +12,7 @@ import mirror.com.android.internal.telephony.ITelephony;
 /**
  * @author Lody
  */
-@Patch({GetDeviceId.class})
+@Patch({GetDeviceId.class, GetLine1NumberForDisplay.class})
 public class TelephonyPatch extends PatchBinderDelegate {
 
 	public TelephonyPatch() {
@@ -27,7 +27,7 @@ public class TelephonyPatch extends PatchBinderDelegate {
 		addHook(new ReplaceCallingPkgHook("getAllCellInfo"));
 		addHook(new ReplaceCallingPkgHook("getCellLocation"));
 		addHook(new ReplaceCallingPkgHook("isOffhook"));
-		addHook(new ReplaceLastPkgHook("getLine1NumberForDisplay"));
+//		addHook(new ReplaceLastPkgHook("getLine1NumberForDisplay"));
 		addHook(new ReplaceLastPkgHook("isOffhookForSubscriber"));
 		addHook(new ReplaceLastPkgHook("isRingingForSubscriber"));
 		addHook(new ReplaceCallingPkgHook("call"));

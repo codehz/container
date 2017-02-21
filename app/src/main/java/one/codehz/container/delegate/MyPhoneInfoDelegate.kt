@@ -27,4 +27,12 @@ class MyPhoneInfoDelegate : PhoneInfoDelegate {
         }
         return oldAddress
     }
+
+    override fun getLine1Number(oldNumber: String?): String? {
+        sharedPreferences.getString("privacy_phone_number", "").apply {
+            if (isNotEmpty())
+                return this
+        }
+        return oldNumber
+    }
 }

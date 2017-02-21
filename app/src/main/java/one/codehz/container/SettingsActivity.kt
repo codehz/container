@@ -1,5 +1,6 @@
 package one.codehz.container
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.preference.EditTextPreference
@@ -17,7 +18,7 @@ class SettingsActivity : AppCompatActivity() {
         supportFragmentManager.transaction { replace(android.R.id.content, FakeModelFragment(id)) }
     }
 
-    class FakeModelFragment(val xml: Int) : PreferenceFragmentCompat() {
+    class FakeModelFragment(val xml: Int) : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?)
                 = addPreferencesFromResource(xml)
 
@@ -26,11 +27,18 @@ class SettingsActivity : AppCompatActivity() {
             (0..preferenceScreen.preferenceCount - 1).map { preferenceScreen.getPreference(it) }.mapNotNull { it as? PreferenceGroup }.forEach { category ->
                 (0..category.preferenceCount - 1).map { category.getPreference(it) }.mapNotNull { it as? EditTextPreference }.forEach { it.summary = it.text }
             }
-            sharedPreferences.registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
-                findPreference(key)?.apply {
-                    if (this is EditTextPreference) {
-                        summary = text.toString()
-                    }
+            sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        }
+
+        override fun onDestroy() {
+            super.onDestroy()
+            sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        }
+
+        override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+            findPreference(key)?.apply {
+                if (this is EditTextPreference) {
+                    summary = text.toString()
                 }
             }
         }

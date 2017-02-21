@@ -7,4 +7,6 @@ public interface PhoneInfoDelegate {
     String getBluetoothAddress(String oldAddress);
 
     String getMacAddress(String oldAddress);
+
+    String getLine1Number(String oldNumber);
 }

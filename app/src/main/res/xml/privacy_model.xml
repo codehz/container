@@ -39,5 +39,9 @@
             android:defaultValue=""
             android:key="privacy_phone_mac_address"
             android:title="@string/mac_address"/>
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="privacy_phone_number"
+            android:title="@string/phone_number"/>
     </PreferenceCategory>
 </PreferenceScreen>
