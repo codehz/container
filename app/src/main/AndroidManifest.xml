@@ -109,7 +109,7 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
-            android:name=".PrivacyProtectonActivity"
+            android:name=".SettingsActivity"
             android:configChanges="orientation|screenSize|screenLayout"
             android:icon="@drawable/ic_device_information"
             android:label="@string/privacy_protection_settings"

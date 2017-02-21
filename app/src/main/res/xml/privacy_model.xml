@@ -6,28 +6,23 @@
         <EditTextPreference
             android:defaultValue=""
             android:key="privacy_device_model"
-            android:summary="ro.product.model"
-            android:title="MODEL"/>
+            android:title="ro.product.model"/>
         <EditTextPreference
             android:defaultValue=""
             android:key="privacy_device_manufacturer"
-            android:summary="ro.product.manufacturer"
-            android:title="MANUFACTURER"/>
+            android:title="ro.product.manufacturer"/>
         <EditTextPreference
             android:defaultValue=""
             android:key="privacy_device_brand"
-            android:summary="ro.product.brand"
-            android:title="BRAND"/>
+            android:title="ro.product.brand"/>
         <EditTextPreference
             android:defaultValue=""
             android:key="privacy_device_product"
-            android:summary="ro.product.name"
-            android:title="PRODUCT"/>
+            android:title="ro.product.name"/>
         <EditTextPreference
             android:defaultValue=""
             android:key="privacy_device_device"
-            android:summary="ro.product.device"
-            android:title="DEVICE"/>
+            android:title="ro.product.device"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:key="privacy_phone_info"
