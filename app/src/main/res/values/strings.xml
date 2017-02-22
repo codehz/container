@@ -91,4 +91,5 @@
     <string name="package_name">Package Name</string>
     <string name="apk_path">Apk Path</string>
     <string name="native_library_path">Native Library Path</string>
+    <string name="log_copied">Log Copied</string>
 </resources>

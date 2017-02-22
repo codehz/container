@@ -7,8 +7,8 @@
         android:id="@+id/time_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:text="@string/pending"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textColor="?attr/colorAccent"/>
@@ -16,9 +16,10 @@
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="16dp"
+        android:layout_below="@+id/time_text"
+        android:clipToPadding="false"
         android:paddingEnd="16dp"
-        android:layout_below="@+id/time_text">
+        android:paddingStart="16dp">
 
         <TextView
             android:id="@+id/info"

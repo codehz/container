@@ -14,7 +14,7 @@ import one.codehz.container.ext.virtualCore
 import one.codehz.container.models.PropertyListItemModel
 import one.codehz.container.models.PropertyListModel
 
-class PropertyListAdapter<T : PropertyListModel> : BaseAdapter<PropertyListAdapter<T>.PropertyListViewHolder, PropertyListItemModel>() {
+class PropertyListAdapter<T : PropertyListModel>(val onClick: (String, String) -> Unit) : BaseAdapter<PropertyListAdapter<T>.PropertyListViewHolder, PropertyListItemModel>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PropertyListViewHolder(parent)
     override fun onSetupViewHolder(holder: PropertyListViewHolder, data: PropertyListItemModel) = holder updateData data
 
@@ -24,8 +24,7 @@ class PropertyListAdapter<T : PropertyListModel> : BaseAdapter<PropertyListAdapt
 
         init {
             itemView.setOnClickListener {
-                clipboardManager.primaryClip = ClipData.newPlainText(keyView.text, valueView.text)
-                Snackbar.make(itemView, virtualCore.context.getString(R.string.value_copied, keyView.text), Snackbar.LENGTH_SHORT).show()
+                onClick(keyView.text.toString(), valueView.text.toString())
             }
         }
 

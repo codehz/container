@@ -27,10 +27,7 @@ import android.widget.ImageView
 import com.lody.virtual.os.VUserHandle
 import one.codehz.container.adapters.PropertyListAdapter
 import one.codehz.container.base.BaseActivity
-import one.codehz.container.ext.MakeLoaderCallbacks
-import one.codehz.container.ext.get
-import one.codehz.container.ext.systemService
-import one.codehz.container.ext.virtualCore
+import one.codehz.container.ext.*
 import one.codehz.container.fragment.BasicDetailFragment
 import one.codehz.container.models.AppModel
 import one.codehz.container.models.AppPropertyModel
@@ -61,7 +58,10 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
 
     inner class DetailPagerAdapter : FragmentPagerAdapter(supportFragmentManager) {
         override fun getItem(position: Int) = when (position) {
-            0 -> BasicDetailFragment(model)
+            0 -> BasicDetailFragment(model) {
+                it.setBackground(bgcolor)
+                it.show()
+            }
             else -> throw IllegalArgumentException()
         }
 

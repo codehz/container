@@ -42,7 +42,7 @@
     <string name="task_running">运行中</string>
     <string name="task_setting">设置</string>
     <string name="uninstall">卸载</string>
-    <string name="value_copied">“%1$s”已复制</string>
+    <string name="value_copied">%1$s已复制</string>
     <string name="advance_settings">高级设置</string>
     <string name="container_space_manager_summary">管理容器内应用使用的空间</string>
     <string name="deleted">已删除</string>
@@ -88,4 +88,5 @@
     <string name="apk_path">APK文件路径</string>
     <string name="native_library_path">原生库文件路径</string>
     <string name="package_name">包名</string>
+    <string name="log_copied">日志已复制</string>
 </resources>

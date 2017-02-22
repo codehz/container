@@ -1,7 +1,9 @@
 package one.codehz.container.fragment
 
+import android.content.ClipData
 import android.content.Context
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
@@ -13,15 +15,13 @@ import android.widget.Button
 import one.codehz.container.R
 import one.codehz.container.adapters.LogListAdapter
 import one.codehz.container.adapters.PropertyListAdapter
-import one.codehz.container.ext.MakeLoaderCallbacks
-import one.codehz.container.ext.get
-import one.codehz.container.ext.vClientImpl
+import one.codehz.container.ext.*
 import one.codehz.container.models.AppModel
 import one.codehz.container.models.AppPropertyModel
 import one.codehz.container.models.LogModel
 import one.codehz.container.provider.MainProvider
 
-class BasicDetailFragment(val model: AppModel) : Fragment() {
+class BasicDetailFragment(val model: AppModel, onSnack: (Snackbar) -> Unit) : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = inflater.inflate(R.layout.application_basic_detail, container, false)!!
 
     val contentList by lazy<RecyclerView> { view!![R.id.content_list] }
@@ -39,10 +39,16 @@ class BasicDetailFragment(val model: AppModel) : Fragment() {
         }
     }
     val contentAdapter by lazy {
-        PropertyListAdapter<AppPropertyModel>()
+        PropertyListAdapter<AppPropertyModel> { key, value ->
+            clipboardManager.primaryClip = ClipData.newPlainText(key, value)
+            onSnack(Snackbar.make(contentList, virtualCore.context.getString(R.string.value_copied, key), Snackbar.LENGTH_SHORT))
+        }
     }
     val logListAdapter by lazy {
-        LogListAdapter()
+        LogListAdapter { time, value ->
+            clipboardManager.primaryClip = ClipData.newPlainText("log", value)
+            onSnack(Snackbar.make(contentList, getString(R.string.log_copied), Snackbar.LENGTH_SHORT))
+        }
     }
 
     override fun onAttach(context: Context?) {
