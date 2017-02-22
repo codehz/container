@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class MainDb(context: Context) : SQLiteOpenHelper(context, "main", null, 0) {
+class MainDb(context: Context) : SQLiteOpenHelper(context, "main", null, 1) {
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL("CREATE TABLE IF NOT EXISTS log(" +
                 "`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
