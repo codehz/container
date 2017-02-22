@@ -48,7 +48,7 @@ import java.lang.reflect.Method;
             VirtualCore.get().getContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         }
         if (VirtualCore.get().getComponentDelegate() != null) {
-            VirtualCore.get().getComponentDelegate().onSendBroadcast(intent);
+            if (!VirtualCore.get().getComponentDelegate().onSendBroadcast(intent)) return null;
         }
         Intent newIntent = handleIntent(intent);
         if (newIntent != null) {

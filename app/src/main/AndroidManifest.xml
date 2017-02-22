@@ -152,6 +152,11 @@
                 <action android:name="android.content.action.DOCUMENTS_PROVIDER"/>
             </intent-filter>
         </provider>
+        <provider
+            android:authorities="one.codehz.container.provider.main"
+            android:name=".provider.MainProvider"
+            android:exported="false"
+            android:grantUriPermissions="true" />
     </application>
 
 </manifest>

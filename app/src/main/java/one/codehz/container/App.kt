@@ -31,7 +31,7 @@ class App : Application() {
         with(virtualCore) {
             when {
                 isVAppProcess -> {
-                    componentDelegate = MyComponentDelegate()
+                    componentDelegate = MyComponentDelegate(this@App)
                     phoneInfoDelegate = MyPhoneInfoDelegate()
                     taskDescriptionDelegate = MyTaskDescriptionDelegate()
                     ioRedirectDelegate = MyIORedirectDelegate()

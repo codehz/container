@@ -50,8 +50,8 @@ public interface ComponentDelegate {
         }
 
         @Override
-        public void onSendBroadcast(Intent intent) {
-            // Empty
+        public boolean onSendBroadcast(Intent intent) {
+            return true;
         }
     };
 
@@ -71,5 +71,5 @@ public interface ComponentDelegate {
 
     void afterActivityDestroy(Activity activity);
 
-    void onSendBroadcast(Intent intent);
+    boolean onSendBroadcast(Intent intent);
 }
