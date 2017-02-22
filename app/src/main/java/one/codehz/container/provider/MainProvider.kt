@@ -16,7 +16,8 @@ class MainProvider : ContentProvider() {
         val TYPE_COMPONENT_ITEM = 3
 
         val AUTHORITY = "one.codehz.container.provider.main"
-        val URI_BUILDER = Uri.Builder().scheme("content").authority(AUTHORITY)!!
+        val LOG_URI = Uri.Builder().scheme("content").authority(AUTHORITY).appendPath("log").build()!!
+        val COMPONENT_URI = Uri.Builder().scheme("content").authority(AUTHORITY).appendPath("component").build()!!
 
         val uriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
             addURI(AUTHORITY, "log", TYPE_LOG_ALL)
@@ -49,9 +50,7 @@ class MainProvider : ContentProvider() {
             TYPE_COMPONENT -> "component"
             else -> throw IllegalArgumentException("Unsupported URI: $uri")
         }
-        val id = dbHelper.writableDatabase.use {
-            it.insert(name, null, values)
-        }
+        val id = dbHelper.writableDatabase.insert(name, null, values)
         context.contentResolver.notifyChange(uri, null)
         return uri!!.buildUpon().appendPath(id.toString()).build()
     }
@@ -64,9 +63,7 @@ class MainProvider : ContentProvider() {
             TYPE_COMPONENT_ITEM -> "component" to "_id=${uri!!.pathSegments.last()}" + if(selection.isNullOrEmpty()) "" else " AND ($selection)"
             else -> throw IllegalArgumentException("Unsupported URI: $uri")
         }
-        val res = dbHelper.writableDatabase.use {
-            it.delete(name, newSelection, selectionArgs)
-        }
+        val res = dbHelper.writableDatabase.delete(name, newSelection, selectionArgs)
         context.contentResolver.notifyChange(uri, null)
         return res
     }
@@ -79,9 +76,7 @@ class MainProvider : ContentProvider() {
             TYPE_COMPONENT_ITEM -> "component" to "_id=${uri!!.pathSegments.last()}" + if(selection.isNullOrEmpty()) "" else " AND ($selection)"
             else -> throw IllegalArgumentException("Unsupported URI: $uri")
         }
-        val res = dbHelper.writableDatabase.use {
-            it.update(name, values, newSelection, selectionArgs)
-        }
+        val res = dbHelper.writableDatabase.update(name, values, newSelection, selectionArgs)
         context.contentResolver.notifyChange(uri, null)
         return res
     }
@@ -94,7 +89,7 @@ class MainProvider : ContentProvider() {
             TYPE_COMPONENT_ITEM -> "component" to uri!!.pathSegments.last()
             else -> throw IllegalArgumentException("Unsupported URI: $uri")
         }
-        return dbHelper.writableDatabase.use {
+        return dbHelper.readableDatabase.let {
             SQLiteQueryBuilder().apply {
                 tables = name
                 targetId?.apply { appendWhere("_id=$this") }

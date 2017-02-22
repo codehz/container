@@ -37,9 +37,11 @@ class MyComponentDelegate(val context: Context) : ComponentDelegate {
         VLog.d("MyComponentDelegate", "onSendBroadcast %s", intent.toString())
         if (intent?.action != null) {
             val action = intent?.action!!
-            context.contentResolver.query(MainProvider.URI_BUILDER.appendPath("component").build(), arrayOf("regex"), "`type`=\"broadcast\"", null, null).use {
-                if (Regex.fromLiteral(it.getString(0)).matches(action))
-                    return false
+            context.contentResolver.query(MainProvider.COMPONENT_URI, arrayOf("regex"), "`type`=\"broadcast\"", null, null).use {
+                while (it.moveToNext()) {
+                    if (Regex.fromLiteral(it.getString(0)).matches(action))
+                        return false
+                }
             }
         }
         return true

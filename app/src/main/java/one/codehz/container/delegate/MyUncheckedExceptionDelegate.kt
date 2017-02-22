@@ -18,7 +18,7 @@ class MyUncheckedExceptionDelegate : UncheckedExceptionDelegate {
         logUncaught.printWriter(Charsets.UTF_8).use {
             e.printStackTrace(it)
         }
-        virtualCore.context.contentResolver.insert(MainProvider.URI_BUILDER.appendPath("log").build(), ContentValues().apply {
+        virtualCore.context.contentResolver.insert(MainProvider.LOG_URI, ContentValues().apply {
             put("package", vClientImpl.currentPackage)
             put("data", StringWriter().apply { e.printStackTrace(PrintWriter(this)) }.toString())
         })

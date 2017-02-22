@@ -7,6 +7,7 @@ import android.os.IInterface;
 import com.lody.virtual.client.core.VirtualCore;
 import com.lody.virtual.client.hook.base.Hook;
 import com.lody.virtual.client.ipc.VActivityManager;
+import com.lody.virtual.helper.utils.VLog;
 import com.lody.virtual.os.VUserHandle;
 
 import java.lang.reflect.Method;
@@ -46,6 +47,7 @@ import java.lang.reflect.Method;
 		if (serviceInfo != null) {
 			return VActivityManager.get().startService(appThread, service, resolvedType, userId);
 		}
+		VLog.d(getName(), "try to %s", service);
 		return method.invoke(who, args);
 	}
 

@@ -39,7 +39,7 @@ import java.lang.reflect.Method;
         Intent intent = (Intent) args[1];
         String type = (String) args[2];
         intent.setDataAndType(redirectData(intent.getData()), type);
-        if (intent.getAction().equals(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE) && intent.getData() != null) {
+        if (intent.getAction() != null && intent.getAction().equals(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE) && intent.getData() != null) {
             ContentValues values = new ContentValues(2);
             String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(intent.getDataString()));
             values.put("mime_type", mime);
