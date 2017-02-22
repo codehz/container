@@ -6,6 +6,7 @@ import android.content.UriMatcher
 import android.database.Cursor
 import android.database.sqlite.SQLiteQueryBuilder
 import android.net.Uri
+import com.lody.virtual.helper.utils.VLog
 import one.codehz.container.db.MainDb
 
 class MainProvider : ContentProvider() {
@@ -96,11 +97,11 @@ class MainProvider : ContentProvider() {
     override fun query(uri: Uri, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): Cursor {
         val (name, targetId) = when (uriMatcher.match(uri)) {
             TYPE_LOG_ALL -> "log" to null
-            TYPE_LOG_SINGLE -> "log" to uri.pathSegments.last()
+            TYPE_LOG_SINGLE -> "log" to uri.lastPathSegment
             TYPE_COMPONENT -> "component" to null
-            TYPE_COMPONENT_ITEM -> "component" to uri.pathSegments.last()
-            TYPE_COMPONENT_LOG -> "clog" to selection
-            TYPE_COMPONENT_LOG_ITEM -> "clog" to uri.pathSegments.last()
+            TYPE_COMPONENT_ITEM -> "component" to uri.lastPathSegment
+            TYPE_COMPONENT_LOG -> "clog" to null
+            TYPE_COMPONENT_LOG_ITEM -> "clog" to uri.lastPathSegment
             else -> throw IllegalArgumentException("Unsupported URI: $uri")
         }
         return dbHelper.readableDatabase.let {

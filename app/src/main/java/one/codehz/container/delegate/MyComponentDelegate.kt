@@ -46,10 +46,12 @@ class MyComponentDelegate(val context: Context) : ComponentDelegate {
     }
 
     fun logComponent(type: String, action: String) = checkComponent(type, action).apply {
+        val result = if (this) 1 else 0
         context.contentResolver.insert(MainProvider.COMPONENT_LOG_URI, ContentValues().apply {
             put("package", vClientImpl.currentPackage)
             put("type", type)
             put("action", action)
+            put("result", result)
         })
     }
 

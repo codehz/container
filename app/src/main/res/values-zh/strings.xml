@@ -89,4 +89,8 @@
     <string name="native_library_path">原生库文件路径</string>
     <string name="package_name">包名</string>
     <string name="log_copied">日志已复制</string>
+    <string name="component_filter">组件过滤</string>
+    <string name="restricted">受限的</string>
+    <string name="usage_history">使用历史</string>
+    <string name="add">添加</string>
 </resources>

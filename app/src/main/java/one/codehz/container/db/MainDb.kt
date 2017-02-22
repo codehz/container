@@ -20,6 +20,7 @@ class MainDb(context: Context) : SQLiteOpenHelper(context, "main", null, 1) {
                 "`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                 "`package` TEXT NOT NULL," +
                 "`type` TEXT NOT NULL," +
+                "`result` INTEGER NOT NULL," +
                 "`action` TEXT NOT NULL);")
     }
 

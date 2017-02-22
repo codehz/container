@@ -29,6 +29,7 @@ import one.codehz.container.adapters.PropertyListAdapter
 import one.codehz.container.base.BaseActivity
 import one.codehz.container.ext.*
 import one.codehz.container.fragment.BasicDetailFragment
+import one.codehz.container.fragment.ComponentDetailFragment
 import one.codehz.container.models.AppModel
 import one.codehz.container.models.AppPropertyModel
 
@@ -62,15 +63,20 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
                 it.setBackground(bgcolor)
                 it.show()
             }
+            1 -> ComponentDetailFragment(model) {
+                it.setBackground(bgcolor)
+                it.show()
+            }
             else -> throw IllegalArgumentException()
         }
 
         override fun getPageTitle(position: Int) = when (position) {
             0 -> getString(R.string.basic_info)!!
+            1 -> getString(R.string.component_filter)!!
             else -> throw IllegalArgumentException()
         }
 
-        override fun getCount() = 1
+        override fun getCount() = 2
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,8 +110,9 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
             }
         }
 
+        tabLayout.setupWithViewPager(viewPager)
+
         with(viewPager) {
-            addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
             adapter = DetailPagerAdapter()
         }
 

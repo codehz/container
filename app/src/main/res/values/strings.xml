@@ -92,4 +92,8 @@
     <string name="apk_path">Apk Path</string>
     <string name="native_library_path">Native Library Path</string>
     <string name="log_copied">Log Copied</string>
+    <string name="restricted">Restricted</string>
+    <string name="usage_history">Usage History</string>
+    <string name="component_filter">Component Filter</string>
+    <string name="add">Add</string>
 </resources>

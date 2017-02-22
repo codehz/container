@@ -32,7 +32,7 @@ class BasicDetailFragment(val model: AppModel, onSnack: (Snackbar) -> Unit) : Fr
         contentAdapter.updateModels(AppPropertyModel(model).getItems())
     }
     val logLoader by MakeLoaderCallbacks({ context }, { it() }) { ctx ->
-        context.contentResolver.query(MainProvider.LOG_URI, arrayOf("time", "data"), "`package` = \"${model.packageName}\"", null, "time ASC").use {
+        ctx.contentResolver.query(MainProvider.LOG_URI, arrayOf("time", "data"), "`package` = \"${model.packageName}\"", null, "time ASC").use {
             generateSequence { if (it.moveToNext()) it else null }.map { LogModel(it.getString(0), it.getString(1)) }.toList()
         }.run {
             logListAdapter.updateModels(this)
@@ -49,10 +49,6 @@ class BasicDetailFragment(val model: AppModel, onSnack: (Snackbar) -> Unit) : Fr
             clipboardManager.primaryClip = ClipData.newPlainText("log", value)
             onSnack(Snackbar.make(contentList, getString(R.string.log_copied), Snackbar.LENGTH_SHORT))
         }
-    }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
