@@ -45,9 +45,9 @@ import java.lang.reflect.Method;
 		service.setDataAndType(service.getData(), resolvedType);
 		ServiceInfo serviceInfo = VirtualCore.get().resolveServiceInfo(service, VUserHandle.myUserId());
 		if (serviceInfo != null) {
+			if (!VirtualCore.get().getComponentDelegate().onStartService(service)) return false;
 			return VActivityManager.get().startService(appThread, service, resolvedType, userId);
 		}
-		VLog.d(getName(), "try to %s", service);
 		return method.invoke(who, args);
 	}
 

@@ -100,8 +100,8 @@ class MainProvider : ContentProvider() {
             TYPE_LOG_SINGLE -> "log" to uri.lastPathSegment
             TYPE_COMPONENT -> "component" to null
             TYPE_COMPONENT_ITEM -> "component" to uri.lastPathSegment
-            TYPE_COMPONENT_LOG -> "clog" to null
-            TYPE_COMPONENT_LOG_ITEM -> "clog" to uri.lastPathSegment
+            TYPE_COMPONENT_LOG -> "clog_view" to null
+            TYPE_COMPONENT_LOG_ITEM -> "clog_view" to uri.lastPathSegment
             else -> throw IllegalArgumentException("Unsupported URI: $uri")
         }
         return dbHelper.readableDatabase.let {

@@ -50,6 +50,11 @@ public interface ComponentDelegate {
         }
 
         @Override
+        public boolean onStartService(Intent intent) {
+            return true;
+        }
+
+        @Override
         public boolean onSendBroadcast(Intent intent) {
             return true;
         }
@@ -70,6 +75,8 @@ public interface ComponentDelegate {
     void afterActivityPause(Activity activity);
 
     void afterActivityDestroy(Activity activity);
+
+    boolean onStartService(Intent intent);
 
     boolean onSendBroadcast(Intent intent);
 }
