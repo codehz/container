@@ -7,5 +7,5 @@ open class PropertyListModel {
             .map { it.getAnnotation(propertyField::class.java) to it }
             .filter { it.first != null }
             .sortedBy { it.first.order }
-            .map { PropertyListItemModel(it.first.name, it.second.invoke(this).toString()) }
+            .map { PropertyListItemModel(it.first.nameRes, it.second.invoke(this).toString()) }
 }

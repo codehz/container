@@ -30,7 +30,7 @@ class PropertyListAdapter<T : PropertyListModel> : BaseAdapter<PropertyListAdapt
         }
 
         override fun updateData(data: PropertyListItemModel) {
-            keyView.text = data.key
+            keyView.text = itemView.context.getString(data.key)
             valueView.text = data.value
         }
     }

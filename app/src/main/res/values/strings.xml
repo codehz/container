@@ -88,4 +88,7 @@
     <string name="basic_info">Basic Info</string>
     <string name="log">Log</string>
     <string name="clear">Clear</string>
+    <string name="package_name">Package Name</string>
+    <string name="apk_path">Apk Path</string>
+    <string name="native_library_path">Native Library Path</string>
 </resources>
