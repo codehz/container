@@ -93,4 +93,6 @@
     <string name="restricted">受限的</string>
     <string name="usage_history">使用历史</string>
     <string name="add">添加</string>
+    <string name="edit_regex">编辑正则表达式</string>
+    <string name="prompt_resicted">限制它吗？</string>
 </resources>

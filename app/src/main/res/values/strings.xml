@@ -96,4 +96,6 @@
     <string name="usage_history">Usage History</string>
     <string name="component_filter">Component Filter</string>
     <string name="add">Add</string>
+    <string name="edit_regex">Edit Regex</string>
+    <string name="prompt_resicted">Resicted it?</string>
 </resources>

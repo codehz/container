@@ -36,9 +36,10 @@ class MyComponentDelegate(val context: Context) : ComponentDelegate {
     }
 
     fun checkComponent(type: String, action: String): Boolean {
-        context.contentResolver.query(MainProvider.COMPONENT_URI, arrayOf("regex"), "`type`=\"$type\" AND package=\"${vClientImpl.currentPackage}\"", null, null).use {
-            while (it.moveToNext()) {
-                if (Regex.fromLiteral(it.getString(0)).matches(action))
+        context.contentResolver.query(MainProvider.COMPONENT_URI, arrayOf("action"), "`type`=\"$type\" AND package=\"${vClientImpl.currentPackage}\"", null, null).use {
+            generateSequence { if (it.moveToNext()) it else null }.map { it.getString(0) }.forEach {
+                VLog.d("MCD", "%s == %s", it, action)
+                if (it == action)
                     return false
             }
         }

@@ -10,7 +10,7 @@ import one.codehz.container.base.BaseViewHolder
 import one.codehz.container.ext.get
 import one.codehz.container.models.ComponentInfoModel
 
-class ComponentListAdapter(val hasCount: Boolean) : BaseAdapter<ComponentListAdapter.ViewHolder, ComponentInfoModel>() {
+class ComponentListAdapter(val hasCount: Boolean, val onClick: (Long, String, String) -> Unit) : BaseAdapter<ComponentListAdapter.ViewHolder, ComponentInfoModel>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(parent)
 
     override fun onSetupViewHolder(holder: ViewHolder, data: ComponentInfoModel) = holder updateData data
@@ -19,10 +19,18 @@ class ComponentListAdapter(val hasCount: Boolean) : BaseAdapter<ComponentListAda
         val typeView by lazy<TextView> { itemView[R.id.type_text] }
         val titleView by lazy<TextView> { itemView[R.id.title] }
         val countView by lazy<TextView> { itemView[R.id.count_text] }
+        var id: Long = 0
+
+        init {
+            itemView.setOnClickListener {
+                onClick(id, typeView.text.toString(), titleView.text.toString())
+            }
+        }
 
         override fun updateData(data: ComponentInfoModel) {
             typeView.text = data.type
             titleView.text = data.name
+            id = data.id
             if (hasCount)
                 countView.text = data.count
             countView.visibility = if (hasCount) View.VISIBLE else View.GONE

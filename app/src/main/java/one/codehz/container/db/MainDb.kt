@@ -15,7 +15,7 @@ class MainDb(context: Context) : SQLiteOpenHelper(context, "main", null, 1) {
                 "`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                 "`package` TEXT NOT NULL," +
                 "`type` TEXT NOT NULL," +
-                "`regex` TEXT NOT NULL);")
+                "`action` TEXT NOT NULL);")
         db.execSQL("CREATE TABLE IF NOT EXISTS clog(" +
                 "`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                 "`package` TEXT NOT NULL," +
