@@ -1,70 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:clickable="true"
-              android:focusable="true"
-              android:focusableInTouchMode="true"
-              android:orientation="vertical">
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                                            xmlns:tools="http://schemas.android.com/tools"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp">
+        android:orientation="vertical">
 
-        <one.codehz.container.widget.RecycleViewWithEmptySupport
-            android:id="@+id/content_list"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp"
-            app:emptyDrawable="@drawable/ic_empty"/>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/log_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/log"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
-
-            <Button
-                android:id="@+id/clear_log"
-                style="@android:style/Widget.Material.Light.Button.Borderless.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/log_title"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="16dp"
-                android:text="@string/clear"
-                tools:ignore="RelativeOverlap"/>
+            android:layout_margin="16dp">
 
             <one.codehz.container.widget.RecycleViewWithEmptySupport
-                android:id="@+id/log_list"
+                android:id="@+id/content_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/log_title"
-                android:layout_marginTop="16dp"
                 android:clipToPadding="false"
-                android:minHeight="64dp"
-                android:paddingEnd="16dp"
-                android:paddingStart="16dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 app:emptyDrawable="@drawable/ic_empty"/>
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-</LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/log_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/log"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+                <Button
+                    android:id="@+id/clear_log"
+                    style="@android:style/Widget.Material.Light.Button.Borderless.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/log_title"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="16dp"
+                    android:text="@string/clear"
+                    tools:ignore="RelativeOverlap"/>
+
+                <one.codehz.container.widget.RecycleViewWithEmptySupport
+                    android:id="@+id/log_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/log_title"
+                    android:layout_marginTop="16dp"
+                    android:clipToPadding="false"
+                    android:minHeight="64dp"
+                    app:emptyDrawable="@drawable/ic_empty"/>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

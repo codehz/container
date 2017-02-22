@@ -82,4 +82,7 @@
     <string name="null_launch_intent">无法找到启动活动！</string>
     <string name="mac_address">Wifi硬件地址</string>
     <string name="phone_number">手机号</string>
+    <string name="basic_info">基本信息</string>
+    <string name="clear">清除</string>
+    <string name="log">日志</string>
 </resources>
