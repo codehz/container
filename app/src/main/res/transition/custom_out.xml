@@ -7,7 +7,7 @@
             <target android:excludeId="@id/app_bar"/>
             <target android:excludeId="@id/fab"/>
             <target android:excludeId="@id/bottom_navigation"/>
-            <target android:excludeId="@id/property_card" />
+            <target android:excludeId="@id/viewPager" />
         </targets>
     </explode>
     <slide android:startDelay="50" android:slideEdge="top">
@@ -19,7 +19,7 @@
         <targets>
             <target android:targetId="@id/fab"/>
             <target android:targetId="@id/bottom_navigation"/>
-            <target android:targetId="@id/property_card" />
+            <target android:targetId="@id/viewPager" />
         </targets>
     </slide>
     <fade >

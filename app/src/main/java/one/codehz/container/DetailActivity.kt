@@ -12,6 +12,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.CollapsingToolbarLayout
+import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.view.PagerAdapter
+import android.support.v4.view.ViewPager
 import android.support.v7.graphics.Palette
 import android.support.v7.widget.*
 import android.view.Menu
@@ -25,6 +31,7 @@ import one.codehz.container.ext.MakeLoaderCallbacks
 import one.codehz.container.ext.get
 import one.codehz.container.ext.systemService
 import one.codehz.container.ext.virtualCore
+import one.codehz.container.fragment.BasicDetailFragment
 import one.codehz.container.models.AppModel
 import one.codehz.container.models.AppPropertyModel
 
@@ -45,20 +52,26 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
     val package_name: String by lazy { intent.data.path.substring(1) }
     val model by lazy { AppModel(this, virtualCore.findApp(package_name)) }
 
-    val listLoader by MakeLoaderCallbacks({ this }, { it() }) { ctx ->
-        contentAdapter.updateModels(AppPropertyModel(model).getItems())
-    }
-
     val iconView by lazy<ImageView> { this[R.id.icon] }
-    val contentList by lazy<RecyclerView> { this[R.id.content_list] }
+    val viewPager by lazy<ViewPager> { this[R.id.viewPager] }
+    val tabLayout by lazy<TabLayout> { this[R.id.tabs] }
     val collapsingToolbar by lazy<CollapsingToolbarLayout> { this[R.id.collapsing_toolbar] }
     var bgcolor = 0
     val handler = Handler()
 
-    val contentAdapter by lazy {
-        PropertyListAdapter<AppPropertyModel>()
+    inner class DetailPagerAdapter : FragmentPagerAdapter(supportFragmentManager) {
+        override fun getItem(position: Int) = when (position) {
+            0 -> BasicDetailFragment(model)
+            else -> throw IllegalArgumentException()
+        }
+
+        override fun getPageTitle(position: Int) = when (position) {
+            0 -> getString(R.string.basic_info)!!
+            else -> throw IllegalArgumentException()
+        }
+
+        override fun getCount() = 1
     }
-    val linearLayoutManager by lazy { LinearLayoutManager(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,8 +84,6 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
-
-        supportLoaderManager.initLoader(0, null, listLoader).forceLoad()
 
         iconView.setImageDrawable(model.icon)
         Palette.from(model.icon.bitmap).apply { maximumColorCount(1) }.generate { palette ->
@@ -93,12 +104,9 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
             }
         }
 
-        with(contentList) {
-            adapter = contentAdapter
-            layoutManager = linearLayoutManager
-            itemAnimator = DefaultItemAnimator()
-            addItemDecoration(DividerItemDecoration(this@DetailActivity, OrientationHelper.HORIZONTAL))
-            setHasFixedSize(false)
+        with(viewPager) {
+            addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
+            adapter = DetailPagerAdapter()
         }
 
         collapsingToolbar.title = model.name
@@ -158,10 +166,5 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
                 })
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        supportLoaderManager.restartLoader(0, null, listLoader)
     }
 }

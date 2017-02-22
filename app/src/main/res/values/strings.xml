@@ -85,4 +85,6 @@
     <string name="null_launch_intent">Cannot find launch activity!</string>
     <string name="mac_address">Mac Address</string>
     <string name="phone_number">Number</string>
+    <string name="basic_info">Basic Info</string>
+    <string name="log">Log</string>
 </resources>
