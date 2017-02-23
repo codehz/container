@@ -49,13 +49,11 @@ class InstallService : Service() {
             REQUEST_INSTALL -> NotificationCompat.Builder(this)
                     .setContentTitle(getString(R.string.install_request))
                     .setContentText(getString(R.string.install_request_content, intent.data.path))
-                    .addAction(NotificationCompat.Action(0, getString(R.string.install), makePendingService(PENDING_INSTALL, INSTALL) { data = intent.data }))
-                    .addAction(NotificationCompat.Action(0, getString(android.R.string.cancel), cancelPendingIntent))
+                    .setContentIntent(makePendingService(PENDING_INSTALL, INSTALL) { data = intent.data })
             REQUEST_UNINSTALL -> NotificationCompat.Builder(this)
                     .setContentTitle(getString(R.string.uninstall_request))
                     .setContentText(getString(R.string.uninstall_request_content, intent.getStringExtra(KEY_PACKAGE_NAME)))
-                    .addAction(NotificationCompat.Action(0, getString(R.string.uninstall), makePendingService(PENDING_UNINSTALL, UNINSTALL) { putExtra(KEY_PACKAGE_NAME, intent.getStringExtra(KEY_PACKAGE_NAME)) }))
-                    .addAction(NotificationCompat.Action(0, getString(android.R.string.cancel), cancelPendingIntent))
+                    .setContentIntent(makePendingService(PENDING_UNINSTALL, UNINSTALL) { putExtra(KEY_PACKAGE_NAME, intent.getStringExtra(KEY_PACKAGE_NAME)) })
             INSTALL -> {
                 notificationManager.cancel(NOTIFICATION_ID_REQUEST)
                 handler.sendMessage(handler.obtainMessage(0, startId, 0, intent.data))
@@ -133,10 +131,9 @@ class InstallService : Service() {
                         notification
                                 .setContentTitle(getString(R.string.install_finished_with_name, name))
                                 .setTicker(getString(R.string.install_finished_with_name, name))
-                                .addAction(NotificationCompat.Action(0, name,
-                                        makePendingService(PENDING_OPEN, OPEN) {
-                                            data = Uri.Builder().scheme("container").authority("launch").appendPath(packageName).build()
-                                        }))
+                                .setContentIntent(makePendingService(PENDING_OPEN, OPEN) {
+                                    data = Uri.Builder().scheme("container").authority("launch").appendPath(packageName).build()
+                                })
                                 .setProgress(0, 0, false)
                         notificationManager.notify(NOTIFICATION_ID_INSTALL, notification.build())
                     }
