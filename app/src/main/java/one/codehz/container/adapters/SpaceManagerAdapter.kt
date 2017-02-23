@@ -22,9 +22,13 @@ class SpaceManagerAdapter : BaseAdapter<SpaceManagerAdapter.ViewHolder, SpaceMan
         private val valueView by lazy<TextView> { itemView[R.id.value] }
         private val button by lazy<Button> { itemView[R.id.button] }
 
-        init { button.setOnClickListener { currentModel?.target?.apply {
-            itemView.context.startActivity(Intent(itemView.context, this.java))
-        } } }
+        init {
+            button.setOnClickListener {
+                currentModel?.target?.apply {
+                    itemView.context.startActivity(Intent(itemView.context, this.java))
+                }
+            }
+        }
 
         override fun updateData(data: SpaceManagerModel) {
             currentModel = data
@@ -32,6 +36,8 @@ class SpaceManagerAdapter : BaseAdapter<SpaceManagerAdapter.ViewHolder, SpaceMan
             valueView.text = data.amount
         }
 
-        infix fun updateValue(value: String) { valueView.text = value }
+        infix fun updateValue(value: String) {
+            valueView.text = value
+        }
     }
 }

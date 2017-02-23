@@ -51,7 +51,9 @@ infix fun <R, P> ((P) -> R).bind(p: P) = { this.invoke(p) }
 
 fun <T> makeAsyncTaskLoader(context: Context, task: (Context) -> T) = object : AsyncTaskLoader<T>(context) {
     override fun onStartLoading() = forceLoad()
-    override fun onStopLoading() { cancelLoad() }
+    override fun onStopLoading() {
+        cancelLoad()
+    }
 
     override fun loadInBackground() = task(context)
 }

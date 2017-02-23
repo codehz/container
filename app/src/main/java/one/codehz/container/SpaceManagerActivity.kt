@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import one.codehz.container.adapters.SpaceManagerAdapter
 import one.codehz.container.base.BaseActivity
 import one.codehz.container.ext.MakeLoaderCallbacks

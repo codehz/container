@@ -13,25 +13,22 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.graphics.Palette
-import android.support.v7.widget.*
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import com.lody.virtual.os.VUserHandle
-import one.codehz.container.adapters.PropertyListAdapter
 import one.codehz.container.base.BaseActivity
-import one.codehz.container.ext.*
+import one.codehz.container.ext.get
+import one.codehz.container.ext.setBackground
+import one.codehz.container.ext.systemService
+import one.codehz.container.ext.virtualCore
 import one.codehz.container.fragment.BasicDetailFragment
 import one.codehz.container.fragment.ComponentDetailFragment
 import one.codehz.container.models.AppModel
-import one.codehz.container.models.AppPropertyModel
 
 class DetailActivity : BaseActivity(R.layout.application_detail) {
     companion object {

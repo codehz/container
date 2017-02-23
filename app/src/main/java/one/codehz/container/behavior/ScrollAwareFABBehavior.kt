@@ -1,13 +1,10 @@
 package one.codehz.container.behavior
 
-import android.app.ProgressDialog.show
 import android.content.Context
-import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.FloatingActionButton
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import one.codehz.container.MainActivity
 

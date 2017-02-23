@@ -2,7 +2,10 @@ package one.codehz.container.behavior
 
 import android.content.Context
 import android.graphics.Rect
-import android.support.design.widget.*
+import android.support.design.widget.AppBarLayout
+import android.support.design.widget.BottomNavigationView
+import android.support.design.widget.CoordinatorLayout
+import android.support.design.widget.Snackbar
 import android.support.v4.view.WindowInsetsCompat
 import android.util.AttributeSet
 import android.util.Log
@@ -21,7 +24,7 @@ class BottomNavigationBehavior(context: Context, val attrs: AttributeSet) : Coor
 
     override fun layoutDependsOn(parent: CoordinatorLayout?, child: BottomNavigationView, dependency: View): Boolean {
         if ((dependency.context as? MainActivity)?.isTransition ?: false) return false
-        return when(dependency) {
+        return when (dependency) {
             is AppBarLayout -> true
             is Snackbar.SnackbarLayout -> {
                 adjustSnackBarLayout(dependency, child)
@@ -35,7 +38,7 @@ class BottomNavigationBehavior(context: Context, val attrs: AttributeSet) : Coor
 
     override fun onDependentViewChanged(parent: CoordinatorLayout?, child: BottomNavigationView, dependency: View): Boolean {
         if ((dependency.context as? MainActivity)?.isTransition ?: false) return false
-        return when(dependency) {
+        return when (dependency) {
             is AppBarLayout -> {
                 val value = child.context.resources.getDimensionPixelSize(child.context.resources.getIdentifier("status_bar_height", "dimen", "android")) - dependency.y
                 child.translationY = value / dependency.height * child.height

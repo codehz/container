@@ -1,7 +1,6 @@
 package one.codehz.container.fragment
 
 import android.content.ClipData
-import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -15,7 +14,10 @@ import android.widget.Button
 import one.codehz.container.R
 import one.codehz.container.adapters.LogListAdapter
 import one.codehz.container.adapters.PropertyListAdapter
-import one.codehz.container.ext.*
+import one.codehz.container.ext.MakeLoaderCallbacks
+import one.codehz.container.ext.clipboardManager
+import one.codehz.container.ext.get
+import one.codehz.container.ext.virtualCore
 import one.codehz.container.models.AppModel
 import one.codehz.container.models.AppPropertyModel
 import one.codehz.container.models.LogModel

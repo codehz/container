@@ -9,7 +9,6 @@ import one.codehz.container.R
 import one.codehz.container.base.BaseAdapter
 import one.codehz.container.base.BaseViewHolder
 import one.codehz.container.ext.get
-import one.codehz.container.ext.onEach
 import one.codehz.container.ext.vUserManager
 import one.codehz.container.models.AppModel
 import one.codehz.container.models.RunningAppBaseModel

@@ -13,6 +13,7 @@ abstract class BaseAdapter<T : RecyclerView.ViewHolder, D : SameAsAble<D>> : Rec
         onBindViewHolder(holder, position)
     else
         onSetupViewHolder(holder, models[position], payloads[0])
+
     final override fun getItemCount() = models.size
 
     abstract fun onSetupViewHolder(holder: T, data: D)
@@ -23,6 +24,7 @@ abstract class BaseAdapter<T : RecyclerView.ViewHolder, D : SameAsAble<D>> : Rec
         models.clear()
         notifyDataSetChanged()
     }
+
     fun enqueueDelete(target: D): () -> Unit {
         deleted += target
         return {

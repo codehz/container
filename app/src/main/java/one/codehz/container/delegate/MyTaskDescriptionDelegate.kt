@@ -2,7 +2,6 @@ package one.codehz.container.delegate
 
 import android.app.ActivityManager
 import com.lody.virtual.client.hook.delegate.TaskDescriptionDelegate
-import com.lody.virtual.os.VUserManager
 import one.codehz.container.ext.vUserManager
 
 class MyTaskDescriptionDelegate : TaskDescriptionDelegate {

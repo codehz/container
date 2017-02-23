@@ -5,16 +5,14 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.transition.Fade
 import android.transition.Transition
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.lody.virtual.client.ipc.VActivityManager
-import com.lody.virtual.os.VUserHandle
-import one.codehz.container.ext.*
+import one.codehz.container.ext.get
+import one.codehz.container.ext.pair
+import one.codehz.container.ext.runAsync
+import one.codehz.container.ext.virtualCore
 import one.codehz.container.models.AppModel
 
 class LoadingActivity : Activity() {

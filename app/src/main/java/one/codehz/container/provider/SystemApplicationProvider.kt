@@ -49,7 +49,7 @@ class SystemApplicationProvider : DocumentsProvider() {
         val ret = MatrixCursor(resolveDocumentProjection(projection))
         val internal = virtualCore.allApps.map { it.packageName }
         with(context.packageManager.getInstalledPackages(0)) {
-            when(query) {
+            when (query) {
                 "-s" -> filter { it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0 }
                 "-3" -> filter { it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0 }
                 "-t" -> filter { it.applicationInfo.flags and ApplicationInfo.FLAG_STOPPED != 0 }
@@ -83,8 +83,7 @@ class SystemApplicationProvider : DocumentsProvider() {
             row.add(Document.COLUMN_DISPLAY_NAME, context.getString(R.string.installed_application))
             row.add(Document.COLUMN_LAST_MODIFIED, System.currentTimeMillis())
 //            row.add(Document.COLUMN_FLAGS, Document.FLAG_DIR_PREFERS_LAST_MODIFIED)
-        }
-        else
+        } else
             ret += findApp(documentId.substring(4))
         return ret
     }

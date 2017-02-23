@@ -2,7 +2,6 @@ package one.codehz.container.models
 
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import com.lody.virtual.helper.proto.AppSetting
 import com.lody.virtual.os.VUserHandle
 import one.codehz.container.base.SameAsAble
