@@ -271,6 +271,7 @@ public final class VClientImpl extends IVClient.Stub {
             PatchManager.getInstance().checkEnv(AppInstrumentation.class);
         }
         mInitialApplication = LoadedApk.makeApplication.call(data.info, false, null);
+        VLog.d(TAG, "app: %s", mInitialApplication);
         mirror.android.app.ActivityThread.mInitialApplication.set(mainThread, mInitialApplication);
         ContextFixer.fixContext(mInitialApplication);
         List<ProviderInfo> providers = VPackageManager.get().queryContentProviders(data.processName, vuid, PackageManager.GET_META_DATA);
@@ -294,7 +295,7 @@ public final class VClientImpl extends IVClient.Stub {
         } catch (Exception e) {
             if (!mInstrumentation.onException(mInitialApplication, e)) {
                 throw new RuntimeException(
-                        "Unable to create application " + mInitialApplication.getClass().getName()
+                        "Unable to create application " + (mInitialApplication == null ? "NULL" : mInitialApplication.getClass().getName())
                                 + ": " + e.toString(), e);
             }
         }
