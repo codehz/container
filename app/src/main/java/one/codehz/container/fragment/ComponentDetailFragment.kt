@@ -68,13 +68,13 @@ class ComponentDetailFragment(val model: AppModel, onSnack: (Snackbar) -> Unit) 
         }
     }
 
-    val packageInfo: PackageInfo by lazy { context.packageManager.getPackageArchiveInfo(virtualCore.findApp(model.packageName).apkPath, PackageManager.GET_SERVICES) }
+    val packageInfo: PackageInfo? by lazy { context.packageManager.getPackageArchiveInfo(virtualCore.findApp(model.packageName).apkPath, PackageManager.GET_SERVICES) }
 
-    val staticComponentListLoader by MakeLoaderCallbacks({ context }, { it() }) { ctx ->
+    val staticComponentListLoader by MakeLoaderCallbacks({ context }, { it?.invoke() }) { ctx ->
         val map = ctx.contentResolver.query(MainProvider.COMPONENT_LOG_VIEW_URI, arrayOf("action", "_id"), "`package` = ? AND type = 'service' AND restricted <> 0", arrayOf(model.packageName), null).use {
             generateSequence { if (it.moveToNext()) it else null }.map { it.getString(0) to it.getLong(1) }.toMap()
         }
-        packageInfo.services.map { ComponentInfoModel(map.getOrElse(it.name) { 0L }, it.name, "service", if (it.name in map) getString(R.string.restricted) else "") }.run {
+        packageInfo?.services?.map { ComponentInfoModel(map.getOrElse(it.name) { 0L }, it.name, "service", if (it.name in map) getString(R.string.restricted) else "") }?.run {
             staticComponentListAdapter.updateModels(this)
         }
     }
