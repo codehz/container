@@ -34,7 +34,7 @@ import java.lang.reflect.Method;
 		Intent service = (Intent) args[2];
 		String resolvedType = (String) args[3];
 		IServiceConnection conn = (IServiceConnection) args[4];
-		if (!VirtualCore.get().getComponentDelegate().onStartService(service)) return false;
+		if (!VirtualCore.get().getComponentDelegate().onStartService(service)) return 0;
 		int flags = (int) args[5];
 		int userId = VUserHandle.myUserId();
 		if (isServerProcess()) {
