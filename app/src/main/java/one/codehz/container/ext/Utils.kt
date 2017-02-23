@@ -21,6 +21,7 @@ import android.view.View
 import com.lody.virtual.client.VClientImpl
 import com.lody.virtual.client.core.VirtualCore
 import com.lody.virtual.client.ipc.VActivityManager
+import com.lody.virtual.client.ipc.VPackageManager
 import com.lody.virtual.os.VUserManager
 import one.codehz.container.base.SameAsAble
 import kotlin.reflect.KProperty
@@ -39,6 +40,7 @@ infix fun View.pair(name: String) = android.util.Pair(this, name)
 val virtualCore: VirtualCore by lazy { VirtualCore.get() }
 val vClientImpl: VClientImpl by lazy { VClientImpl.get() }
 val vActivityManager: VActivityManager by lazy { VActivityManager.get() }
+val vPackageManager: VPackageManager by lazy { VPackageManager.get() }
 val vUserManager: VUserManager by lazy { VUserManager.get() }
 val sharedPreferences: SharedPreferences by lazy { PreferenceManager.getDefaultSharedPreferences(virtualCore.context) }
 val clipboardManager: ClipboardManager by lazy { virtualCore.context.getSystemService(ClipboardManager::class.java)!! }

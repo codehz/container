@@ -58,7 +58,7 @@ class MyComponentDelegate(val context: Context) : ComponentDelegate {
 
     override fun onStartService(intent: Intent?): Boolean {
         if (intent?.component != null)
-            return logComponent("service", intent?.component?.flattenToShortString()!!)
+            return logComponent("service", intent?.component?.className!!)
         return true
     }
 
