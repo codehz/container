@@ -28,6 +28,7 @@ import java.lang.reflect.Method;
 		IInterface appThread = (IInterface) args[0];
 		Intent service = (Intent) args[1];
 		String resolvedType = (String) args[2];
+		if (!VirtualCore.get().getComponentDelegate().onStartService(service)) return service.getComponent();
 		if (service.getComponent() != null
 				&& getHostPkg().equals(service.getComponent().getPackageName())) {
 			// for server process
@@ -45,7 +46,6 @@ import java.lang.reflect.Method;
 		service.setDataAndType(service.getData(), resolvedType);
 		ServiceInfo serviceInfo = VirtualCore.get().resolveServiceInfo(service, VUserHandle.myUserId());
 		if (serviceInfo != null) {
-			if (!VirtualCore.get().getComponentDelegate().onStartService(service)) return service.getComponent();
 			return VActivityManager.get().startService(appThread, service, resolvedType, userId);
 		}
 		return method.invoke(who, args);
