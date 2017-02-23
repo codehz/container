@@ -12,6 +12,7 @@ import com.lody.virtual.client.core.VirtualCore;
 import com.lody.virtual.client.hook.base.Hook;
 import com.lody.virtual.client.hook.secondary.ServiceConnectionDelegate;
 import com.lody.virtual.client.ipc.VActivityManager;
+import com.lody.virtual.helper.utils.VLog;
 import com.lody.virtual.os.VUserHandle;
 
 import java.lang.reflect.Method;
@@ -33,6 +34,7 @@ import java.lang.reflect.Method;
 		Intent service = (Intent) args[2];
 		String resolvedType = (String) args[3];
 		IServiceConnection conn = (IServiceConnection) args[4];
+		if (!VirtualCore.get().getComponentDelegate().onStartService(service)) return false;
 		int flags = (int) args[5];
 		int userId = VUserHandle.myUserId();
 		if (isServerProcess()) {
