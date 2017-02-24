@@ -34,7 +34,8 @@
         android:layout_marginBottom="8dp"
         android:clipToPadding="false"
         android:paddingEnd="16dp"
-        android:paddingStart="16dp">
+        android:paddingStart="16dp"
+        android:scrollbars="none">
 
         <TextView
             android:id="@+id/title"
