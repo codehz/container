@@ -3,6 +3,7 @@ package one.codehz.container
 import android.app.Activity
 import android.app.ActivityManager
 import android.app.ActivityOptions
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -20,6 +21,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import com.lody.virtual.helper.utils.VLog
 import com.lody.virtual.os.VUserHandle
 import one.codehz.container.base.BaseActivity
 import one.codehz.container.ext.get
@@ -29,12 +31,14 @@ import one.codehz.container.ext.virtualCore
 import one.codehz.container.fragment.BasicDetailFragment
 import one.codehz.container.fragment.ComponentDetailFragment
 import one.codehz.container.models.AppModel
+import one.codehz.container.provider.MainProvider
 
 class DetailActivity : BaseActivity(R.layout.application_detail) {
     companion object {
         val RESULT_DELETE_APK = 1
         val REQUEST_USER = 0
         val REQUEST_USER_FOR_SHORTCUT = 1
+        val SELECT_SERVICES = 2
 
         fun launch(context: Activity, appModel: AppModel, iconView: View, startFn: (Intent, Bundle) -> Unit) {
             startFn(Intent(context, DetailActivity::class.java).apply {
@@ -168,6 +172,16 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
                     putExtra(Intent.EXTRA_SHORTCUT_ICON, scaledIcon)
                     putExtra("duplicate", false)
                 })
+            }
+            SELECT_SERVICES -> {
+                data?.getStringArrayExtra("LIST")?.forEach {
+                    contentResolver.insert(MainProvider.COMPONENT_URI, ContentValues().apply {
+                        put("package", model.packageName)
+                        put("type", "service")
+                        put("action", it)
+                        VLog.d("DA", toString())
+                    })
+                }
             }
         }
     }

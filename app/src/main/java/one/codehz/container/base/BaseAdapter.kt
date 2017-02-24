@@ -25,6 +25,12 @@ abstract class BaseAdapter<T : RecyclerView.ViewHolder, D : SameAsAble<D>> : Rec
         notifyDataSetChanged()
     }
 
+    fun dumpDeleted() = deleted.toList()
+
+    fun clearDeleteQueue() {
+        deleted.clear()
+    }
+
     fun enqueueDelete(target: D): () -> Unit {
         deleted += target
         return {

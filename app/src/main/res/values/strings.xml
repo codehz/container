@@ -103,4 +103,7 @@
     <string name="component_in_manifest">Component In Manifest</string>
     <string name="clear_data">Clear Data</string>
     <string name="add_component_from_manifest">Add Component From Manifest</string>
+    <string name="check">Check</string>
+    <string name="search">Search</string>
+    <string name="cancel">Cancel</string>
 </resources>

@@ -26,6 +26,11 @@
                 android:resource="@xml/shortcuts"/>
         </activity>
 
+        <activity android:name=".ServiceSelectorActivity"
+                  android:parentActivityName=".DetailActivity"
+                  android:configChanges="orientation|screenSize"
+                  android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".ShortcutActivity"
             android:excludeFromRecents="true"

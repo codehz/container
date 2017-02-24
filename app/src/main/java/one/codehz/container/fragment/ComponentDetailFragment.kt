@@ -1,6 +1,7 @@
 package one.codehz.container.fragment
 
 import android.content.ContentValues
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -11,8 +12,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.lody.virtual.helper.utils.VLog
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.TextView
+import one.codehz.container.DetailActivity
 import one.codehz.container.R
+import one.codehz.container.ServiceSelectorActivity
 import one.codehz.container.adapters.ComponentListAdapter
 import one.codehz.container.ext.MakeLoaderCallbacks
 import one.codehz.container.ext.get
@@ -23,7 +28,10 @@ import one.codehz.container.provider.MainProvider
 class ComponentDetailFragment(val model: AppModel, onSnack: (Snackbar) -> Unit) : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = inflater.inflate(R.layout.component_detail, container, false)!!
 
+    val hackList by lazy<RecyclerView> { view!![R.id.hack] }
     val historyList by lazy<RecyclerView> { view!![R.id.history_list] }
+    val addButton by lazy<ImageButton> { view!![R.id.add_button] }
+    val clearButton by lazy<TextView> { view!![R.id.clear_history] }
     val historyListAdapter by lazy {
         ComponentListAdapter(true) { item ->
             val (id, value, type) = item
@@ -51,7 +59,6 @@ class ComponentDetailFragment(val model: AppModel, onSnack: (Snackbar) -> Unit) 
                 arrayOf(model.packageName),
                 "type ASC").use {
             generateSequence { if (it.moveToNext()) it else null }.map {
-                VLog.d("CDF", (0..it.columnCount - 1).map { i -> it.getString(i) }.toString())
                 ComponentInfoModel(it.getLong(0), it.getString(2), it.getString(1), "${if (it.getInt(5) != 0) "${getString(R.string.restricted)} " else ""}${it.getString(3)}/${it.getString(4)}")
             }.toList()
         }.run {
@@ -66,6 +73,19 @@ class ComponentDetailFragment(val model: AppModel, onSnack: (Snackbar) -> Unit) 
             adapter = historyListAdapter
             itemAnimator = DefaultItemAnimator()
             layoutManager = LinearLayoutManager(context)
+        }
+        with(hackList) {
+            adapter = ComponentListAdapter(true) {}
+            layoutManager = LinearLayoutManager(context)
+        }
+        clearButton.setOnClickListener {
+            context.contentResolver.delete(MainProvider.COMPONENT_LOG_URI, "package = ?", arrayOf(model.packageName))
+            loaderManager.restartLoader(0, null, historyListLoader)
+        }
+        addButton.setOnClickListener {
+            activity.startActivityForResult(Intent(context, ServiceSelectorActivity::class.java).apply {
+                putExtra("package", model.packageName)
+            }, DetailActivity.SELECT_SERVICES)
         }
     }
 
