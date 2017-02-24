@@ -3,6 +3,11 @@ package one.codehz.container.models
 import one.codehz.container.base.SameAsAble
 
 class ComponentInfoModel(val id: Long, val name: String, val type: String, val count: String) : SameAsAble<ComponentInfoModel> {
+    operator fun component1() = id
+    operator fun component2() = name
+    operator fun component3() = type
+    operator fun component4() = count
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other?.javaClass != javaClass) return false

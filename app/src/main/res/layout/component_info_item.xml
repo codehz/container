@@ -7,34 +7,34 @@
         android:id="@+id/type_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toStartOf="@+id/count_text"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="4dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="4dp"
-        android:layout_alignParentStart="true"
-        android:textColor="?attr/colorPrimary"
-        android:text="@string/pending"/>
+        android:layout_toStartOf="@+id/count_text"
+        android:text="@string/pending"
+        android:textColor="?attr/colorPrimary"/>
 
     <TextView
         android:id="@+id/count_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/type_text"
         android:layout_alignParentEnd="true"
+        android:layout_marginBottom="4dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="4dp"
-        android:layout_alignBaseline="@id/type_text"
         android:text="@string/pending"
         android:textColor="?attr/colorAccent"/>
 
     <HorizontalScrollView
-        android:layout_below="@id/type_text"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/type_text"
         android:layout_marginBottom="8dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
         android:clipToPadding="false"
-        android:layout_height="wrap_content">
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp">
 
         <TextView
             android:id="@+id/title"
@@ -44,4 +44,5 @@
             android:text="@string/pending"
             android:textAppearance="@style/TextAppearance.AppCompat"/>
     </HorizontalScrollView>
+
 </RelativeLayout>

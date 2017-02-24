@@ -13,7 +13,8 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp">
+            android:layout_margin="16dp"
+            app:cardElevation="2dp">
 
             <one.codehz.container.widget.RecycleViewWithEmptySupport
                 android:id="@+id/content_list"
@@ -28,7 +29,8 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp">
+            android:layout_margin="16dp"
+            app:cardElevation="2dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
