@@ -9,7 +9,7 @@ android {
         minSdkVersion 22
         targetSdkVersion 25
         versionCode 9
-        versionName "0.857142857142 hotfix"
+        versionName "0.999999999999 preview"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
