@@ -45,7 +45,12 @@ import java.lang.reflect.Method;
             values.put("mime_type", mime);
             values.put("_data", intent.getData().getPath());
             VLog.d(getName(), "try " + values);
-            VirtualCore.get().getContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            if (mime.startsWith("image"))
+                VirtualCore.get().getContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            else if (mime.startsWith("video"))
+                VirtualCore.get().getContext().getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values);
+            else if (mime.startsWith("audio"))
+                VirtualCore.get().getContext().getContentResolver().insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
         }
         if (VirtualCore.get().getComponentDelegate() != null) {
             if (!VirtualCore.get().getComponentDelegate().onSendBroadcast(intent)) return null;
