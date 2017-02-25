@@ -23,5 +23,6 @@
         android:id="@+id/content_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:emptyDrawable="@drawable/ic_empty"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 </android.support.design.widget.CoordinatorLayout>
