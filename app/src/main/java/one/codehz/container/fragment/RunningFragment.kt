@@ -74,6 +74,7 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
             val (user, pkgName) = it
             virtualCore.killAppEx(pkgName, user)
         }
+        VLog.d("RF", "force update")
         RunningWidgetProvier.forceUpdate(context)
         Thread.sleep(200)
     }
@@ -151,12 +152,9 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
                                     override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                                         if (undo) return
                                         deleteAction()
-                                        if (isAdded) {
-                                            killedList += currentModel.userId to currentModel.appModel.packageName
-                                            loaderManager.restartLoader(KILL_LOADER, null, killAppLoader)
-                                        } else {
-                                            virtualCore.killAppEx(currentModel.appModel.packageName, currentModel.userId)
-                                        }
+                                        mSnackbar = null
+                                        VLog.d("RF", "dismiss")
+                                        virtualCore.killAppEx(currentModel.appModel.packageName, currentModel.userId)
                                     }
                                 })
                         mSnackbar!!.show()
@@ -169,13 +167,9 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
         }
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        mSnackbar?.dismiss()
-    }
-
     override fun onPause() {
         super.onPause()
+        VLog.d("RF", "onPause " + mSnackbar)
         mSnackbar?.dismiss()
     }
 }
