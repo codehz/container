@@ -3,6 +3,7 @@ package one.codehz.container.fragment
 import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.content.Loader
@@ -88,6 +89,8 @@ class ComponentDetailFragment(val model: AppModel, onSnack: (Snackbar) -> Unit) 
             }, DetailActivity.SELECT_SERVICES)
         }
     }
+
+    val handler = Handler()
 
     override fun onResume() {
         super.onResume()

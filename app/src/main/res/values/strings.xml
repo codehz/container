@@ -106,4 +106,5 @@
     <string name="check">Check</string>
     <string name="search">Search</string>
     <string name="cancel">Cancel</string>
+    <string name="list_is_empty">List Is Empty</string>
 </resources>

@@ -27,6 +27,7 @@ import one.codehz.container.ext.*
 import one.codehz.container.interfaces.IFloatingActionTarget
 import one.codehz.container.models.AppModel
 import one.codehz.container.models.RunningAppModel
+import one.codehz.container.provider.RunningWidgetProvier
 
 class RunningFragment : Fragment(), IFloatingActionTarget {
     companion object {
@@ -39,6 +40,7 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
 
     override fun onFloatingAction() {
         loaderManager.restartLoader(KILL_ALL_LOADER, null, killAllLoader)
+        RunningWidgetProvier.forceUpdate(context)
         activityManager.appTasks.filter { it.taskInfo.baseIntent.action != Intent.ACTION_MAIN }.forEach {
             when (it.taskInfo.baseIntent.action) {
                 Intent.ACTION_RUN ->
@@ -70,19 +72,15 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
     val killAppLoader by MakeLoaderCallbacks({ activity }, { loaderManager.getLoader<Loader<*>>(LIST_LOADER).forceLoad() }) {
         killedList.forEach {
             val (user, pkgName) = it
-            virtualCore.killApp(pkgName, user)
-            activityManager.appTasks
-                    .filter { it.taskInfo.baseIntent.component.className.startsWith("com.lody.virtual.client.stub.StubActivity$") }
-                    .filter { it.taskInfo.baseIntent.type.startsWith(pkgName + "/") }
-                    .forEach(ActivityManager.AppTask::finishAndRemoveTask)
+            virtualCore.killAppEx(pkgName, user)
         }
+        RunningWidgetProvier.forceUpdate(context)
         Thread.sleep(200)
     }
 
     val killAllLoader by MakeLoaderCallbacks({ activity }, { loaderManager.getLoader<Loader<*>>(LIST_LOADER).forceLoad() }) {
         killedList.clear()
-        virtualCore.killAllApps()
-        Thread.sleep(400)
+        virtualCore.killAllAppsEx()
     }
 
     val recycleView by lazy<RecyclerView> { view!![R.id.content_main] }
@@ -157,7 +155,7 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
                                             killedList += currentModel.userId to currentModel.appModel.packageName
                                             loaderManager.restartLoader(KILL_LOADER, null, killAppLoader)
                                         } else {
-                                            virtualCore.killApp(currentModel.appModel.packageName, currentModel.userId)
+                                            virtualCore.killAppEx(currentModel.appModel.packageName, currentModel.userId)
                                         }
                                     }
                                 })

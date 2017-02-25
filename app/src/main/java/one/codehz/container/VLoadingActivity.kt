@@ -10,6 +10,7 @@ import one.codehz.container.ext.get
 import one.codehz.container.ext.vActivityManager
 import one.codehz.container.ext.virtualCore
 import one.codehz.container.models.AppModel
+import one.codehz.container.provider.RunningWidgetProvier
 
 class VLoadingActivity : Activity() {
     val iconView by lazy<ImageView> { this[R.id.icon] }
@@ -37,17 +38,20 @@ class VLoadingActivity : Activity() {
         if (intent.data.getQueryParameter("delay") != null)
             Handler().postDelayed({
                 vActivityManager.startActivity(target, userId)
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                RunningWidgetProvier.forceUpdate(this)
                 finish()
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             }, 50)
         else if (!virtualCore.isAppRunning(package_name, userId))
             Handler().postDelayed({
                 vActivityManager.startActivity(target, userId)
+                RunningWidgetProvier.forceUpdate(this)
                 finish()
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             }, 100)
         else {
             vActivityManager.startActivity(target, userId)
+            RunningWidgetProvier.forceUpdate(this)
             finish()
         }
     }

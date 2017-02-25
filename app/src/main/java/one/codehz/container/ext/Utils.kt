@@ -25,6 +25,7 @@ import com.lody.virtual.client.ipc.VActivityManager
 import com.lody.virtual.client.ipc.VPackageManager
 import com.lody.virtual.os.VUserManager
 import one.codehz.container.base.SameAsAble
+import one.codehz.container.provider.RunningWidgetProvier
 import kotlin.reflect.KProperty
 
 @Suppress("UNCHECKED_CAST")
@@ -48,6 +49,23 @@ val clipboardManager: ClipboardManager by lazy { virtualCore.context.systemServi
 val activityManager: ActivityManager by lazy { virtualCore.context.systemService<ActivityManager>(Context.ACTIVITY_SERVICE) }
 
 fun FragmentManager.transaction(fn: FragmentTransaction.() -> Unit) = beginTransaction().apply(fn).commit()
+
+fun VirtualCore.killAppEx(pkgName: String, uid: Int) {
+    killApp(pkgName, uid)
+    activityManager.appTasks
+            .filter { it.taskInfo.baseIntent.component.className.startsWith("com.lody.virtual.client.stub.StubActivity$") }
+            .filter { it.taskInfo.baseIntent.type.startsWith(pkgName + "/") }
+            .forEach(ActivityManager.AppTask::finishAndRemoveTask)
+    RunningWidgetProvier.forceUpdate(context)
+}
+
+fun VirtualCore.killAllAppsEx() {
+    killAllApps()
+    activityManager.appTasks
+            .filter { it.taskInfo.baseIntent.component.className.startsWith("com.lody.virtual.client.stub.StubActivity$") }
+            .forEach(ActivityManager.AppTask::finishAndRemoveTask)
+    RunningWidgetProvier.forceUpdate(context)
+}
 
 infix fun <R, P> ((P) -> R).bind(p: P) = { this.invoke(p) }
 

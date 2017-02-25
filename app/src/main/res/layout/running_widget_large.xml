@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="24dp"
+        android:background="@color/widgetBackground"
+        android:contentDescription="@string/list_is_empty"
+        android:foreground="@drawable/ic_empty"
+        android:visibility="gone"/>
+
+    <GridView
+        android:id="@+id/main_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="24dp"
+        android:background="@color/widgetBackground"
+        android:clipToPadding="false"
+        android:columnWidth="72dp"
+        android:gravity="center"
+        android:numColumns="auto_fit"
+        android:paddingBottom="24dp"
+        android:stretchMode="columnWidth"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/clear"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/clear"
+            android:src="@drawable/ic_shortcut_clear_all"/>
+
+        <ImageButton
+            android:id="@+id/add_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/add"
+            android:src="@drawable/ic_shortcut_add"/>
+
+        <ImageButton
+            android:id="@+id/run_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/running"
+            android:src="@drawable/ic_shortcut_play_arrow"/>
+
+    </LinearLayout>
+</RelativeLayout>

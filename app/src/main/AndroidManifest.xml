@@ -15,6 +15,7 @@
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -26,10 +27,11 @@
                 android:resource="@xml/shortcuts"/>
         </activity>
 
-        <activity android:name=".ServiceSelectorActivity"
-                  android:parentActivityName=".DetailActivity"
-                  android:configChanges="orientation|screenSize"
-                  android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ServiceSelectorActivity"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName=".DetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
             android:name=".ShortcutActivity"
@@ -146,6 +148,10 @@
             android:exported="false"
             android:process=":installer"/>
 
+        <service
+            android:name=".RunningWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
         <provider
             android:name=".provider.SystemApplicationProvider"
             android:authorities="one.codehz.container.provider.system-applications"
@@ -157,10 +163,20 @@
             </intent-filter>
         </provider>
         <provider
-            android:authorities="one.codehz.container.provider.main"
             android:name=".provider.MainProvider"
+            android:authorities="one.codehz.container.provider.main"
             android:exported="false"
-            android:grantUriPermissions="true" />
+            android:grantUriPermissions="true"/>
+
+        <receiver
+            android:name=".provider.RunningWidgetProvier">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/running_widget"/>
+        </receiver>
     </application>
 
 </manifest>

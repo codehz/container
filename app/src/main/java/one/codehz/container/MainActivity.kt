@@ -2,6 +2,7 @@ package one.codehz.container
 
 import android.Manifest
 import android.app.ActivityManager
+import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.os.Handler
@@ -11,6 +12,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.transition.Transition
 import android.view.MenuItem
+import com.lody.virtual.helper.utils.VLog
 import one.codehz.container.base.BaseActivity
 import one.codehz.container.ext.get
 import one.codehz.container.ext.transaction
@@ -76,10 +78,18 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             true
         }
 
-        if (intent.action == "one.codehz.container.TAB_RUNNING")
-            selectFragment(bottomNavigationView.menu.findItem(R.id.running))
-        else
-            selectFragment(bottomNavigationView.menu.findItem(R.id.installed))
+        onNewIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        VLog.d("SELECT", intent.toString())
+        when (intent?.action) {
+            "one.codehz.container.TAB_INSTALL" -> selectFragment(bottomNavigationView.menu.findItem(R.id.installed))
+            "one.codehz.container.TAB_RUNNING" -> selectFragment(bottomNavigationView.menu.findItem(R.id.running))
+            "one.codehz.container.TAB_SETTING" -> selectFragment(bottomNavigationView.menu.findItem(R.id.settings))
+            else -> selectFragment(bottomNavigationView.menu.findItem(R.id.installed))
+        }
     }
 
     fun selectFragment(menuItem: MenuItem) {
