@@ -43,7 +43,7 @@ val vActivityManager: VActivityManager by lazy { VActivityManager.get() }
 val vPackageManager: VPackageManager by lazy { VPackageManager.get() }
 val vUserManager: VUserManager by lazy { VUserManager.get() }
 val sharedPreferences: SharedPreferences by lazy { PreferenceManager.getDefaultSharedPreferences(virtualCore.context) }
-val clipboardManager: ClipboardManager by lazy { virtualCore.context.getSystemService(ClipboardManager::class.java)!! }
+val clipboardManager: ClipboardManager by lazy { virtualCore.context.systemService<ClipboardManager>(Context.CLIPBOARD_SERVICE) }
 
 fun FragmentManager.transaction(fn: FragmentTransaction.() -> Unit) = beginTransaction().apply(fn).commit()
 
