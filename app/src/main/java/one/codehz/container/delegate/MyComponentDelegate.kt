@@ -67,4 +67,10 @@ class MyComponentDelegate(val context: Context) : ComponentDelegate {
             return logComponent("broadcast", intent?.action!!)
         return true
     }
+
+    override fun onAcquireContentProvider(name: String?): Boolean {
+        if (name != null && name != "one.codehz.container.provider.main")
+            return logComponent("provider", name)
+        return true
+    }
 }

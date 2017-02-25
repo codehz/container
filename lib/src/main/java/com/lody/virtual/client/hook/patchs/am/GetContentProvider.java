@@ -3,11 +3,13 @@ package com.lody.virtual.client.hook.patchs.am;
 import android.content.pm.ProviderInfo;
 import android.os.IInterface;
 
+import com.lody.virtual.client.core.VirtualCore;
 import com.lody.virtual.client.hook.base.Hook;
 import com.lody.virtual.client.hook.providers.ProviderHook;
 import com.lody.virtual.client.ipc.VActivityManager;
 import com.lody.virtual.client.ipc.VPackageManager;
 import com.lody.virtual.client.stub.StubManifest;
+import com.lody.virtual.helper.utils.VLog;
 import com.lody.virtual.os.VUserHandle;
 
 import java.lang.reflect.Method;
@@ -30,6 +32,7 @@ import mirror.android.app.IActivityManager;
 		int userId = VUserHandle.myUserId();
 		ProviderInfo info = VPackageManager.get().resolveContentProvider(name, 0, userId);
 		if (info != null && info.enabled && isAppPkg(info.packageName)) {
+			if (!VirtualCore.get().getComponentDelegate().onAcquireContentProvider(name)) return null;
 			int targetVPid = VActivityManager.get().initProcess(info.packageName, info.processName, userId);
 			if (targetVPid == -1) {
 				return null;

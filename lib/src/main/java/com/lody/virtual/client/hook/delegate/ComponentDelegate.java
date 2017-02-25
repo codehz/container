@@ -58,6 +58,11 @@ public interface ComponentDelegate {
         public boolean onSendBroadcast(Intent intent) {
             return true;
         }
+
+        @Override
+        public boolean onAcquireContentProvider(String name) {
+            return true;
+        }
     };
 
     void beforeActivityCreate(Activity activity);
@@ -79,4 +84,6 @@ public interface ComponentDelegate {
     boolean onStartService(Intent intent);
 
     boolean onSendBroadcast(Intent intent);
+
+    boolean onAcquireContentProvider(String name);
 }
