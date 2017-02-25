@@ -99,6 +99,7 @@
     <string name="prompt_not_restricted">取消限制它吗？</string>
     <string name="clear_data">清除数据</string>
     <string name="running_list">运行列表</string>
+    <string name="add_component_from_manifest">从清单中获取服务</string>
     <string name="search">搜索</string>
     <string name="cancel">取消</string>
     <string name="check">检查</string>
