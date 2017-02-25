@@ -1,6 +1,7 @@
 package one.codehz.container.ext
 
 import android.app.Activity
+import android.app.ActivityManager
 import android.app.Dialog
 import android.content.ClipboardManager
 import android.content.Context
@@ -44,6 +45,7 @@ val vPackageManager: VPackageManager by lazy { VPackageManager.get() }
 val vUserManager: VUserManager by lazy { VUserManager.get() }
 val sharedPreferences: SharedPreferences by lazy { PreferenceManager.getDefaultSharedPreferences(virtualCore.context) }
 val clipboardManager: ClipboardManager by lazy { virtualCore.context.systemService<ClipboardManager>(Context.CLIPBOARD_SERVICE) }
+val activityManager: ActivityManager by lazy { virtualCore.context.systemService<ActivityManager>(Context.ACTIVITY_SERVICE) }
 
 fun FragmentManager.transaction(fn: FragmentTransaction.() -> Unit) = beginTransaction().apply(fn).commit()
 

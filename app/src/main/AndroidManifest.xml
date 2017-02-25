@@ -56,7 +56,6 @@
             android:name=".VLoadingActivity"
             android:excludeFromRecents="true"
             android:label="@string/loading"
-            android:launchMode="singleInstance"
             android:noHistory="true"
             android:taskAffinity="va.task.loading"
             android:theme="@style/LoadingScreenTheme">

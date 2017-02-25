@@ -1,7 +1,11 @@
 package one.codehz.container.fragment
 
 import android.app.Activity
+import android.app.ActivityManager
+import android.content.Context
+import android.content.Intent
 import android.content.Loader
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -14,6 +18,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.lody.virtual.helper.utils.VLog
 import one.codehz.container.LoadingActivity
 import one.codehz.container.MainActivity
 import one.codehz.container.R
@@ -34,6 +39,16 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
 
     override fun onFloatingAction() {
         loaderManager.restartLoader(KILL_ALL_LOADER, null, killAllLoader)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            activityManager.appTasks.filter { it.taskInfo.baseIntent.action != Intent.ACTION_MAIN }.forEach {
+                when (it.taskInfo.baseIntent.action) {
+                    Intent.ACTION_RUN ->
+                        it.finishAndRemoveTask()
+                    else -> if (it.taskInfo.baseIntent.component.className.startsWith("com.lody.virtual.client.stub.StubActivity$")) {
+                        it.finishAndRemoveTask()
+                    }
+                }
+            }
     }
 
     override fun getFloatingDrawable() = R.drawable.ic_clear_all
@@ -57,6 +72,10 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
         killedList.forEach {
             val (user, pkgName) = it
             virtualCore.killApp(pkgName, user)
+            activityManager.appTasks
+                    .filter { it.taskInfo.baseIntent.component.className.startsWith("com.lody.virtual.client.stub.StubActivity$") }
+                    .filter { it.taskInfo.baseIntent.type.startsWith(pkgName + "/") }
+                    .forEach(ActivityManager.AppTask::finishAndRemoveTask)
         }
         Thread.sleep(200)
     }

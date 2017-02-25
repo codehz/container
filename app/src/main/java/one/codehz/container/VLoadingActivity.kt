@@ -38,13 +38,17 @@ class VLoadingActivity : Activity() {
             Handler().postDelayed({
                 vActivityManager.startActivity(target, userId)
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                finish()
             }, 50)
         else if (!virtualCore.isAppRunning(package_name, userId))
             Handler().postDelayed({
                 vActivityManager.startActivity(target, userId)
+                finish()
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             }, 100)
-        else
+        else {
             vActivityManager.startActivity(target, userId)
+            finish()
+        }
     }
 }
