@@ -1,6 +1,8 @@
 package one.codehz.container.fragment
 
 import android.content.ClipData
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -11,6 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
+import one.codehz.container.LogActivity
 import one.codehz.container.R
 import one.codehz.container.adapters.LogListAdapter
 import one.codehz.container.adapters.PropertyListAdapter
@@ -28,13 +32,14 @@ class BasicDetailFragment(val model: AppModel, onSnack: (Snackbar) -> Unit) : Fr
 
     val contentList by lazy<RecyclerView> { view!![R.id.content_list] }
     val logList by lazy<RecyclerView> { view!![R.id.log_list] }
-    val clearLogButton by lazy<Button> { view!![R.id.clear_log] }
+    val logManagerButton by lazy<TextView> { view!![R.id.log_manager] }
+    val clearLogButton by lazy<TextView> { view!![R.id.clear_log] }
 
     val propertyLoader by MakeLoaderCallbacks({ context }, { it() }) { ctx ->
         contentAdapter.updateModels(AppPropertyModel(model).getItems())
     }
     val logLoader by MakeLoaderCallbacks({ context }, { it() }) { ctx ->
-        ctx.contentResolver.query(MainProvider.LOG_URI, arrayOf("time", "data"), "`package` = \"${model.packageName}\"", null, "time ASC").use {
+        ctx.contentResolver.query(MainProvider.LOG_URI, arrayOf("time", "data"), "`package` = \"${model.packageName}\"", null, "time ASC limit 5").use {
             generateSequence { if (it.moveToNext()) it else null }.map { LogModel(it.getString(0), it.getString(1)) }.toList()
         }.run {
             logListAdapter.updateModels(this)
@@ -66,6 +71,12 @@ class BasicDetailFragment(val model: AppModel, onSnack: (Snackbar) -> Unit) : Fr
         }
         loaderManager.restartLoader(0, null, propertyLoader)
         loaderManager.restartLoader(1, null, logLoader)
+
+        logManagerButton.setOnClickListener {
+            startActivity(Intent(context, LogActivity::class.java).apply {
+                data = Uri.Builder().scheme("log").authority("container").path(model.packageName).build()
+            })
+        }
 
         clearLogButton.setOnClickListener {
             context.contentResolver.delete(MainProvider.LOG_URI, "`package` = \"${model.packageName}\"", null)

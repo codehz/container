@@ -91,6 +91,25 @@
         </activity>
 
         <activity
+            android:name=".LogActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:label="@string/log"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="log"
+                    android:scheme="container"/>
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".SpaceManagerActivity"
             android:configChanges="orientation|screenSize|screenLayout"
             android:label="@string/container_space_manager"

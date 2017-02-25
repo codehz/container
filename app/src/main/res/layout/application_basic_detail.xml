@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                            xmlns:tools="http://schemas.android.com/tools"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content">
 
@@ -41,13 +40,26 @@
                     android:id="@+id/log_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
+                    android:layout_toStartOf="@+id/log_manager"
                     android:text="@string/log"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
-                <Button
+                <TextView
+                    android:id="@+id/log_manager"
+                    style="@android:style/Widget.Material.Light.Button.Borderless.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/log_title"
+                    android:layout_toStartOf="@+id/clear_log"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:text="@string/manage"
+                    android:textColor="@color/colorAccent"/>
+
+                <TextView
                     android:id="@+id/clear_log"
                     style="@android:style/Widget.Material.Light.Button.Borderless.Small"
                     android:layout_width="wrap_content"
@@ -55,8 +67,9 @@
                     android:layout_alignBaseline="@+id/log_title"
                     android:layout_alignParentEnd="true"
                     android:layout_margin="16dp"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:text="@string/clear"
-                    tools:ignore="RelativeOverlap"/>
+                    android:textColor="@color/colorAccent"/>
 
                 <one.codehz.container.widget.RecycleViewWithEmptySupport
                     android:id="@+id/log_list"
