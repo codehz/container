@@ -39,16 +39,15 @@ class RunningFragment : Fragment(), IFloatingActionTarget {
 
     override fun onFloatingAction() {
         loaderManager.restartLoader(KILL_ALL_LOADER, null, killAllLoader)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            activityManager.appTasks.filter { it.taskInfo.baseIntent.action != Intent.ACTION_MAIN }.forEach {
-                when (it.taskInfo.baseIntent.action) {
-                    Intent.ACTION_RUN ->
-                        it.finishAndRemoveTask()
-                    else -> if (it.taskInfo.baseIntent.component.className.startsWith("com.lody.virtual.client.stub.StubActivity$")) {
-                        it.finishAndRemoveTask()
-                    }
+        activityManager.appTasks.filter { it.taskInfo.baseIntent.action != Intent.ACTION_MAIN }.forEach {
+            when (it.taskInfo.baseIntent.action) {
+                Intent.ACTION_RUN ->
+                    it.finishAndRemoveTask()
+                else -> if (it.taskInfo.baseIntent.component.className.startsWith("com.lody.virtual.client.stub.StubActivity$")) {
+                    it.finishAndRemoveTask()
                 }
             }
+        }
     }
 
     override fun getFloatingDrawable() = R.drawable.ic_clear_all
