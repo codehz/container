@@ -22,6 +22,7 @@ import android.view.View
 import com.lody.virtual.client.VClientImpl
 import com.lody.virtual.client.core.VirtualCore
 import com.lody.virtual.client.ipc.VActivityManager
+import com.lody.virtual.client.ipc.VNotificationManager
 import com.lody.virtual.client.ipc.VPackageManager
 import com.lody.virtual.os.VUserManager
 import one.codehz.container.base.SameAsAble
@@ -44,6 +45,7 @@ val vClientImpl: VClientImpl by lazy { VClientImpl.get() }
 val vActivityManager: VActivityManager by lazy { VActivityManager.get() }
 val vPackageManager: VPackageManager by lazy { VPackageManager.get() }
 val vUserManager: VUserManager by lazy { VUserManager.get() }
+val vNotificationManager: VNotificationManager by lazy { VNotificationManager.get() }
 val sharedPreferences: SharedPreferences by lazy { PreferenceManager.getDefaultSharedPreferences(virtualCore.context) }
 val clipboardManager: ClipboardManager by lazy { virtualCore.context.systemService<ClipboardManager>(Context.CLIPBOARD_SERVICE) }
 val activityManager: ActivityManager by lazy { virtualCore.context.systemService<ActivityManager>(Context.ACTIVITY_SERVICE) }
@@ -57,14 +59,23 @@ fun VirtualCore.killAppEx(pkgName: String, uid: Int) {
             .filter { it.taskInfo.baseIntent.type.startsWith(pkgName + "/") }
             .forEach(ActivityManager.AppTask::finishAndRemoveTask)
     RunningWidgetProvier.forceUpdate(context)
+    vNotificationManager.cancelAllNotification(pkgName, uid)
 }
 
 fun VirtualCore.killAllAppsEx() {
-    killAllApps()
-    activityManager.appTasks
-            .filter { it.taskInfo.baseIntent.component.className.startsWith("com.lody.virtual.client.stub.StubActivity$") }
-            .forEach(ActivityManager.AppTask::finishAndRemoveTask)
-    RunningWidgetProvier.forceUpdate(context)
+    synchronized(this) {
+        allApps.map { it.packageName }.forEach { pkgName ->
+            vUserManager.users
+                    .map { it.id }
+                    .filter { uid -> virtualCore.isAppRunning(pkgName, uid) }
+                    .onEach { uid -> vNotificationManager.cancelAllNotification(pkgName, uid) }
+                    .forEach { uid -> virtualCore.killApp(pkgName, uid) }}
+        activityManager.appTasks
+                .filter { it.taskInfo.baseIntent.component.className.startsWith("com.lody.virtual.client.stub.StubActivity$") }
+                .forEach(ActivityManager.AppTask::finishAndRemoveTask)
+        RunningWidgetProvier.forceUpdate(context)
+    }
+
 }
 
 infix fun <R, P> ((P) -> R).bind(p: P) = { this.invoke(p) }
