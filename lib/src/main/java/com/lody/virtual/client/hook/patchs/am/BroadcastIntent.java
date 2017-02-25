@@ -53,7 +53,7 @@ import java.lang.reflect.Method;
                 VirtualCore.get().getContext().getContentResolver().insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
         }
         if (VirtualCore.get().getComponentDelegate() != null) {
-            if (!VirtualCore.get().getComponentDelegate().onSendBroadcast(intent)) return null;
+            if (!VirtualCore.get().getComponentDelegate().onSendBroadcast(intent)) return 0;
         }
         Intent newIntent = handleIntent(intent);
         if (newIntent != null) {
