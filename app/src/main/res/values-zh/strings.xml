@@ -16,7 +16,7 @@
     <string name="container_application_internal_space_manager">容器内应用内部存储空间管理器</string>
     <string name="container_application_optimization_data">容器内应用优化数据</string>
     <string name="container_space_manager">容器空间管理器</string>
-    <string name="dismiss">解雇</string>
+    <string name="dismiss">消除</string>
     <string name="install_failed">安装失败</string>
     <string name="install_finished">应用程序安装成功</string>
     <string name="installed">已安装</string>
@@ -97,6 +97,9 @@
     <string name="prompt_restricted">限制它吗？</string>
     <string name="prompt_delete_item">删除它吗？</string>
     <string name="prompt_not_restricted">取消限制它吗？</string>
-    <string name="component_in_manifest">清单中的组件</string>
     <string name="clear_data">清除数据</string>
+    <string name="running_list">运行列表</string>
+    <string name="search">搜索</string>
+    <string name="cancel">取消</string>
+    <string name="check">检查</string>
 </resources>

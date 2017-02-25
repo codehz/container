@@ -12,4 +12,17 @@
             android:targetClass="one.codehz.container.ShortcutActivity" />
         <categories android:name="android.shortcut.conversation" />
     </shortcut>
+    <shortcut
+        android:shortcutId="running_app"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_play_arrow"
+        android:shortcutShortLabel="@string/running"
+        android:shortcutLongLabel="@string/running"
+        android:shortcutDisabledMessage="@string/running">
+        <intent
+            android:action="one.codehz.container.TAB_RUNNING"
+            android:targetPackage="one.codehz.container"
+            android:targetClass="one.codehz.container.MainActivity" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
 </shortcuts>

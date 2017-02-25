@@ -16,6 +16,7 @@
     <string name="install_failed">Install Failed</string>
     <string name="installed">Installed</string>
     <string name="running">Running</string>
+    <string name="running_list">Running App List</string>
     <string name="scroll_aware_fab_behavior" translatable="false">one.codehz.container.behavior.ScrollAwareFABBehavior</string>
     <string name="bottom_navigation_behavior" translatable="false">one.codehz.container.behavior.BottomNavigationBehavior</string>
     <string name="receive_apk_file">Receiving APK File</string>
@@ -100,9 +101,7 @@
     <string name="prompt_restricted">Restrict it?</string>
     <string name="prompt_delete_item">Do you want to delete this item?</string>
     <string name="prompt_not_restricted">Do not limit it anymore?</string>
-    <string name="component_in_manifest">Component In Manifest</string>
     <string name="clear_data">Clear Data</string>
-    <string name="add_component_from_manifest">Add Component From Manifest</string>
     <string name="check">Check</string>
     <string name="search">Search</string>
     <string name="cancel">Cancel</string>

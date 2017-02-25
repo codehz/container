@@ -76,7 +76,10 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             true
         }
 
-        selectFragment(bottomNavigationView.menu.findItem(R.id.installed))
+        if (intent.action == "one.codehz.container.TAB_RUNNING")
+            selectFragment(bottomNavigationView.menu.findItem(R.id.running))
+        else
+            selectFragment(bottomNavigationView.menu.findItem(R.id.installed))
     }
 
     fun selectFragment(menuItem: MenuItem) {
