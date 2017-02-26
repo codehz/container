@@ -35,6 +35,7 @@ import android.os.IBinder;
 	@Override
 	public Object call(Object who, Method method, Object... args) throws Throwable {
 		ComponentName cn = (ComponentName) args[0];
+		if (!VirtualCore.get().getComponentDelegate().onSetForeground(cn.getPackageName())) return 0;
 		int id = (int) args[2];
 		Notification notification = (Notification) args[3];
 		if (notification == null)

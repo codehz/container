@@ -50,6 +50,11 @@ public interface ComponentDelegate {
         }
 
         @Override
+        public boolean onSetForeground(String pkgName) {
+            return true;
+        }
+
+        @Override
         public boolean onStartService(Intent intent) {
             return true;
         }
@@ -80,6 +85,8 @@ public interface ComponentDelegate {
     void afterActivityPause(Activity activity);
 
     void afterActivityDestroy(Activity activity);
+
+    boolean onSetForeground(String pkgName);
 
     boolean onStartService(Intent intent);
 

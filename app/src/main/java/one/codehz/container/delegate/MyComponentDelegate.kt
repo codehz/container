@@ -8,9 +8,19 @@ import com.lody.virtual.client.hook.delegate.ComponentDelegate
 import com.lody.virtual.helper.utils.VLog
 import one.codehz.container.ext.vClientImpl
 import one.codehz.container.provider.MainProvider
+import one.codehz.container.provider.PreferenceProvider
+import one.codehz.container.utils.DatabasePreferences
 
 
 class MyComponentDelegate(val context: Context) : ComponentDelegate {
+    val prePackage = mutableMapOf<String, DatabasePreferences>()
+
+    fun acquirePrePackagePreferences(pkgName: String): DatabasePreferences {
+        if (pkgName in prePackage) return prePackage[pkgName] ?: throw AssertionError()
+        prePackage[pkgName] = DatabasePreferences(context, PreferenceProvider.PRE_PACKAGE_URI, "key", "value", mapOf("package" to pkgName))
+        return prePackage[pkgName] ?: throw AssertionError()
+    }
+
     override fun beforeActivityCreate(activity: Activity?) {
     }
 
@@ -55,6 +65,8 @@ class MyComponentDelegate(val context: Context) : ComponentDelegate {
             put("result", result)
         })
     }
+
+    override fun onSetForeground(pkgName: String) = acquirePrePackagePreferences(pkgName).getBoolean("foreground_service_notification", false)
 
     override fun onStartService(intent: Intent?): Boolean {
         if (intent?.component != null)
