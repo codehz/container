@@ -26,7 +26,7 @@ import one.codehz.container.models.AppModel
 import one.codehz.container.models.ComponentInfoModel
 import one.codehz.container.provider.MainProvider
 
-class ComponentDetailFragment(val model: AppModel, onSnack: (Snackbar) -> Unit) : Fragment() {
+class ComponentDetailFragment(val model: AppModel) : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = inflater.inflate(R.layout.component_detail, container, false)!!
 
     val hackList by lazy<RecyclerView> { view!![R.id.hack] }

@@ -181,11 +181,16 @@
                 <action android:name="android.content.action.DOCUMENTS_PROVIDER"/>
             </intent-filter>
         </provider>
+
         <provider
             android:name=".provider.MainProvider"
             android:authorities="one.codehz.container.provider.main"
-            android:exported="false"
-            android:grantUriPermissions="true"/>
+            android:exported="false"/>
+
+        <provider
+            android:name=".provider.PreferenceProvider"
+            android:authorities="one.codehz.container.provider.preference"
+            android:exported="false"/>
 
         <receiver
             android:name=".provider.RunningWidgetProvier">

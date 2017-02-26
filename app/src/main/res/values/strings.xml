@@ -107,4 +107,8 @@
     <string name="search">Search</string>
     <string name="cancel">Cancel</string>
     <string name="list_is_empty">List is empty</string>
+    <string name="foreground_service_notification">Foreground Service Notification</string>
+    <string name="special_settings">Special Settings</string>
+    <string name="basic">Basic</string>
+    <string name="experimental_options">Experimental options</string>
 </resources>

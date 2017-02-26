@@ -30,6 +30,7 @@ import one.codehz.container.ext.systemService
 import one.codehz.container.ext.virtualCore
 import one.codehz.container.fragment.BasicDetailFragment
 import one.codehz.container.fragment.ComponentDetailFragment
+import one.codehz.container.fragment.SpecialSettingsFragment
 import one.codehz.container.models.AppModel
 import one.codehz.container.provider.MainProvider
 
@@ -64,20 +65,19 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
                 it.setBackground(bgcolor)
                 it.show()
             }
-            1 -> ComponentDetailFragment(model) {
-                it.setBackground(bgcolor)
-                it.show()
-            }
+            1 -> ComponentDetailFragment(model)
+            2 -> SpecialSettingsFragment(model)
             else -> throw IllegalArgumentException()
         }
 
         override fun getPageTitle(position: Int) = when (position) {
             0 -> getString(R.string.basic_info)!!
             1 -> getString(R.string.component_filter)!!
+            2 -> getString(R.string.special_settings)!!
             else -> throw IllegalArgumentException()
         }
 
-        override fun getCount() = 2
+        override fun getCount() = 3
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,6 +115,7 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
 
         with(viewPager) {
             adapter = DetailPagerAdapter()
+            offscreenPageLimit = 3
         }
 
         collapsingToolbar.title = model.name

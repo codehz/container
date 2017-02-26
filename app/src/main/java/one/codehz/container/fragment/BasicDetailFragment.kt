@@ -1,6 +1,7 @@
 package one.codehz.container.fragment
 
 import android.content.ClipData
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -14,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import com.lody.virtual.helper.utils.VLog
 import one.codehz.container.LogActivity
 import one.codehz.container.R
 import one.codehz.container.adapters.LogListAdapter
@@ -60,6 +62,10 @@ class BasicDetailFragment(val model: AppModel, onSnack: (Snackbar) -> Unit) : Fr
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
+    }
+
+    fun initView() {
         with(contentList) {
             adapter = contentAdapter
             layoutManager = LinearLayoutManager(context)
@@ -69,8 +75,6 @@ class BasicDetailFragment(val model: AppModel, onSnack: (Snackbar) -> Unit) : Fr
             layoutManager = LinearLayoutManager(context)
             itemAnimator = DefaultItemAnimator()
         }
-        loaderManager.restartLoader(0, null, propertyLoader)
-        loaderManager.restartLoader(1, null, logLoader)
 
         logManagerButton.setOnClickListener {
             startActivity(Intent(context, LogActivity::class.java).apply {
@@ -84,8 +88,18 @@ class BasicDetailFragment(val model: AppModel, onSnack: (Snackbar) -> Unit) : Fr
         }
     }
 
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        VLog.d("BDF", "vis")
+        if (isVisibleToUser && isAdded) {
+            loaderManager.restartLoader(0, null, propertyLoader)
+            loaderManager.restartLoader(1, null, logLoader)
+        }
+    }
+
     override fun onResume() {
         super.onResume()
+        VLog.d("BDF", "res")
         loaderManager.restartLoader(0, null, propertyLoader)
         loaderManager.restartLoader(1, null, logLoader)
     }
