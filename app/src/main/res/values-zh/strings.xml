@@ -104,4 +104,8 @@
     <string name="cancel">取消</string>
     <string name="check">检查</string>
     <string name="list_is_empty">列表是空的</string>
+    <string name="basic">基本设置</string>
+    <string name="experimental_options">实验性选项</string>
+    <string name="foreground_service_notification">前台服务通知</string>
+    <string name="special_settings">特别设置</string>
 </resources>
