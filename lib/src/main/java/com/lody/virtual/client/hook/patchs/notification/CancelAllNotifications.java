@@ -25,7 +25,7 @@ import java.lang.reflect.Method;
 //            user = (int) args[1];
 //        }
         if (VirtualCore.get().isAppInstalled(pkg)) {
-            VNotificationManager.get().cancelAllNotification(pkg, getVUserId());
+            VNotificationManager.get().cancelAllNotification(pkg, getAppUserId());
             return 0;
         }
         return method.invoke(who, args);

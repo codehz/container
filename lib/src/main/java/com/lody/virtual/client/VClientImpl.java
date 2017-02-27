@@ -23,7 +23,6 @@ import android.os.Message;
 import android.os.Process;
 import android.os.StrictMode;
 
-import com.lody.virtual.IOHook;
 import com.lody.virtual.client.core.PatchManager;
 import com.lody.virtual.client.core.VirtualCore;
 import com.lody.virtual.client.env.SpecialComponentList;
@@ -37,8 +36,9 @@ import com.lody.virtual.client.hook.secondary.ProxyServiceFactory;
 import com.lody.virtual.client.ipc.VActivityManager;
 import com.lody.virtual.client.ipc.VPackageManager;
 import com.lody.virtual.client.stub.StubManifest;
-import com.lody.virtual.helper.proto.PendingResultData;
+import com.lody.virtual.remote.PendingResultData;
 import com.lody.virtual.helper.utils.VLog;
+import com.lody.virtual.os.VEnvironment;
 import com.lody.virtual.os.VUserHandle;
 import com.lody.virtual.server.secondary.FakeIdentityBinder;
 
@@ -137,9 +137,6 @@ public final class VClientImpl extends IVClient.Stub {
     }
 
     public void initProcess(IBinder token, int vuid) {
-        if (this.token != null) {
-            throw new IllegalStateException("Token is exist!");
-        }
         this.token = token;
         this.vuid = vuid;
     }
@@ -232,9 +229,9 @@ public final class VClientImpl extends IVClient.Stub {
         if (StubManifest.ENABLE_IO_REDIRECT) {
             startIOUniformer();
         }
-        IOHook.hookNative();
+        NativeEngine.hookNative();
         Object mainThread = VirtualCore.mainThread();
-        IOHook.startDexOverride();
+        NativeEngine.startDexOverride();
         Context context = createPackageContext(data.appInfo.packageName);
         System.setProperty("java.io.tmpdir", context.getCacheDir().getAbsolutePath());
         File codeCacheDir;
@@ -271,7 +268,6 @@ public final class VClientImpl extends IVClient.Stub {
             PatchManager.getInstance().checkEnv(AppInstrumentation.class);
         }
         mInitialApplication = LoadedApk.makeApplication.call(data.info, false, null);
-        VLog.d(TAG, "app: %s", mInitialApplication);
         mirror.android.app.ActivityThread.mInitialApplication.set(mainThread, mInitialApplication);
         ContextFixer.fixContext(mInitialApplication);
         List<ProviderInfo> providers = VPackageManager.get().queryContentProviders(data.processName, vuid, PackageManager.GET_META_DATA);
@@ -295,7 +291,7 @@ public final class VClientImpl extends IVClient.Stub {
         } catch (Exception e) {
             if (!mInstrumentation.onException(mInitialApplication, e)) {
                 throw new RuntimeException(
-                        "Unable to create application " + (mInitialApplication == null ? "NULL" : mInitialApplication.getClass().getName())
+                        "Unable to create application " + mInitialApplication.getClass().getName()
                                 + ": " + e.toString(), e);
             }
         }
@@ -337,19 +333,24 @@ public final class VClientImpl extends IVClient.Stub {
     @SuppressLint("SdCardPath")
     private void startIOUniformer() {
         ApplicationInfo info = mBoundApplication.appInfo;
-        IOHook.redirect("/data/data/" + info.packageName + "/", info.dataDir + "/");
-        IOHook.redirect("/data/user/0/" + info.packageName + "/", info.dataDir + "/");
-        IOHook.redirect(info.dataDir + "/lib", info.nativeLibraryDir);
+        NativeEngine.redirect("/data/data/" + info.packageName + "/", info.dataDir + "/");
+        NativeEngine.redirect("/data/user/0/" + info.packageName + "/", info.dataDir + "/");
+        /*
+         *  /data/user/0/{Host-Pkg}/virtual/data/user/{user-id}/lib -> /data/user/0/{Host-Pkg}/virtual/data/app/{App-Pkg}/lib/
+         */
+        NativeEngine.redirect(
+                new File(VEnvironment.getUserSystemDirectory(VUserHandle.myUserId()).getAbsolutePath(), "lib").getAbsolutePath() + "/",
+                info.nativeLibraryDir + "/");
         IORedirectDelegate delegate = VirtualCore.get().ioRedirectDelegate;
         if (delegate != null) {
             Map<String, String> ioRedirect = delegate.getIORedirect();
             for (Map.Entry<String, String> entry : ioRedirect.entrySet())
-                IOHook.redirect(entry.getKey(), entry.getValue());
+                NativeEngine.redirect(entry.getKey(), entry.getValue());
             Map<String, String> reversedRedirect = delegate.getIOReversedRedirect();
             for (Map.Entry<String, String> entry : reversedRedirect.entrySet())
-                IOHook.reversed(entry.getKey(), entry.getValue());
+                NativeEngine.reversed(entry.getKey(), entry.getValue());
         }
-        IOHook.hook();
+        NativeEngine.hook();
     }
 
     private Context createPackageContext(String packageName) {
@@ -521,7 +522,7 @@ public final class VClientImpl extends IVClient.Stub {
 
     private static class RootThreadGroup extends ThreadGroup {
 
-        public RootThreadGroup(ThreadGroup parent) {
+        RootThreadGroup(ThreadGroup parent) {
             super(parent, "VA-Root");
         }
 

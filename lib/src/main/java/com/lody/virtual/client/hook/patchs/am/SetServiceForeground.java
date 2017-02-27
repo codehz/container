@@ -4,15 +4,12 @@ import java.lang.reflect.Method;
 
 import com.lody.virtual.client.core.VirtualCore;
 import com.lody.virtual.client.hook.base.Hook;
-import com.lody.virtual.client.hook.patchs.notification.compat.NotificationHandler;
-import com.lody.virtual.client.ipc.VActivityManager;
 import com.lody.virtual.client.ipc.VNotificationManager;
 
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
-import android.os.IBinder;
 
 /**
  * @author Lody
@@ -42,7 +39,7 @@ import android.os.IBinder;
 			return 0;
 		if (!VNotificationManager.get().dealNotification(id, notification, cn.getPackageName()))
 			return 0;
-		VNotificationManager.get().addNotification(id, null, cn.getPackageName(), getVUserId());
+		VNotificationManager.get().addNotification(id, null, cn.getPackageName(), getAppUserId());
 		NotificationManager manager = (NotificationManager) VirtualCore.get().getContext().getSystemService(Context.NOTIFICATION_SERVICE);
 		manager.notify(id, notification);
 		return 0;

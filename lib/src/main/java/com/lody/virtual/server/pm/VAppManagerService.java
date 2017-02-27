@@ -14,10 +14,9 @@ import com.lody.virtual.client.core.VirtualCore;
 import com.lody.virtual.client.env.Constants;
 import com.lody.virtual.helper.compat.NativeLibraryHelperCompat;
 import com.lody.virtual.helper.compat.PackageParserCompat;
-import com.lody.virtual.helper.proto.AppSetting;
-import com.lody.virtual.helper.proto.InstallResult;
+import com.lody.virtual.remote.AppSetting;
+import com.lody.virtual.remote.InstallResult;
 import com.lody.virtual.helper.utils.FileUtils;
-import com.lody.virtual.helper.utils.ResourcesUtils;
 import com.lody.virtual.helper.utils.VLog;
 import com.lody.virtual.os.VEnvironment;
 import com.lody.virtual.os.VUserHandle;
@@ -78,7 +77,7 @@ public class VAppManagerService extends IAppManager.Stub {
                 } catch (PackageManager.NameNotFoundException e) {
                     // Ignore
                 }
-                if (appInfo == null || appInfo.publicSourceDir == null) {
+                if ((appInfo == null || appInfo.publicSourceDir == null)) {
                     FileUtils.deleteDir(appDir);
                     for (int userId : VUserManagerService.get().getUserIds()) {
                         FileUtils.deleteDir(VEnvironment.getDataUserPackageDirectory(userId, pkgName));
@@ -175,7 +174,11 @@ public class VAppManagerService extends IAppManager.Stub {
             PackageCache.remove(pkg.packageName);
         }
         if (!dependSystem) {
-            ResourcesUtils.chmod(appDir);
+            try {
+                linkApkResForNotification(pkg.packageName, apk);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         AppSetting appSetting = new AppSetting();
         appSetting.parser = parser;
@@ -192,6 +195,20 @@ public class VAppManagerService extends IAppManager.Stub {
         }
         res.isSuccess = true;
         return res;
+    }
+
+    private void linkApkResForNotification(String packageName, File apkFile) throws Exception {
+        if (FileUtils.isSymlink(apkFile)) {
+            return;
+        }
+        File res = VEnvironment.getPackageResourcePath(packageName);
+        String apkPath = apkFile.getAbsolutePath();
+        try {
+            FileUtils.createSymlink(res.getAbsolutePath(), apkPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Runtime.getRuntime().exec("chmod -R 755 " + res.getAbsolutePath()).waitFor();
     }
 
     private boolean canUpdate(PackageParser.Package existOne, PackageParser.Package newOne, int flags) {
@@ -218,6 +235,7 @@ public class VAppManagerService extends IAppManager.Stub {
                     BroadcastSystem.get().stopApp(pkg);
                     VActivityManagerService.get().killAppByPkg(pkg, VUserHandle.USER_ALL);
                     FileUtils.deleteDir(VEnvironment.getDataAppPackageDirectory(pkg));
+                    VEnvironment.getPackageResourcePath(pkg).delete();
                     VEnvironment.getOdexFile(pkg).delete();
                     for (int userId : VUserManagerService.get().getUserIds()) {
                         FileUtils.deleteDir(VEnvironment.getDataUserPackageDirectory(userId, pkg));

@@ -13,7 +13,7 @@ public class GetLine1NumberForDisplay extends ReplaceLastPkgHook {
 	@Override
 	public Object afterCall(Object who, Method method, Object[] args, Object result) throws Throwable {
 		if (VirtualCore.get().getPhoneInfoDelegate() != null) {
-			String res = VirtualCore.get().getPhoneInfoDelegate().getLine1Number((String) result);
+			String res = VirtualCore.get().getPhoneInfoDelegate().getLine1Number((String) result, getAppUserId());
 			if (res != null) {
 				return res;
 			}

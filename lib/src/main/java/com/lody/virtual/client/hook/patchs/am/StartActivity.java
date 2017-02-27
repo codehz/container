@@ -12,7 +12,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.TypedValue;
 
-import com.lody.virtual.IOHook;
+import com.lody.virtual.client.NativeEngine;
 import com.lody.virtual.client.core.VirtualCore;
 import com.lody.virtual.client.env.Constants;
 import com.lody.virtual.client.hook.base.Hook;
@@ -134,7 +134,7 @@ import java.lang.reflect.Method;
             if (SCHEME_FILE.equals(packageUri.getScheme())) {
                 File sourceFile = new File(packageUri.getPath());
                 try {
-                    listener.onRequestInstall(IOHook.getRedirectedPath(sourceFile.getPath()));
+                    listener.onRequestInstall(NativeEngine.getRedirectedPath(sourceFile.getPath()));
                     return true;
                 } catch (RemoteException e) {
                     e.printStackTrace();

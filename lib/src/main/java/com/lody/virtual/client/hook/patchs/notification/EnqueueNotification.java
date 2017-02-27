@@ -25,13 +25,13 @@ import java.lang.reflect.Method;
         int notificationIndex = ArrayUtils.indexOfFirst(args, Notification.class);
         int idIndex = ArrayUtils.indexOfFirst(args, Integer.class);
         int id = (int) args[idIndex];
-        id = VNotificationManager.get().dealNotificationId(id, pkg, null, getVUserId());
+        id = VNotificationManager.get().dealNotificationId(id, pkg, null, getAppUserId());
         args[idIndex] = id;
         Notification notification = (Notification) args[notificationIndex];
         if (!VNotificationManager.get().dealNotification(id, notification, pkg)) {
             return 0;
         }
-        VNotificationManager.get().addNotification(id, null, pkg, getVUserId());
+        VNotificationManager.get().addNotification(id, null, pkg, getAppUserId());
         args[0] = getHostPkg();
         return method.invoke(who, args);
     }

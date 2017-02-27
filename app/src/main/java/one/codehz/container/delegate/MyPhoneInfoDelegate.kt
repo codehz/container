@@ -4,7 +4,7 @@ import com.lody.virtual.client.hook.delegate.PhoneInfoDelegate
 import one.codehz.container.ext.sharedPreferences
 
 class MyPhoneInfoDelegate : PhoneInfoDelegate {
-    override fun getDeviceId(oldDeviceId: String): String {
+    override fun getDeviceId(oldDeviceId: String, userId: Int): String {
         sharedPreferences.getString("privacy_phone_device_id", "").apply {
             if (isNotEmpty())
                 return this
@@ -12,7 +12,7 @@ class MyPhoneInfoDelegate : PhoneInfoDelegate {
         return oldDeviceId
     }
 
-    override fun getBluetoothAddress(oldAddress: String): String {
+    override fun getBluetoothAddress(oldAddress: String, userId: Int): String {
         sharedPreferences.getString("privacy_phone_bluetooth_address", "").apply {
             if (isNotEmpty())
                 return this
@@ -20,7 +20,7 @@ class MyPhoneInfoDelegate : PhoneInfoDelegate {
         return oldAddress
     }
 
-    override fun getMacAddress(oldAddress: String?): String? {
+    override fun getMacAddress(oldAddress: String?, userId: Int): String? {
         sharedPreferences.getString("privacy_phone_mac_address", "").apply {
             if (isNotEmpty())
                 return this
@@ -28,7 +28,7 @@ class MyPhoneInfoDelegate : PhoneInfoDelegate {
         return oldAddress
     }
 
-    override fun getLine1Number(oldNumber: String?): String? {
+    override fun getLine1Number(oldNumber: String?, userId: Int): String? {
         sharedPreferences.getString("privacy_phone_number", "").apply {
             if (isNotEmpty())
                 return this

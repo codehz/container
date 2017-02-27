@@ -1,22 +1,20 @@
-package com.lody.virtual;
+package com.lody.virtual.client;
 
 import android.hardware.Camera;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Process;
 
-import com.lody.virtual.client.VClientImpl;
 import com.lody.virtual.client.core.VirtualCore;
 import com.lody.virtual.client.env.VirtualRuntime;
 import com.lody.virtual.client.ipc.VActivityManager;
-import com.lody.virtual.helper.proto.AppSetting;
 import com.lody.virtual.helper.utils.VLog;
 import com.lody.virtual.os.VUserHandle;
+import com.lody.virtual.remote.AppSetting;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,9 +24,9 @@ import dalvik.system.DexFile;
 /**
  * VirtualApp Native Project
  */
-public class IOHook {
+public class NativeEngine {
 
-    private static final String TAG = IOHook.class.getSimpleName();
+    private static final String TAG = NativeEngine.class.getSimpleName();
 
     private static Map<String, AppSetting> sDexOverrideMap;
     private static Method gOpenDexFileNative;
@@ -37,7 +35,7 @@ public class IOHook {
 
     static {
         try {
-            System.loadLibrary("iohook");
+            System.loadLibrary("va-native");
         } catch (Throwable e) {
             VLog.e(TAG, VLog.getStackTraceString(e));
         }
@@ -71,6 +69,7 @@ public class IOHook {
                 gCameraNativeSetup = Camera.class.getDeclaredMethod("native_setup", Object.class, int.class, int.class, String.class);
                 gCameraMethodType = 2;
             } catch (NoSuchMethodException e) {
+                // ignore
             }
         }
 
@@ -87,7 +86,6 @@ public class IOHook {
             for (Method method : methods) {
                 if ("native_setup".equals(method.getName())) {
                     gCameraNativeSetup = method;
-                    VLog.w("native_setup", "native_setup:" + Arrays.toString(method.getParameterTypes()));
                     break;
                 }
             }
@@ -138,7 +136,7 @@ public class IOHook {
 
     public static void reversed(String origPath, String newPath) {
         try {
-            nativeReversedRedirect(origPath, newPath);
+            nativeReversed(origPath, newPath);
         } catch (Throwable e) {
             VLog.e(TAG, VLog.getStackTraceString(e));
         }
@@ -212,7 +210,7 @@ public class IOHook {
 
     private static native void nativeRedirect(String orgPath, String newPath);
 
-    private static native void nativeReversedRedirect(String orgPath, String newPath);
+    private static native void nativeReversed(String orgPath, String newPath);
 
     private static native void nativeHook(int apiLevel);
 

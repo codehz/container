@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.IInterface;
+import android.os.Parcel;
 import android.os.RemoteException;
 
 import com.lody.virtual.client.VClientImpl;

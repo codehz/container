@@ -23,11 +23,11 @@ public class TelephonyPatch extends PatchBinderDelegate {
 	protected void onBindHooks() {
 		super.onBindHooks();
 		//addHook(new ReplaceCallingPkgHook("getDeviceId"));
+		//addHook(new ReplaceLastPkgHook("getLine1NumberForDisplay"));
 		addHook(new ReplaceCallingPkgHook("getNeighboringCellInfo"));
 		addHook(new ReplaceCallingPkgHook("getAllCellInfo"));
 		addHook(new ReplaceCallingPkgHook("getCellLocation"));
 		addHook(new ReplaceCallingPkgHook("isOffhook"));
-//		addHook(new ReplaceLastPkgHook("getLine1NumberForDisplay"));
 		addHook(new ReplaceLastPkgHook("isOffhookForSubscriber"));
 		addHook(new ReplaceLastPkgHook("isRingingForSubscriber"));
 		addHook(new ReplaceCallingPkgHook("call"));

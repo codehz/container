@@ -10,104 +10,106 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 
-import com.lody.virtual.client.core.VirtualCore;
-import com.lody.virtual.helper.proto.AppSetting;
 import com.lody.virtual.helper.utils.Reflect;
 import com.lody.virtual.helper.utils.VLog;
 
-class NotificationCompatCompatV21 extends NotificationCompatCompatV14 {
-	static final String TAG = NotificationCompatCompatV21.class.getSimpleName();
+import static com.lody.virtual.os.VEnvironment.getPackageResourcePath;
 
-	NotificationCompatCompatV21() {
-		super();
-	}
+/**
+ * @author 247321543
+ */
+/* package */ class NotificationCompatCompatV21 extends NotificationCompatCompatV14 {
+    static final String TAG = NotificationCompatCompatV21.class.getSimpleName();
 
-	@Override
-	public boolean dealNotification(int id, Notification notification, String packageName) {
+    NotificationCompatCompatV21() {
+        super();
+    }
+
+    @Override
+    public boolean dealNotification(int id, Notification notification, String packageName) {
 //        VLog.d(TAG, "dealNotification:" + packageName + ",notification=" + notification);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			Context pluginContext = getAppContext(packageName);
-			return resolveRemoteViews(pluginContext, packageName, notification)
-					|| resolveRemoteViews(pluginContext, packageName, notification.publicVersion);
-		}
-		return super.dealNotification(id, notification, packageName);
-	}
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Context pluginContext = getAppContext(packageName);
+            return resolveRemoteViews(pluginContext, packageName, notification)
+                    || resolveRemoteViews(pluginContext, packageName, notification.publicVersion);
+        }
+        return super.dealNotification(id, notification, packageName);
+    }
 
-	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-	private boolean resolveRemoteViews(Context pluginContext, String packageName, Notification notification) {
-		if (notification == null) {
-			return false;
-		}
-		String publicApk = null;
-		PackageInfo packageInfo = getPackageInfo(packageName);
-		ApplicationInfo host = getHostContext().getApplicationInfo();
-		if (packageInfo != null) {
-			publicApk = packageInfo.applicationInfo.publicSourceDir;
-		}
-		if (TextUtils.isEmpty(publicApk)) {
-			AppSetting setting = VirtualCore.get().findApp(packageName);
-			publicApk = setting.apkPath;
-		}
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private boolean resolveRemoteViews(Context pluginContext, String packageName, Notification notification) {
+        if (notification == null) {
+            return false;
+        }
+        String publicApk = null;
+        PackageInfo packageInfo = getPackageInfo(packageName);
+        ApplicationInfo host = getHostContext().getApplicationInfo();
+        if (packageInfo != null) {
+            publicApk = packageInfo.applicationInfo.publicSourceDir;
+        }
+        if (TextUtils.isEmpty(publicApk)) {
+            publicApk = getPackageResourcePath(packageName).getAbsolutePath();
+        }
 
-		//remoteviews
-		getNotificationFixer().fixNotificationRemoteViews(pluginContext, notification);
-		//图标修复
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			getNotificationFixer().fixIcon(notification.getSmallIcon(), pluginContext, packageInfo != null);
-			getNotificationFixer().fixIcon(notification.getLargeIcon(), pluginContext, packageInfo != null);
-		} else {
-			getNotificationFixer().fixIconImage(pluginContext.getResources(), notification.contentView, false, notification);
-		}
-		notification.icon = host.icon;
+        //remoteviews
+        getNotificationFixer().fixNotificationRemoteViews(pluginContext, notification);
+        //图标修复
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getNotificationFixer().fixIcon(notification.getSmallIcon(), pluginContext, packageInfo != null);
+            getNotificationFixer().fixIcon(notification.getLargeIcon(), pluginContext, packageInfo != null);
+        } else {
+            getNotificationFixer().fixIconImage(pluginContext.getResources(), notification.contentView, false, notification);
+        }
+        notification.icon = host.icon;
 
-		ApplicationInfo proxyApplicationInfo = new ApplicationInfo(host);
-		//要确保publicSourceDir这个路径可以被SystemUI应用读取
-		proxyApplicationInfo.packageName = packageName;
-		proxyApplicationInfo.publicSourceDir = publicApk;
-		VLog.d(TAG, "proxyApplicationInfo=" + proxyApplicationInfo + ",apk=" + publicApk);
+        ApplicationInfo proxyApplicationInfo = new ApplicationInfo(host);
 
-		fixApplication(notification.tickerView, proxyApplicationInfo);
-		fixApplication(notification.contentView, proxyApplicationInfo);
-		fixApplication(notification.bigContentView, proxyApplicationInfo);
-		fixApplication(notification.headsUpContentView, proxyApplicationInfo);
-		Bundle bundle = Reflect.on(notification).get("extras");
-		if (bundle != null) {
-			bundle.putParcelable(EXTRA_BUILDER_APPLICATION_INFO, proxyApplicationInfo);
-		}
-		return true;
-	}
+        proxyApplicationInfo.packageName = packageName;
+        proxyApplicationInfo.publicSourceDir = publicApk;
+        VLog.d(TAG, "proxyApplicationInfo=" + proxyApplicationInfo + ",apk=" + publicApk);
 
-	private ApplicationInfo getApplication(Notification notification) {
-		ApplicationInfo applicationInfo = getApplication(notification.tickerView);
-		if (applicationInfo != null) {
-			return applicationInfo;
-		}
-		applicationInfo = getApplication(notification.contentView);
-		if (applicationInfo != null) {
-			return applicationInfo;
-		}
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-			applicationInfo = getApplication(notification.bigContentView);
-			if (applicationInfo != null) {
-				return applicationInfo;
-			}
-		}
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			applicationInfo = getApplication(notification.headsUpContentView);
-			if (applicationInfo != null) {
-				return applicationInfo;
-			}
-		}
-		return null;
-	}
+        fixApplication(notification.tickerView, proxyApplicationInfo);
+        fixApplication(notification.contentView, proxyApplicationInfo);
+        fixApplication(notification.bigContentView, proxyApplicationInfo);
+        fixApplication(notification.headsUpContentView, proxyApplicationInfo);
+        Bundle bundle = Reflect.on(notification).get("extras");
+        if (bundle != null) {
+            bundle.putParcelable(EXTRA_BUILDER_APPLICATION_INFO, proxyApplicationInfo);
+        }
+        return true;
+    }
 
-	private ApplicationInfo getApplication(RemoteViews remoteViews) {
-		if (remoteViews == null) return null;
-		return Reflect.on(remoteViews).get("mApplication");
-	}
+    private ApplicationInfo getApplication(Notification notification) {
+        ApplicationInfo applicationInfo = getApplication(notification.tickerView);
+        if (applicationInfo != null) {
+            return applicationInfo;
+        }
+        applicationInfo = getApplication(notification.contentView);
+        if (applicationInfo != null) {
+            return applicationInfo;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            applicationInfo = getApplication(notification.bigContentView);
+            if (applicationInfo != null) {
+                return applicationInfo;
+            }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            applicationInfo = getApplication(notification.headsUpContentView);
+            if (applicationInfo != null) {
+                return applicationInfo;
+            }
+        }
+        return null;
+    }
 
-	private void fixApplication(RemoteViews remoteViews, ApplicationInfo applicationInfo) {
-		if (remoteViews == null) return;
+    private ApplicationInfo getApplication(RemoteViews remoteViews) {
+        if (remoteViews == null) return null;
+        return Reflect.on(remoteViews).get("mApplication");
+    }
+
+    private void fixApplication(RemoteViews remoteViews, ApplicationInfo applicationInfo) {
+        if (remoteViews == null) return;
 //        ArrayList<Object> mActions = Reflect.on(remoteViews).get("mActions");
 //        if (mActions != null) {
 //            remoteViews.setImageViewResource();
@@ -115,6 +117,6 @@ class NotificationCompatCompatV21 extends NotificationCompatCompatV14 {
 //
 //            }
 //        }
-		Reflect.on(remoteViews).set("mApplication", applicationInfo);
-	}
+        Reflect.on(remoteViews).set("mApplication", applicationInfo);
+    }
 }

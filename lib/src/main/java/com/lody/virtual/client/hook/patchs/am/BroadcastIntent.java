@@ -9,17 +9,15 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.webkit.MimeTypeMap;
 
-import com.lody.virtual.IOHook;
+import com.lody.virtual.client.NativeEngine;
 import com.lody.virtual.client.core.VirtualCore;
 import com.lody.virtual.client.env.Constants;
 import com.lody.virtual.client.hook.base.Hook;
 import com.lody.virtual.client.stub.StubManifest;
 import com.lody.virtual.helper.utils.BitmapUtils;
 import com.lody.virtual.helper.utils.ComponentUtils;
-import com.lody.virtual.helper.utils.VLog;
 import com.lody.virtual.os.VUserHandle;
 
 import java.lang.reflect.Method;
@@ -44,7 +42,6 @@ import java.lang.reflect.Method;
             String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(intent.getDataString()));
             values.put("mime_type", mime);
             values.put("_data", intent.getData().getPath());
-            VLog.d(getName(), "try " + values);
             if (mime.startsWith("image"))
                 VirtualCore.get().getContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
             else if (mime.startsWith("video"))
@@ -66,14 +63,13 @@ import java.lang.reflect.Method;
             // clear the permission
             args[7] = null;
         }
-        VLog.d(getName(), "broadcast " + intent);
         return method.invoke(who, args);
     }
 
     private Uri redirectData(Uri data) {
         if (data == null) return null;
         if (data.getScheme().equals("file"))
-            return data.buildUpon().path(IOHook.getRedirectedPath(data.getPath())).build();
+            return data.buildUpon().path(NativeEngine.getRedirectedPath(data.getPath())).build();
         return data;
     }
 

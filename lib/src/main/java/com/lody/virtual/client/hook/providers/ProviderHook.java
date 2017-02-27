@@ -64,29 +64,6 @@ public class ProviderHook implements InvocationHandler {
 		return fetcher;
 	}
 
-	private static IInterface createProxy(IInterface provider, ProviderHook hook) {
-		if (provider == null || hook == null) {
-			return null;
-		}
-		return (IInterface) Proxy.newProxyInstance(provider.getClass().getClassLoader(), new Class[]{
-				IContentProvider.TYPE,
-		}, hook);
-	}
-
-	public static IInterface createProxy(boolean external, String authority, IInterface provider) {
-		if (provider instanceof Proxy && Proxy.getInvocationHandler(provider) instanceof ProviderHook) {
-			return provider;
-		}
-		ProviderHook.HookFetcher fetcher = ProviderHook.fetchHook(authority);
-		if (fetcher != null) {
-			ProviderHook hook = fetcher.fetch(external, provider);
-			IInterface proxyProvider = ProviderHook.createProxy(provider, hook);
-			if (proxyProvider != null) {
-				provider = proxyProvider;
-			}
-		}
-		return provider;
-	}
 
 	public Bundle call(Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
 
@@ -129,6 +106,30 @@ public class ProviderHook implements InvocationHandler {
 
 	protected void processArgs(Method method, Object... args) {
 
+	}
+
+	private static IInterface createProxy(IInterface provider, ProviderHook hook) {
+		if (provider == null || hook == null) {
+			return null;
+		}
+		return (IInterface) Proxy.newProxyInstance(provider.getClass().getClassLoader(), new Class[] {
+				IContentProvider.TYPE,
+		}, hook);
+	}
+
+	public static IInterface createProxy(boolean external, String authority, IInterface provider) {
+		if (provider instanceof Proxy && Proxy.getInvocationHandler(provider) instanceof ProviderHook) {
+			return provider;
+		}
+		ProviderHook.HookFetcher fetcher = ProviderHook.fetchHook(authority);
+		if (fetcher != null) {
+			ProviderHook hook = fetcher.fetch(external, provider);
+			IInterface proxyProvider = ProviderHook.createProxy(provider, hook);
+			if (proxyProvider != null) {
+				provider = proxyProvider;
+			}
+		}
+		return provider;
 	}
 
 	public interface HookFetcher {
