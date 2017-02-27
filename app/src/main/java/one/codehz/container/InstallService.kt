@@ -44,7 +44,6 @@ class InstallService : Service() {
             = PendingIntent.getService(this, id, Intent(this, InstallService::class.java).apply { action = target; fn?.invoke(this) }, PendingIntent.FLAG_CANCEL_CURRENT)
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        val cancelPendingIntent = makePendingService(PENDING_CANCEL, CANCEL)
         when (intent.action) {
             REQUEST_INSTALL -> NotificationCompat.Builder(this)
                     .setContentTitle(getString(R.string.install_request))
