@@ -29,7 +29,8 @@ public class FileUtils {
 
     public static void createSymlink(String oldPath, String newPath) throws Exception {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Os.symlink(oldPath, newPath);
+            if (!new File(newPath).exists())
+                Os.symlink(oldPath, newPath);
         } else {
             Runtime.getRuntime().exec("ln -s " + oldPath + " " + newPath).waitFor();
         }

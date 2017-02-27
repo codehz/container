@@ -10,7 +10,7 @@ void GodinHook::ThumbInstruction::createStub(HookInfo * info)
   size_t originalAddress = info->getOriginalAddr();
   size_t targetAddress = info->getHookAddr();
   int i = 0;
-  if(NULL == originalAddress || NULL == targetAddress)
+  if(0 == originalAddress || 0 == targetAddress)
     return ;
   /// 修正地址
   size_t original = valueToMem(originalAddress);
@@ -336,7 +336,7 @@ int GodinHook::ThumbInstruction::repairThumb16Instruction(uint32_t pc, uint16_t 
         }
       else if (type == ADR_THUMB16) {
           r = (instruction & 0x700) >> 8;
-          value = ALIGN_PC(pc) + (instruction & 0xFF) << 2;
+          value = ALIGN_PC(pc) + ((instruction & 0xFF) << 2);
         }
       else {
           r = (instruction & 0x700) >> 8;
