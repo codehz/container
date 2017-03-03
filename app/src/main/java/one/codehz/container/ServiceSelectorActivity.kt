@@ -36,7 +36,7 @@ class ServiceSelectorActivity : BaseActivity(R.layout.service_selector) {
             supportLoaderManager.getLoader<Loader<*>>(0).forceLoad()
         }
     }
-    val contentLoader by MakeLoaderCallbacks({ this }, { it() }) { ctx ->
+    val contentLoader by MakeLoaderCallbacks({ this }, { it() }) { _ ->
         packageInfo!!.services.map { it.name }.filter { it !in restrictedList }.map(::SimpleComponentModel).run {
             contentAdapter.updateModels(this)
         }

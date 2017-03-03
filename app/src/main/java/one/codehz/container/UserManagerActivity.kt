@@ -36,11 +36,11 @@ class UserManagerActivity : BaseActivity(R.layout.user_manager_activity) {
             AlertDialog.Builder(this)
                     .setTitle(getString(R.string.input_name))
                     .setView(editLayout)
-                    .setPositiveButton(android.R.string.ok) { dialog, i ->
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
                         vUserManager.setUserName(model.id, edit.text.toString())
                         supportLoaderManager.getLoader<Loader<*>>(USER_LIST).forceLoad()
                     }
-                    .setNegativeButton(android.R.string.cancel) { dialog, i -> }
+                    .setNegativeButton(android.R.string.cancel) { _, _ -> }
                     .show()
         }
     }
@@ -113,11 +113,11 @@ class UserManagerActivity : BaseActivity(R.layout.user_manager_activity) {
             AlertDialog.Builder(this)
                     .setTitle(getString(R.string.input_name))
                     .setView(R.layout.input_layout)
-                    .setPositiveButton(android.R.string.ok) { dialog, i ->
+                    .setPositiveButton(android.R.string.ok) { dialog, _ ->
                         vUserManager.createUser(((dialog as AlertDialog).findViewById(R.id.input) as EditText).text.toString(), 0)
                         supportLoaderManager.restartLoader(USER_LIST, null, userListLoader)
                     }
-                    .setNegativeButton(android.R.string.cancel) { dialog, i -> }
+                    .setNegativeButton(android.R.string.cancel) { _, _ -> }
                     .show()
         }
     }

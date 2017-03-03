@@ -5,6 +5,7 @@ import one.codehz.container.annotation.propertyField
 import one.codehz.container.base.SameAsAble
 import one.codehz.container.ext.virtualCore
 
+@Suppress("unused")
 class AppPropertyModel(
         val model: AppModel
 ) : PropertyListModel(), SameAsAble<AppPropertyModel> {

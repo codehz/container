@@ -1,7 +1,6 @@
 package one.codehz.container.fragment
 
 import android.content.ClipData
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -13,7 +12,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import com.lody.virtual.helper.utils.VLog
 import one.codehz.container.LogActivity
@@ -37,7 +35,7 @@ class BasicDetailFragment(val model: AppModel, onSnack: (Snackbar) -> Unit) : Fr
     val logManagerButton by lazy<TextView> { view!![R.id.log_manager] }
     val clearLogButton by lazy<TextView> { view!![R.id.clear_log] }
 
-    val propertyLoader by MakeLoaderCallbacks({ context }, { it() }) { ctx ->
+    val propertyLoader by MakeLoaderCallbacks({ context }, { it() }) { _ ->
         contentAdapter.updateModels(AppPropertyModel(model).getItems())
     }
     val logLoader by MakeLoaderCallbacks({ context }, { it() }) { ctx ->
@@ -54,7 +52,7 @@ class BasicDetailFragment(val model: AppModel, onSnack: (Snackbar) -> Unit) : Fr
         }
     }
     val logListAdapter by lazy {
-        LogListAdapter { time, value ->
+        LogListAdapter { _, value ->
             clipboardManager.primaryClip = ClipData.newPlainText("log", value)
             onSnack(Snackbar.make(contentList, getString(R.string.log_copied), Snackbar.LENGTH_SHORT))
         }

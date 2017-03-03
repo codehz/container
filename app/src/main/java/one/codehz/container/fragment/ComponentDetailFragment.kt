@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.content.Loader
 import android.support.v7.widget.DefaultItemAnimator
@@ -13,7 +12,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import one.codehz.container.DetailActivity
@@ -35,7 +33,7 @@ class ComponentDetailFragment(val model: AppModel) : Fragment() {
     val clearButton by lazy<TextView> { view!![R.id.clear_history] }
     val historyListAdapter by lazy {
         ComponentListAdapter(true) { item ->
-            val (id, value, type) = item
+            val (_, value, type) = item
             context.contentResolver.query(MainProvider.COMPONENT_URI, arrayOf("_id"), "`package` = ? AND `type` = ? AND `action` = ?", arrayOf(model.packageName, type, value), null).use {
                 if (it.moveToNext()) {
                     context.contentResolver.delete(MainProvider.COMPONENT_URI.buildUpon().appendPath(it.getLong(0).toString()).build(), null, null)
@@ -89,8 +87,6 @@ class ComponentDetailFragment(val model: AppModel) : Fragment() {
             }, DetailActivity.SELECT_SERVICES)
         }
     }
-
-    val handler = Handler()
 
     override fun onResume() {
         super.onResume()

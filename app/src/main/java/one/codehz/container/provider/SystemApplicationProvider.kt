@@ -82,7 +82,6 @@ class SystemApplicationProvider : DocumentsProvider() {
             row.add(Document.COLUMN_MIME_TYPE, Document.MIME_TYPE_DIR)
             row.add(Document.COLUMN_DISPLAY_NAME, context.getString(R.string.installed_application))
             row.add(Document.COLUMN_LAST_MODIFIED, System.currentTimeMillis())
-//            row.add(Document.COLUMN_FLAGS, Document.FLAG_DIR_PREFERS_LAST_MODIFIED)
         } else
             ret += findApp(documentId.substring(4))
         return ret

@@ -33,7 +33,7 @@ class LogListAdapter(val onClick: (String, String) -> Unit) : BaseAdapter<LogLis
         val longPressDetector = GestureDetector(itemView.context, LongPressListener())
 
         init {
-            infoParent.setOnTouchListener { v, e ->
+            infoParent.setOnTouchListener { _, e ->
                 longPressDetector.onTouchEvent(e)
             }
         }

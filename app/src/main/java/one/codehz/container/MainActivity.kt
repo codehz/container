@@ -69,7 +69,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     }
 
     fun initViews() {
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener { _ ->
             currentFragment.onFloatingAction()
         }
 

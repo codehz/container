@@ -127,20 +127,10 @@ class AsyncTaskProxy<T, R>(val backgroundFn: AsyncTaskContext.(Int, T) -> R, val
 }
 
 class AsyncTaskBuilder<T, R>(val context: Context, val mapFn: AsyncTaskContext.(Int, T) -> R) {
-
-    fun then(finishedFn: (Int, R) -> Unit) = AsyncTaskProxy(mapFn, finishedFn)
-
-    fun then(finishedFn: (R) -> Unit) = AsyncTaskProxy(mapFn) { index, input -> finishedFn(input) }
-
-    inline fun before(preFn: () -> Unit): AsyncTaskBuilder<T, R> {
-        preFn()
-        return this
-    }
+    fun then(finishedFn: (R) -> Unit) = AsyncTaskProxy(mapFn) { _, input -> finishedFn(input) }
 }
 
-fun <T, R> Context.runAsync(mapFn: AsyncTaskContext.(Int, T) -> R) = AsyncTaskBuilder<T, R>(this, mapFn)
-
-fun <T, R> Context.runAsync(mapFn: AsyncTaskContext.(T) -> R) = AsyncTaskBuilder<T, R>(this) { index, input -> mapFn(input) }
+fun <T, R> Context.runAsync(mapFn: AsyncTaskContext.(T) -> R) = AsyncTaskBuilder<T, R>(this) { _, input -> mapFn(input) }
 
 inline fun <reified T> Context.systemService(name: String) = getSystemService(name) as T
 
@@ -149,12 +139,3 @@ object staticName {
 }
 
 fun Snackbar.setBackground(color: Int) = apply { view.setBackgroundColor(color) }
-
-fun <T> Iterable<T>.onEach(thing: (T) -> Unit) = map { thing(it); it }
-fun <T> Sequence<T>.onEach(thing: (T) -> Unit) = map { thing(it); it }
-
-inline fun <reified T : Parcelable> createParcel(crossinline createFromParcel: (Parcel) -> T?): Parcelable.Creator<T> =
-        object : Parcelable.Creator<T> {
-            override fun createFromParcel(source: Parcel): T? = createFromParcel(source)
-            override fun newArray(size: Int): Array<out T?> = arrayOfNulls(size)
-        }

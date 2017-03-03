@@ -5,7 +5,7 @@ import one.codehz.container.base.SameAsAble
 
 class UserModel(from: VUserInfo) : SameAsAble<UserModel> {
     val id = from.id
-    val name = from.name!!
+    val name = from.name ?: "no name"
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

@@ -14,7 +14,7 @@ import android.view.View
 import one.codehz.container.MainActivity
 
 @Suppress("unused")
-class BottomNavigationBehavior(context: Context, val attrs: AttributeSet) : CoordinatorLayout.Behavior<BottomNavigationView>(context, attrs) {
+class BottomNavigationBehavior(context: Context, attrs: AttributeSet) : CoordinatorLayout.Behavior<BottomNavigationView>(context, attrs) {
     override fun onApplyWindowInsets(coordinatorLayout: CoordinatorLayout?, child: BottomNavigationView?, insets: WindowInsetsCompat): WindowInsetsCompat {
         Log.d("BMB", insets.toString())
         return super.onApplyWindowInsets(coordinatorLayout, child, insets)

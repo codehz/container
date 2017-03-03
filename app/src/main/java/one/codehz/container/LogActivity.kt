@@ -17,7 +17,7 @@ import one.codehz.container.provider.MainProvider
 class LogActivity : BaseActivity(R.layout.activity_log) {
     val logList by lazy<RecyclerView> { this[R.id.content_list] }
     val logListAdapter by lazy {
-        LogListAdapter { time, value ->
+        LogListAdapter { _, value ->
             clipboardManager.primaryClip = ClipData.newPlainText("log", value)
             Snackbar.make(logList, getString(R.string.log_copied), Snackbar.LENGTH_SHORT).setBackground(ContextCompat.getColor(this, R.color.colorPrimaryDark)).show()
         }

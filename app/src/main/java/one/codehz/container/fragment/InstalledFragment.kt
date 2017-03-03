@@ -35,7 +35,7 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
         contentAdapter.updateModels(virtualCore.allApps.filterNotNull().filter { it.packageName != "android" }.map { AppModel(ctx, it) })
     }
 
-    val uninstallLoader by MakeLoaderCallbacks({ activity }, { loaderManager.getLoader<Loader<*>>(AppListLoaderId).forceLoad() }) { ctx ->
+    val uninstallLoader by MakeLoaderCallbacks({ activity }, { loaderManager.getLoader<Loader<*>>(AppListLoaderId).forceLoad() }) { _ ->
         uninstallPendingList.forEach {
             Thread.sleep(200)
             virtualCore.uninstallApp(it)
@@ -157,8 +157,8 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
 
     fun installFromStream(vararg params: Pair<InputStream, Long>) {
         with(activity) {
-            runAsync<Pair<InputStream, Long>, Unit> { data ->
-                val (stream, size) = data
+            runAsync<Pair<InputStream, Long>, Unit> {
+                val (stream, size) = it
                 object {
                     val dialog: ProgressDialog by lazy {
                         ProgressDialog(activity).apply {
@@ -221,7 +221,7 @@ class InstalledFragment : Fragment(), IFloatingActionTarget {
                         }
                     }
                 }.start()
-            }.then { unit ->
+            }.then {
                 File("$filesDir/temp.apk").delete()
 
                 Snackbar.make(installedList, getString(R.string.install_finished), Snackbar.LENGTH_SHORT).setBackground(ContextCompat.getColor(activity, R.color.colorPrimaryDark)).show()
