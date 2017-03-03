@@ -70,13 +70,13 @@ class MyComponentDelegate(val context: Context) : ComponentDelegate {
 
     override fun onStartService(intent: Intent?): Boolean {
         if (intent?.component != null)
-            return logComponent("service", intent?.component?.className!!)
+            return logComponent("service", intent.component?.className!!)
         return true
     }
 
     override fun onSendBroadcast(intent: Intent?): Boolean {
         if (intent?.action != null)
-            return logComponent("broadcast", intent?.action!!)
+            return logComponent("broadcast", intent.action!!)
         return true
     }
 
