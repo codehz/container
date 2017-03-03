@@ -46,7 +46,7 @@ public class ArrayUtils {
 			int N = -1;
 			for (Object one : array) {
 				N++;
-				if (one != null && type == one.getClass()) {
+				if (one != null && type.isInstance(one)) {
 					return N;
 				}
 			}
