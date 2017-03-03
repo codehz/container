@@ -17,6 +17,7 @@ import com.lody.virtual.client.hook.base.ReplaceLastUidHook;
 import com.lody.virtual.client.hook.base.ResultStaticHook;
 import com.lody.virtual.client.hook.base.StaticHook;
 import com.lody.virtual.client.ipc.VActivityManager;
+import com.lody.virtual.helper.utils.VLog;
 import com.lody.virtual.remote.AppTaskInfo;
 
 import java.lang.reflect.Method;
@@ -89,6 +90,12 @@ public class ActivityManagerPatch extends PatchDelegate<HookDelegate<IInterface>
 			addHook(new ReplaceLastUidHook("checkPermissionWithToken"));
 			addHook(new isUserRunning());
 			addHook(new ResultStaticHook("updateConfiguration", 0));
+			addHook(new StaticHook("isTopOfTask") {
+				@Override
+				public Object afterCall(Object who, Method method, Object[] args, Object result) throws Throwable {
+					return super.afterCall(who, method, args, result == null ? false : result);
+				}
+			});
 			addHook(new ReplaceCallingPkgHook("setAppLockedVerifying"));
 			addHook(new StaticHook("checkUriPermission") {
 				@Override
