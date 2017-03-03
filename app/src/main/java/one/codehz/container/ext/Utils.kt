@@ -69,8 +69,8 @@ fun VirtualCore.killAllAppsEx() {
                     .map { it.id }
                     .filter { uid -> virtualCore.isAppRunning(pkgName, uid) }
                     .onEach { uid -> vNotificationManager.cancelAllNotification(pkgName, uid) }
-                    .forEach { uid -> virtualCore.killApp(pkgName, uid) }
         }
+        virtualCore.killAllApps()
         activityManager.appTasks
                 .filter { it.taskInfo.baseIntent.component.className.startsWith("com.lody.virtual.client.stub.StubActivity$") }
                 .forEach(ActivityManager.AppTask::finishAndRemoveTask)
