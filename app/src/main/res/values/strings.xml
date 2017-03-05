@@ -111,4 +111,6 @@
     <string name="special_settings">Special Settings</string>
     <string name="basic">Basic</string>
     <string name="experimental_options">Experimental options</string>
+    <string name="wake_lock">Wake Lock</string>
+    <string name="wake_lock_postfix">%1$s:WakeLock Manager</string>
 </resources>

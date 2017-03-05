@@ -68,6 +68,11 @@ public interface ComponentDelegate {
         public boolean onAcquireContentProvider(String name) {
             return true;
         }
+
+        @Override
+        public boolean onAcquireWakeLock(String name) {
+            return true;
+        }
     };
 
     void beforeActivityCreate(Activity activity);
@@ -93,4 +98,6 @@ public interface ComponentDelegate {
     boolean onSendBroadcast(Intent intent);
 
     boolean onAcquireContentProvider(String name);
+
+    boolean onAcquireWakeLock(String name);
 }

@@ -22,7 +22,7 @@ import one.codehz.container.models.AppModel
 import one.codehz.container.models.SimpleComponentModel
 import one.codehz.container.provider.MainProvider
 
-class ServiceSelectorActivity : BaseActivity(R.layout.service_selector) {
+class ServiceSelectorActivity : BaseActivity(R.layout.common_list_activity) {
     val contentList by lazy<RecyclerView> { this[R.id.content_list] }
     val packageInfo: PackageInfo? by lazy { packageManager.getPackageArchiveInfo(virtualCore.findApp(model.packageName).apkPath, PackageManager.GET_SERVICES) }
     val restrictedList: List<String> by lazy {

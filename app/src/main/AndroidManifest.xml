@@ -34,6 +34,12 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
+            android:name=".WakeLockActivity"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName=".DetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
             android:name=".ShortcutActivity"
             android:excludeFromRecents="true"
             android:exported="false"

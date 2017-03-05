@@ -43,3 +43,8 @@ repositories {
     mavenCentral()
     jcenter()
 }
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}

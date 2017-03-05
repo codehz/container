@@ -1,15 +1,17 @@
 package one.codehz.container.delegate
 
 import android.app.Activity
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import com.lody.virtual.client.hook.delegate.ComponentDelegate
 import com.lody.virtual.helper.utils.VLog
+import one.codehz.container.ext.insert
+import one.codehz.container.ext.query
 import one.codehz.container.ext.vClientImpl
 import one.codehz.container.provider.MainProvider
 import one.codehz.container.provider.PreferenceProvider
 import one.codehz.container.utils.DatabasePreferences
+import kotlin.collections.set
 
 
 class MyComponentDelegate(val context: Context) : ComponentDelegate {
@@ -45,25 +47,35 @@ class MyComponentDelegate(val context: Context) : ComponentDelegate {
     override fun afterActivityDestroy(activity: Activity?) {
     }
 
-    fun checkComponent(type: String, action: String): Boolean {
-        context.contentResolver.query(MainProvider.COMPONENT_URI, arrayOf("action"), "`type`=\"$type\" AND package=\"${vClientImpl.currentPackage}\"", null, null).use {
-            generateSequence { if (it.moveToNext()) it else null }.map { it.getString(0) }.forEach {
-                VLog.d("MCD", "%s == %s", it, action)
-                if (it == action)
-                    return false
-            }
-        }
-        return true
+    fun checkComponent(type: String, action: String) = context.contentResolver query
+            MainProvider.COMPONENT_URI select
+            arrayOf("action") where
+            mapOf("type" to type, "package" to vClientImpl.currentPackage, "action" to action) exec
+            { !it.moveToNext() }
+
+    fun logComponent(type: String, action: String) = checkComponent(type, action).also { result ->
+        context.contentResolver insert MainProvider.COMPONENT_LOG_URI values mapOf(
+                "package" to vClientImpl.currentPackage,
+                "type" to type,
+                "action" to action,
+                "result" to if (result) 1 else 0
+        )
     }
 
-    fun logComponent(type: String, action: String) = checkComponent(type, action).apply {
-        val result = if (this) 1 else 0
-        context.contentResolver.insert(MainProvider.COMPONENT_LOG_URI, ContentValues().apply {
-            put("package", vClientImpl.currentPackage)
-            put("type", type)
-            put("action", action)
-            put("result", result)
-        })
+    fun getPattern(name: String) = name.replace(Regex("\\d+"), "%number%")
+
+    fun checkWakelock(pattern: String) = context.contentResolver query
+            MainProvider.WAKELOCK_URI select
+            arrayOf("pattern") where
+            mapOf("package" to vClientImpl.currentPackage, "pattern" to pattern) exec
+            { !it.moveToNext() }
+
+    fun logWakelock(pattern: String) = checkWakelock(pattern).also { result ->
+        context.contentResolver insert MainProvider.WAKELOCK_LOG_URI values mapOf(
+                "package" to vClientImpl.currentPackage,
+                "pattern" to pattern,
+                "result" to if (result) 1 else 0
+        )
     }
 
     override fun onSetForeground(pkgName: String) = acquirePrePackagePreferences(pkgName).getBoolean("foreground_service_notification", false)
@@ -83,6 +95,13 @@ class MyComponentDelegate(val context: Context) : ComponentDelegate {
     override fun onAcquireContentProvider(name: String?): Boolean {
         if (name != null && name != "one.codehz.container.provider.main")
             return logComponent("provider", name)
+        return true
+    }
+
+    override fun onAcquireWakeLock(name: String?): Boolean {
+        VLog.d("MCD", "wakelock: %s", name)
+        if (name != null)
+            return logWakelock(getPattern(name))
         return true
     }
 }

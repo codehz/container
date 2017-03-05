@@ -2,10 +2,12 @@ package com.lody.virtual.client.hook.patchs.power;
 
 import android.content.Context;
 
+import com.lody.virtual.client.core.VirtualCore;
 import com.lody.virtual.client.hook.base.PatchBinderDelegate;
 import com.lody.virtual.client.hook.base.ReplaceLastPkgHook;
 import com.lody.virtual.client.hook.base.ReplaceSequencePkgHook;
 import com.lody.virtual.client.hook.base.ResultStaticHook;
+import com.lody.virtual.helper.utils.ArrayUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -27,6 +29,10 @@ public class PowerManagerPatch extends PatchBinderDelegate {
 		addHook(new ReplaceSequencePkgHook("acquireWakeLock", 2) {
 			@Override
 			public Object call(Object who, Method method, Object... args) throws Throwable {
+				int index = ArrayUtils.indexOfFirst(args, String.class);
+				if (index != -1 && !VirtualCore.get().getComponentDelegate().onAcquireWakeLock((String) args[index])) {
+					return null;
+				}
 				try {
 					return super.call(who, method, args);
 				} catch (InvocationTargetException e) {
@@ -38,6 +44,10 @@ public class PowerManagerPatch extends PatchBinderDelegate {
 
 			@Override
 			public Object call(Object who, Method method, Object... args) throws Throwable {
+				int index = ArrayUtils.indexOfFirst(args, String.class);
+				if (index != -1 && !VirtualCore.get().getComponentDelegate().onAcquireWakeLock((String) args[index])) {
+					return null;
+				}
 				try {
 					return super.call(who, method, args);
 				} catch (InvocationTargetException e) {

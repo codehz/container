@@ -26,9 +26,22 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_margin="16dp"
-                android:layout_toStartOf="@+id/clear_history"
+                android:layout_toStartOf="@+id/wake_lock"
                 android:text="@string/usage_history"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+            <TextView
+                android:id="@+id/wake_lock"
+                android:layout_alignBaseline="@+id/history_title"
+                android:layout_toStartOf="@+id/clear_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:paddingEnd="16dp"
+                android:paddingStart="8dp"
+                android:text="@string/wake_lock"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"/>
 
             <TextView
                 android:id="@+id/clear_history"
@@ -38,7 +51,7 @@
                 android:layout_alignParentEnd="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:padding="16dp"
+                android:paddingEnd="16dp"
                 android:text="@string/clear"
                 android:textAppearance="@style/TextAppearance.AppCompat.Button"
                 android:textColor="@color/colorAccent"/>

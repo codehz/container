@@ -108,4 +108,6 @@
     <string name="experimental_options">实验性选项</string>
     <string name="foreground_service_notification">前台服务通知</string>
     <string name="special_settings">特别设置</string>
+    <string name="wake_lock">唤醒锁</string>
+    <string name="wake_lock_postfix">%1$s:唤醒锁管理器</string>
 </resources>

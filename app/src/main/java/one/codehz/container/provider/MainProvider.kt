@@ -11,6 +11,9 @@ class MainProvider : BaseDatabaseProvider() {
         val COMPONENT_URI = Uri.Builder().scheme("content").authority(AUTHORITY).appendPath("component").build()!!
         val COMPONENT_LOG_URI = Uri.Builder().scheme("content").authority(AUTHORITY).appendPath("clog").build()!!
         val COMPONENT_LOG_VIEW_URI = Uri.Builder().scheme("content").authority(AUTHORITY).appendPath("clog_view").build()!!
+        val WAKELOCK_URI = Uri.Builder().scheme("content").authority(AUTHORITY).appendPath("wakelock").build()!!
+        val WAKELOCK_LOG_URI = Uri.Builder().scheme("content").authority(AUTHORITY).appendPath("wlog").build()!!
+        val WAKELOCK_LOG_VIEW_URI = Uri.Builder().scheme("content").authority(AUTHORITY).appendPath("wlog_view").build()!!
     }
 
     override fun onCreateDatabase() = MainDb(context)
