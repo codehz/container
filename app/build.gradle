@@ -6,7 +6,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "one.codehz.container"
-        minSdkVersion 22
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 9
         versionName "0.999999999999 preview"
