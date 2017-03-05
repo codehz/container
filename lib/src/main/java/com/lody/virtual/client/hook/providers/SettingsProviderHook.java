@@ -59,7 +59,7 @@ public class SettingsProviderHook extends ExternalProviderHook {
 			}
 		}
 		if (METHOD_PUT == methodType) {
-			if (isSecureMethod(methodName)) {
+			if (isSecureMethod(methodName) || isSystem(methodName)) {
 				return null;
 			}
 		}
@@ -71,6 +71,10 @@ public class SettingsProviderHook extends ExternalProviderHook {
 			}
 			throw e;
 		}
+	}
+
+	public boolean isSystem(String method) {
+		return method.endsWith("system");
 	}
 
 	@Override
