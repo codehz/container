@@ -1,10 +1,10 @@
 package one.codehz.container
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
-import android.support.design.widget.TextInputLayout
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.Loader
 import android.support.v7.widget.DefaultItemAnimator
@@ -31,17 +31,9 @@ class UserManagerActivity : BaseActivity(R.layout.user_manager_activity) {
     val linearLayoutManager by lazy { LinearLayoutManager(this) }
     val contentAdapter by lazy {
         UserListAdapter { model ->
-            val edit = EditText(this@UserManagerActivity).apply { hint = model.name }
-            val editLayout = TextInputLayout(this).apply { this.addView(edit, -1, -1); }
-            AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.input_name))
-                    .setView(editLayout)
-                    .setPositiveButton(android.R.string.ok) { _, _ ->
-                        vUserManager.setUserName(model.id, edit.text.toString())
-                        supportLoaderManager.getLoader<Loader<*>>(USER_LIST).forceLoad()
-                    }
-                    .setNegativeButton(android.R.string.cancel) { _, _ -> }
-                    .show()
+            startActivityForResult(Intent(this, UserSettingActivity::class.java).apply {
+                putExtra(UserSettingActivity.EXTRA_USER_ID, model.id)
+            }, 0)
         }
     }
     val userListLoader by MakeLoaderCallbacks({ this }, { it() }) { contentAdapter.updateModels(vUserManager.users.map(::UserModel)) }
@@ -120,5 +112,10 @@ class UserManagerActivity : BaseActivity(R.layout.user_manager_activity) {
                     .setNegativeButton(android.R.string.cancel) { _, _ -> }
                     .show()
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        supportLoaderManager.getLoader<Loader<*>>(USER_LIST).forceLoad()
     }
 }

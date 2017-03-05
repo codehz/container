@@ -32,7 +32,7 @@ class App : Application() {
             when {
                 isVAppProcess -> {
                     componentDelegate = MyComponentDelegate(this@App)
-                    phoneInfoDelegate = MyPhoneInfoDelegate()
+                    phoneInfoDelegate = MyPhoneInfoDelegate(this@App)
                     taskDescriptionDelegate = MyTaskDescriptionDelegate()
                     ioRedirectDelegate = MyIORedirectDelegate()
                     uncheckedExceptionDelegate = MyUncheckedExceptionDelegate()

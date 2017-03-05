@@ -146,6 +146,12 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
+            android:name=".UserSettingActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:label="@string/user_preference"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
             android:name=".SettingsActivity"
             android:configChanges="orientation|screenSize|screenLayout"
             android:icon="@drawable/ic_device_information"

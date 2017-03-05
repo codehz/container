@@ -123,4 +123,6 @@
     <string name="edit_image">Edit Image</string>
     <string name="icon_exported">Icon Exported: %1$s</string>
     <string name="open">Open</string>
+    <string name="user_name">User Name</string>
+    <string name="user_preference">User Preference</string>
 </resources>

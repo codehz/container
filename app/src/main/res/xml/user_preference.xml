@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:key="privacy_phone_info"
+        android:title="@string/phone_info">
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="privacy_phone_device_id"
+            android:title="@string/device_id"/>
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="privacy_phone_bluetooth_address"
+            android:title="@string/bluetooth_address"/>
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="privacy_phone_mac_address"
+            android:title="@string/mac_address"/>
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="privacy_phone_number"
+            android:title="@string/phone_number"/>
+    </PreferenceCategory>
+</PreferenceScreen>

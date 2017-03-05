@@ -91,26 +91,29 @@ class DatabasePreferences(val context: Context, val uri: Uri, val keyName: Strin
     override fun edit() = Editor()
 
     inner class Editor : SharedPreferences.Editor {
-        inline private fun runSelf(fn: () -> Unit): Editor {
+        inline private fun edit(key:String?, fn: () -> Unit): Editor {
             fn()
+            listeners.forEach {
+                it.onSharedPreferenceChanged(this@DatabasePreferences, key)
+            }
             return this
         }
 
-        override fun clear() = runSelf { deleteAll() }
+        override fun clear() = apply { deleteAll() }
 
-        override fun remove(key: String?) = runSelf { delete(key) }
+        override fun remove(key: String?) = apply { delete(key) }
 
-        override fun putInt(key: String?, value: Int) = runSelf { insert(key) { put(valueName, value) } }
+        override fun putInt(key: String?, value: Int) = edit(key) { insert(key) { put(valueName, value) } }
 
-        override fun putLong(key: String?, value: Long) = runSelf { insert(key) { put(valueName, value) } }
+        override fun putLong(key: String?, value: Long) = edit(key) { insert(key) { put(valueName, value) } }
 
-        override fun putFloat(key: String?, value: Float) = runSelf { insert(key) { put(valueName, value) } }
+        override fun putFloat(key: String?, value: Float) = edit(key) { insert(key) { put(valueName, value) } }
 
-        override fun putBoolean(key: String?, value: Boolean) = runSelf { insert(key) { put(valueName, if (value) 1 else 0) } }
+        override fun putBoolean(key: String?, value: Boolean) = edit(key) { insert(key) { put(valueName, if (value) 1 else 0) } }
 
-        override fun putString(key: String?, value: String?) = runSelf { insert(key) { put(valueName, value) } }
+        override fun putString(key: String?, value: String?) = edit(key) { insert(key) { put(valueName, value) } }
 
-        override fun putStringSet(key: String?, values: MutableSet<String>?) = runSelf {
+        override fun putStringSet(key: String?, values: MutableSet<String>?) = edit(key) {
             insert(key) {
                 put(keyName, ByteArrayOutputStream()
                         .apply { ObjectOutputStream(this).use { it.writeObject(HashSet(values)) } }.toByteArray())

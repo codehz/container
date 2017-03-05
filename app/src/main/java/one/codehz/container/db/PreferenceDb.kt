@@ -6,13 +6,17 @@ import android.database.sqlite.SQLiteOpenHelper
 
 class PreferenceDb(context: Context) : SQLiteOpenHelper(context, "preference", null, 1) {
     override fun onCreate(db: SQLiteDatabase) {
-        db.execSQL("CREATE TABLE pre_package(" +
+    }
+
+    override fun onOpen(db: SQLiteDatabase) {
+        super.onOpen(db)
+        db.execSQL("CREATE TABLE IF NOT EXISTS pre_package(" +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                 "package TEXT NOT NULL," +
                 "key TEXT NOT NULL," +
                 "value INTEGER NOT NULL," +
                 "UNIQUE (`package`, `key`) ON CONFLICT REPLACE);")
-        db.execSQL("CREATE TABLE pre_user(" +
+        db.execSQL("CREATE TABLE IF NOT EXISTS pre_user(" +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                 "user INTEGER NOT NULL," +
                 "key TEXT NOT NULL," +
