@@ -110,4 +110,16 @@
     <string name="special_settings">特别设置</string>
     <string name="wake_lock">唤醒锁</string>
     <string name="wake_lock_postfix">%1$s:唤醒锁管理器</string>
+    <string name="edit_image">编辑图片</string>
+    <string name="export_image">导出图片</string>
+    <string name="icon_exported">图标已导出: %1$s</string>
+    <string name="icon_preview">图标预览</string>
+    <string name="image_exporter">图片导出</string>
+    <string name="image_selector">图片选择</string>
+    <string name="open">打开</string>
+    <string name="select_image">选择图片</string>
+    <string name="shortcut_label">快捷方式标签</string>
+    <string name="shortcut_maker_postfix">%1$s:快捷方式生成器</string>
+    <string name="user_name">用户名称</string>
+    <string name="user_preference">用户设置</string>
 </resources>
