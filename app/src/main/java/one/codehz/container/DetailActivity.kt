@@ -146,7 +146,7 @@ class DetailActivity : BaseActivity(R.layout.application_detail) {
                 true
             }
             R.id.send_to_desktop -> {
-                startActivityForResult(Intent(this, UserSelectorActivity::class.java), REQUEST_USER_FOR_SHORTCUT)
+                startActivity(Intent(this, ShortcutMakerActivity::class.java).apply { putExtra(ShortcutMakerActivity.EXTRA_PACKAGE, model.packageName) })
                 true
             }
             else -> false

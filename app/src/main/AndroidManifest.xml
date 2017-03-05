@@ -47,6 +47,12 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
         <activity
+            android:name=".ShortcutMakerActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
             android:name=".LoadingActivity"
             android:label="@string/loading"
             android:theme="@style/LoadingScreenTheme">
@@ -176,6 +182,16 @@
         <service
             android:name=".RunningWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="one.codehz.container.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/fileprovider"/>
+        </provider>
 
         <provider
             android:name=".provider.SystemApplicationProvider"

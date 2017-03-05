@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.AsyncTaskLoader
+import android.support.v4.content.FileProvider
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -28,12 +29,15 @@ import com.lody.virtual.client.ipc.VPackageManager
 import com.lody.virtual.os.VUserManager
 import one.codehz.container.base.SameAsAble
 import one.codehz.container.provider.RunningWidgetProvier
+import java.io.File
 import kotlin.coroutines.experimental.buildSequence
 import kotlin.reflect.KProperty
 
 typealias ViewBinding<T, R> = Pair<(View, R) -> Unit, (T) -> R>
 
 infix fun <T, R> T.then(fn: T.() -> R) = run(fn)
+
+fun getUriFromFile(file: File) = FileProvider.getUriForFile(virtualCore.context, "one.codehz.container.fileprovider", file)!!
 
 @Suppress("EXPERIMENTAL_FEATURE_WARNING")
 fun Cursor.asSequence() = buildSequence { while (moveToNext()) yield(this@asSequence) }
