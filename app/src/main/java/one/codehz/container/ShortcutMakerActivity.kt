@@ -2,7 +2,6 @@ package one.codehz.container
 
 import android.app.Activity
 import android.app.ActivityManager
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -27,7 +26,6 @@ class ShortcutMakerActivity : BaseActivity(R.layout.shortcut_maker) {
         val EXTRA_PACKAGE by staticName
         val OPEN_IMAGE_REQUEST = 0
         val EDIT_IMAGE_REQUEST = 1
-        val OPEN_EXPORT_DIRECTORY = 2
     }
 
     val pkgName: String by lazy { intent.getStringExtra(EXTRA_PACKAGE) }
@@ -120,9 +118,7 @@ class ShortcutMakerActivity : BaseActivity(R.layout.shortcut_maker) {
                         saveImage(bitmap)
                     } else
                         startActivityForResult(Intent(Intent.ACTION_EDIT).run {
-                            type = "image/*"
-                            data = uri
-                            type = contentResolver.getType(uri)
+                            setDataAndType(uri, contentResolver.getType(uri))
                             flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                             Intent.createChooser(this, getString(R.string.edit_image))
                         }, EDIT_IMAGE_REQUEST)
@@ -148,9 +144,8 @@ class ShortcutMakerActivity : BaseActivity(R.layout.shortcut_maker) {
     }
 
     private fun saveImage(bitmap: Bitmap) {
-        val density = resources.displayMetrics.density
         val size = systemService<ActivityManager>(Context.ACTIVITY_SERVICE).launcherLargeIconSize
-        val width = (size * density + 0.5).toInt()
-        cacheBitmap = Bitmap.createScaledBitmap(bitmap, width, width, false)
+        VLog.d("SMA", "size: %d", size)
+        cacheBitmap = Bitmap.createScaledBitmap(bitmap, size, size, false)
     }
 }

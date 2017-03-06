@@ -6,11 +6,12 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "one.codehz.container"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 25
         versionCode 9
         versionName "0.999999999999 preview"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
